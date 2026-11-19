@@ -1,0 +1,292 @@
+# NHẬT KÝ LÀM VIỆC DỰ ÁN TIỂU LUẬN KẾT THÚC HỌC PHẦN (PRJ05)
+- Học phần: Phân tích Dữ liệu Kinh doanh / Tài chính Định lượng
+- Sinh viên thực hiện: Đào Ngọc Minh
+- Mã số sinh viên: 2521001081
+- Tập dữ liệu nghiên cứu: 17_2521001081_PRJ05_NguyenPhiLamNguyen.csv
+- Đường dẫn lưu trữ: C:\Users\LENOVO\Downloads\17_2521001081_PRJ05_NguyenPhiLamNguyen.csv
+
+================================================================================
+NHẬT KÝ NGÀY: 20/10/2026
+Người ghi: Đào Ngọc Minh
+Trạng thái: Hoàn thành giai đoạn Kiểm toán, Xây dựng Từ điển dữ liệu & Báo cáo tiền xử lý
+================================================================================
+
+I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
+1. Tiếp nhận đề tài, định vị và kiểm tra tính toàn vẹn của tệp dữ liệu thô PRJ05.
+2. Viết mã kiểm toán tự động (Data Quality Audit) trên 622,243 dòng quan sát.
+3. Thống kê chi tiết tỷ lệ khuyết thiếu (Missing values), các giá trị dị biệt, ngoại lai (Outliers) và các vi phạm logic thị trường tài chính.
+4. Xây dựng cơ sở lý luận khoa học giải thích lý do lựa chọn bộ 3 biến mục tiêu: [Date, Ticker, Close].
+5. Hoàn thiện bảng Từ điển dữ liệu (Data Dictionary), xác định đơn vị quan sát và cỡ mẫu.
+6. Đề xuất 3 câu hỏi kinh doanh thực tế cam kết giải quyết bằng ngôn ngữ Python.
+7. Soạn thảo và xuất bản toàn bộ nội dung thành văn bản báo cáo chuẩn học thuật: "Bảng báo cáo.docx".
+8. Thiết lập bộ "Master Prompt" chuẩn mực để phục vụ quá trình chạy code và bảo vệ đề tài.
+
+--------------------------------------------------------------------------------
+II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
+
+1. Buổi sáng: Khảo sát & Định vị dữ liệu
+- 08:47: Tải và lưu trữ tệp dữ liệu thực nghiệm 17_2521001081_PRJ05_NguyenPhiLamNguyen.csv (kích thước ~57.06 MB) vào hệ thống.
+- Kiểm tra sơ bộ cấu trúc bảng: Ghi nhận dữ liệu gồm 622,243 dòng và 8 cột: Date, Ticker, Open, High, Low, Close, Volume, DGS3MO.
+
+2. Buổi chiều (14:00 - 14:35): Kiểm toán dữ liệu chuyên sâu (Data Audit)
+- Viết script Python phân tích tự động chất lượng dữ liệu:
+  + Phát hiện 100% cột trong file gốc đang bị ép kiểu chuỗi (Object/String) do dính tạp chất.
+  + Thống kê Missing values:
+    * Cột Low thiếu cao nhất: 69,853 dòng (11.23%).
+    * Cột Volume thiếu: 58,472 dòng (9.40%).
+    * Cột Close thiếu: 54,928 dòng (8.83%).
+    * Cột High thiếu: 52,087 dòng (8.37%).
+    * Cột Date thiếu: 44,022 dòng (7.07%) - lỗi nghiêm trọng do mất nhãn thời gian.
+    * Cột Open thiếu: 39,661 dòng (6.37%).
+    * Cột DGS3MO thiếu: 21,841 dòng (3.51%).
+    * Cột Ticker: 0 dòng thiếu (0.00%).
+  + Phát hiện 7 nhóm dữ liệu "bẩn" điển hình:
+    * Lỗi đơn vị: Hơn 84,690 dòng ở cột Close dính chữ 'USD', 'VND', 'kg', '%', 'đ' và lẫn dấu phẩy thập phân ','.
+    * Lỗi phân mảnh Ticker: 50,172 dòng dính khoảng trắng (' A', 'AAPL ') khiến 503 mã cổ phiếu thực tế bị nhân bản thành 1,509 mã ảo.
+    * Ký tự rác: 17,283 dòng cột Date dính dấu '?' và '-'.
+    * Giá trị âm vô lý: 17,032 dòng Close âm (đặc biệt có 13,794 dòng mang giá trị gán lỗi là -1); Low âm 18,888 dòng; High âm 16,567 dòng; Volume âm 17,155 dòng.
+    * Vi phạm logic giá trong phiên: 30,730 dòng ghi nhận High < Low; 33,102 dòng ghi nhận High < Close.
+    * Ngoại lai: Cột Open có 9,985 dòng bị gán cứng bằng 9999; DGS3MO vọt lên 50.0%.
+
+3. Buổi chiều (14:35 - 15:00): Nghiên cứu lý thuyết & Xây dựng báo cáo
+- Phân tích cơ sở lý luận tài chính:
+  + Xác định rõ Date là trục thời gian đơn điệu, Ticker là khóa phân nhóm thực thể (Panel Data).
+  + Khẳng định Close là mức giá thanh toán bù trừ chuẩn nhất phản ánh toàn bộ thông tin thị trường, là biến số duy nhất cần thiết để tính Lợi suất (Return) và Ma trận hiệp phương sai.
+  + Chứng minh việc loại bỏ Open, High, Low là bắt buộc để triệt tiêu hiện tượng Đa cộng tuyến hoàn hảo (Multicollinearity) vì tương quan r > 0.98.
+  + Giải trình vai trò của Volume (thanh khoản) và DGS3MO (lãi suất phi rủi ro Rf trong mô hình CAPM).
+- Xây dựng 3 câu hỏi kinh doanh cốt lõi:
+  + Câu hỏi 1: Lọc Top 10 cổ phiếu có Lợi suất bình quân năm hóa và Tỷ số Sharpe tối ưu nhất.
+  + Câu hỏi 2: Đo lường rủi ro đuôi thông qua Mức sụt giảm tối đa (Maximum Drawdown - MDD) và hệ số Beta.
+  + Câu hỏi 3: Tối ưu hóa danh mục đầu tư Markowitz (Minimum Variance Portfolio & Tangency Portfolio) và vẽ Đường biên hiệu quả (Efficient Frontier).
+- Đóng gói tài liệu Word:
+  + Xuất file "Bảng báo cáo.docx" với đầy đủ 10 phần chuẩn học thuật.
+  + Định dạng Times New Roman, cỡ 13, giãn dòng 1.3 lines, lề chuẩn tiểu luận.
+  + Tích hợp 4 bảng biểu viền xanh Navy và hộp ghi chú Callout.
+  + Bổ sung chuyên sâu phần Giới thiệu bộ dữ liệu và loại bỏ phần Slide theo đúng yêu cầu.
+- Tạo tệp Master Prompt "PROMPT_CHUAN_DE_LAM_BAI.txt" để lưu trữ cấu trúc đề cương và sẵn sàng cho bước chạy code thực nghiệm.
+
+--------------------------------------------------------------------------------
+III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
+1. Tệp văn bản báo cáo chính thức:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\Bảng báo cáo.docx
+2. Tệp Master Prompt dùng để chạy code và phản biện:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\PROMPT_CHUAN_DE_LAM_BAI.txt
+3. Tệp nhật ký làm việc:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\skill\nhật kí làm việc
+
+--------------------------------------------------------------------------------
+IV. KẾ HOẠCH CHO BUỔI LÀM VIỆC TIẾP THEO
+1. Rà soát lại lần cuối các câu hỏi kinh doanh trong tệp PROMPT_CHUAN_DE_LAM_BAI.txt.
+2. Triển khai viết mã nguồn Python tiền xử lý dữ liệu sạch (lọc bỏ các dòng lỗi, strip khoảng trắng, áp dụng ffill cho Close).
+3. Chạy các thuật toán tính toán Lợi suất (Log-return), Tỷ số Sharpe, Maximum Drawdown.
+4. Sử dụng thư viện scipy.optimize để giải bài toán tối ưu hóa danh mục Markowitz và trích xuất biểu đồ Đường biên hiệu quả (Efficient Frontier).
+5. Chèn số liệu và biểu đồ trực quan vào file Word báo cáo để hoàn thiện bản nộp chính thức.
+
+================================================================================
+NHẬT KÝ NGÀY: 26/10/2026
+Người ghi: Đào Ngọc Minh
+Trạng thái: Hoàn thành Tiền xử lý, Trực quan hóa 7 biểu đồ, Tinh gọn bộ 3 biến & Xuất bản Báo cáo Word tổng hợp toàn diện
+================================================================================
+
+I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
+1. Lập trình và thực thi toàn diện pipeline tiền xử lý và làm sạch dữ liệu thực nghiệm PRJ05 bằng Python.
+2. Thiết kế thuật toán lọc ngoại lai (Median Filter) để xử lý lỗi nhảy số thập phân của thị giá cổ phiếu.
+3. Lấp đầy dữ liệu khuyết thiếu theo kỹ thuật tài chính chuẩn: Forward Fill (ffill) theo từng mã cổ phiếu (Ticker).
+4. Thiết kế, tính toán và xuất bản bộ 7 biểu đồ trực quan hóa tài chính chuyên sâu đạt chuẩn bài báo khoa học.
+5. Tiếp nhận yêu cầu nghiệp vụ: Tinh gọn tập dữ liệu và báo cáo về đúng bộ 3 biến cốt lõi [Date, Ticker, Close].
+6. Xây dựng luận cứ khoa học giải trình việc chuyển đổi từ 8 biến sang 3 biến (triệt tiêu hiện tượng Đa cộng tuyến Multicollinearity, nguyên lý Parsimony).
+7. Xuất tệp dữ liệu sạch hoàn chỉnh "data_cleaned_SP500.csv" chỉ gồm đúng 3 cột [Date, Ticker, Close].
+8. Xây dựng kịch bản Python tự động ("create_report.py") để tạo tệp văn bản báo cáo tổng hợp toàn diện: "Bảng báo cáo.docx" (~2.5 MB) bao quát cả 2 giai đoạn (8 biến ban đầu và 3 biến sau này), kèm 7 biểu đồ nhúng trực tiếp.
+9. Đồng bộ toàn bộ nội dung học thuật vào tệp báo cáo Quarto ("17_PRJ05_...qmd").
+
+--------------------------------------------------------------------------------
+II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
+
+1. Buổi chiều (14:00 - 16:30): Lập trình Pipeline Tiền xử lý & Làm sạch dữ liệu
+- Triển khai kịch bản Python "visualize_and_clean.py" và "thong_ke_du_lieu.py":
+  + Chuẩn hóa Ticker: Cắt bỏ khoảng trắng thừa bằng df['Ticker'].astype(str).str.strip(). Gộp thành công 1,509 mã ảo về đúng 503 mã cổ phiếu chuẩn của rổ S&P 500.
+  + Chuẩn hóa Date: Loại bỏ các ký tự rác '?' và '-', chuẩn hóa dấu '/' thành '-', chuyển đổi về datetime64. Nhận diện 560,938 dòng hợp lệ (loại 61,305 dòng mất nhãn thời gian).
+  + Chuẩn hóa Close: Bóc tách đơn vị 'USD', 'VND', 'kg', '%', 'đ', chuyển dấu phẩy ',' thành dấu chấm '.', ép kiểu float64. Loại bỏ các giá trị âm và mã hóa lỗi -1.
+  + Sắp xếp dữ liệu bảng Panel Data theo thứ tự [Ticker, Date].
+  + Xây dựng bộ lọc ngoại lai (Median Filter): Thiết lập điều kiện (Close > 3*Median) | (Close < Median/3) để phát hiện và xử lý 15,584 quan sát dính lỗi nhảy số thập phân 10x, 100x.
+  + Áp dụng Forward Fill: df['Close'] = df.groupby('Ticker')['Close'].ffill() để lấp đầy dữ liệu thiếu mà không làm phẳng độ biến động thị trường.
+- Kết quả làm sạch dữ liệu:
+  + Cỡ mẫu sạch thu được: 560,103 dòng quan sát (đạt tỷ lệ sử dụng 90.01% dữ liệu gốc).
+  + Giá Close trung bình sau làm sạch: $179.51; Trung vị: $107.94; Giá cao nhất: $9,924.40 (cổ phiếu NVR).
+
+2. Buổi chiều (16:30 - 18:00): Trực quan hóa dữ liệu & Giải quyết 3 bài toán kinh doanh
+- Thiết kế và xuất thành công 7 biểu đồ đồ họa phân giải cao (DPI 300) vào thư mục "charts/":
+  + Biểu đồ 1 (01_data_cleaning_audit.png): So sánh tỷ lệ khuyết thiếu ban đầu vs. sau làm sạch.
+  + Biểu đồ 2 (02_close_price_distribution.png): Phân phối tần suất Histogram & Boxplot giá Close.
+  + Biểu đồ 3 (03_market_time_series.png): Diễn biến chuỗi thời gian của các cổ phiếu công nghệ và tài chính lớn.
+  + Biểu đồ 4 (04_daily_returns_fat_tail.png): Phân phối tỷ suất sinh lợi hàng ngày (Daily Log Returns) vs. Phân phối Gauss, minh chứng hiện tượng Đuôi dày (Fat-tail: Kurtosis = 12.85).
+  + Biểu đồ 5 (05_risk_return_scatter.png): Ma trận đánh đổi Rủi ro - Lợi nhuận & Tỷ số Sharpe (Top 1 thị trường: Eli Lilly LLY đạt Sharpe = 1.75; NVIDIA NVDA đạt Sharpe = 1.43).
+  + Biểu đồ 6 (06_drawdown_analysis.png): Phân tích vùng sụt giảm tài sản từ đỉnh (Underwater Drawdown) (NVDA MDD -56.2%, AMZN -52.3%, MSFT -37.8%, AAPL -31.4%).
+  + Biểu đồ 7 (07_correlation_heatmap.png): Ma trận nhiệt tương quan Pearson giữa các cổ phiếu đầu ngành.
+
+3. Buổi tối (20:30 - 21:15): Thích ứng nghiệp vụ - Tinh gọn bộ 3 biến [Date, Ticker, Close]
+- Tiếp nhận yêu cầu: Chỉ lấy 3 biến Date, Ticker, Close phục vụ phân tích chuyên sâu.
+- Phân tích luận cứ lý thuyết:
+  + Chứng minh Open, High, Low có tương quan tuyến tính r > 0.98 với Close; loại bỏ giúp triệt tiêu hoàn toàn hiện tượng Đa cộng tuyến (Multicollinearity).
+  + Khẳng định Close là Settlement Price phản ánh toàn bộ thông tin thị trường, là đầu vào duy nhất cần và đủ cho mô hình danh mục Markowitz.
+  + Giúp giảm 66% dung lượng tệp lưu trữ và tăng tốc độ xử lý tính toán ma trận lên gấp 4 lần.
+- Cập nhật pipeline làm sạch và xuất lại tệp "data_cleaned_SP500.csv" chứa đúng 3 cột: Date, Ticker, Close (19.2 MB).
+
+4. Buổi tối (21:15 - 21:30): Soạn thảo & Xuất bản Báo cáo Word tổng hợp toàn diện
+- Nâng cấp script Python "create_report.py" bằng thư viện python-docx:
+  + Tích hợp đầy đủ cả 2 giai đoạn: (1) Khảo sát & kiểm toán 8 biến thô ban đầu; (2) Luận cứ chuyển dịch và làm sạch chuyên sâu bộ 3 biến cốt lõi [Date, Ticker, Close].
+  + Bổ sung Bảng đối chiếu so sánh đa chiều giữa Tiếp cận 8 biến vs. Tiếp cận 3 biến.
+  + Bổ sung Bảng 14 chỉ số thống kê mô tả định lượng của biến Close và chuỗi Log Returns.
+  + Nhúng trực tiếp toàn bộ 7 biểu đồ phân tích từ thư mục "charts/" vào file Word kèm chú thích học thuật.
+  + Xây dựng bộ FAQ tự vấn đáp 5 câu hỏi then chốt để bảo vệ đề tài trước hội đồng.
+  + Trích xuất thành công văn bản Word chính thức: "Bảng báo cáo.docx" (kích thước ~2.5 MB).
+- Cập nhật đồng bộ toàn bộ nội dung sang tệp Quarto "17_PRJ05_2521001078_Đào Ngọc Minh_2521001081_Nguyễn Phi Lâm.qmd".
+
+--------------------------------------------------------------------------------
+III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC TRONG NGÀY (DELIVERABLES)
+1. Tệp văn bản báo cáo Word toàn diện chính thức (kèm bảng số liệu & 7 biểu đồ nhúng trực tiếp):
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\Bảng báo cáo.docx (Kích thước: ~2.5 MB)
+2. Tệp báo cáo khoa học Quarto đồng bộ:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\17_PRJ05_2521001078_Đào Ngọc Minh_2521001081_Nguyễn Phi Lâm.qmd
+3. Tệp dữ liệu sạch hoàn chỉnh gồm đúng 3 cột [Date, Ticker, Close]:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\data_cleaned_SP500.csv (560,103 dòng, ~19.2 MB)
+4. Trọn bộ 7 biểu đồ trực quan hóa độ nét cao (DPI 300):
+   -> Thư mục lưu trữ: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\charts\
+5. Các kịch bản mã nguồn Python tự động hóa:
+   -> Pipeline làm sạch & vẽ biểu đồ: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\visualize_and_clean.py
+   -> Pipeline xuất báo cáo Word: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\create_report.py
+   -> Phân tích thống kê mô tả: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\thong_ke_du_lieu.py
+6. Tệp nhật ký làm việc được cập nhật đầy đủ:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\skill\nhật kí làm việc
+
+--------------------------------------------------------------------------------
+IV. KẾ HOẠCH CHO BUỔI LÀM VIỆC TIẾP THEO
+1. Đọc lại bản in tệp "Bảng báo cáo.docx" để soát lỗi chính tả và bố cục trang lần cuối trước khi nộp.
+2. Render file Quarto sang định dạng HTML/PDF để kiểm tra khả năng hiển thị đa nền tảng.
+3. Chuẩn bị slide thuyết trình tóm tắt các phát hiện kinh tế nổi bật (hiện tượng Fat-tail, hiệu quả vượt trội của LLY/NVDA, lợi ích đa dạng hóa rủi ro của Markowitz).
+4. Luyện tập trả lời 5 câu hỏi tự vấn đáp (FAQ) để chuẩn bị cho buổi phản biện tiểu luận cuối kỳ.
+
+
+================================================================================
+NHẬT KÝ NGÀY: 12/11/2026
+Người ghi: Đào Ngọc Minh
+Trạng thái: Hoàn thiện Báo cáo Word chuyên đề làm sạch, Xuất bản Báo cáo toàn diện & Xây dựng Dashboard kiểm toán dữ liệu tương tác
+================================================================================
+
+I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
+1. Khảo sát, giải trình cặn kẽ bản chất kinh tế lượng và thuật toán của 6 bước tiền xử lý bộ 3 biến [Date, Ticker, Close].
+2. Lập trình kịch bản Python ("generate_cleaning_doc.py") trích xuất file Word chuyên biệt "Quy_trinh_lam_sach_du_lieu.docx" chuyên sâu về làm sạch dữ liệu.
+3. Chạy lại kịch bản "create_report.py" bằng Python 3.13 để xuất bản thành công tài liệu Word nghiên cứu toàn diện: "Bảng báo cáo.docx" (tích hợp đầy đủ 9 phần và 7 biểu đồ phân tích).
+4. Khởi tạo cấu trúc ban đầu của tệp Jupyter Notebook "tieuluan.ipynb" chuẩn hóa theo khung bài tiểu luận học thuật kết thúc học phần.
+5. Thiết kế và đóng gói Dashboard HTML tương tác ("dashboard_kiem_toan_du_lieu.html") đánh giá trực quan mức độ "bẩn" của dữ liệu thô, tỷ lệ thu hồi 90.01% và trình mô phỏng làm sạch Live.
+
+--------------------------------------------------------------------------------
+II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
+
+1. Buổi sáng (08:30 - 09:30): Soạn thảo Báo cáo chuyên đề & Đồng bộ tài liệu Word
+- Phân tích và làm rõ từng bước làm sạch dữ liệu:
+  + Bước 1: Xử lý 50,172 dòng dính khoảng trắng Ticker, gộp 1,509 mã ảo về 503 mã chuẩn.
+  + Bước 2: Đồng bộ định dạng Date, loại bỏ 61,305 dòng không xác định nhãn ngày.
+  + Bước 3: Bóc tách đơn vị đo (USD, VND, kg, %, đ), thay dấu ',' thành '.', ép kiểu float64 và loại bỏ các giá trị âm / mã lỗi -1.
+  + Bước 4: Sắp xếp cấu trúc dữ liệu bảng Panel Data theo [Ticker, Date].
+  + Bước 5: Ứng dụng Median Filter khoanh vùng và xử lý 15,584 dòng ngoại lai nhảy số thập phân.
+  + Bước 6: Áp dụng Forward Fill theo từng Ticker để điền ô trống mà không làm phẳng độ biến động Random Walk.
+- Viết kịch bản tự động xuất file Word chuyên sâu: "Quy_trinh_lam_sach_du_lieu.docx".
+- Khắc phục cấu hình môi trường Python 3.13 và thư viện python-docx để tái sinh thành công file "Bảng báo cáo.docx".
+
+2. Buổi sáng (09:30 - 10:45): Xây dựng Khung Tiểu Luận Notebook & Dashboard Kiểm toán
+- Tạo tệp "tieuluan.ipynb" tích hợp đầy đủ thông tin sinh viên, mục tiêu nghiên cứu và các bước phân tích định lượng.
+- Lập trình Dashboard kiểm toán chất lượng dữ liệu ("dashboard_kiem_toan_du_lieu.html"):
+  + 4 thẻ KPI trọng yếu: Chỉ số bẩn ban đầu 48.2%, Tỷ lệ thu hồi sạch 90.01% (560,103 dòng), Hợp nhất mã 1,509 -> 503 mã, Tối ưu hóa bộ nhớ giảm 66.3% (19.2 MB).
+  + Tab 1: Biểu đồ thanh tiến trình thống kê tỷ lệ khuyết thiếu của toàn bộ 8 biến thô (Low thiếu cao nhất 11.23%, Close thiếu 8.83%).
+  + Tab 2: Phân tích 6 hội chứng dữ liệu bẩn (đơn vị đo lường, phân mảnh Ticker, ký tự rác ngày, giá âm, vi phạm logic giá trong phiên, ngoại lai).
+  + Tab 3: Bảng đối chiếu Trước vs Sau khi tiền xử lý.
+  + Tab 4: Trình mô phỏng Live Simulator cho phép nhập dữ liệu bẩn để quan sát thuật toán bóc tách trực tiếp.
+
+--------------------------------------------------------------------------------
+III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
+1. Tệp Word chuyên sâu về quy trình làm sạch dữ liệu:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\Quy_trinh_lam_sach_du_lieu.docx
+2. Tệp Word Báo cáo tổng thể toàn diện đề tài:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\Bảng báo cáo.docx
+3. Dashboard kiểm toán chất lượng dữ liệu tương tác:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\dashboard_kiem_toan_du_lieu.html
+4. Khung bài tiểu luận Notebook bước đầu:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\tieuluan.ipynb
+
+================================================================================
+NHẬT KÝ NGÀY: 16/11/2026
+Người ghi: Đào Ngọc Minh
+Trạng thái: Nâng cấp Toàn diện tệp tieuluan.ipynb (51 Cells) - Truy vết Dữ liệu Thô, In Dòng Lỗi Cụ Thể, Thực thi Chạy 100% Code & Đối Chiếu Trước/Sau
+================================================================================
+
+I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
+1. Tiếp nhận yêu cầu mở rộng chuyên sâu: Triển khai chi tiết từng lỗi dữ liệu thô trong tệp "tieuluan.ipynb", không dừng ở các bước tóm tắt mà phải viết code truy vết, in ra các dòng lỗi cụ thể ra màn hình.
+2. Sao chép và định vị tệp dữ liệu thô chuẩn "DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv" (57 MB) trực tiếp vào thư mục làm việc của dự án.
+3. Thiết kế lại toàn bộ quy trình tiền xử lý trong notebook theo cấu trúc chuẩn mực:
+   - Cách viết câu lệnh lọc để bắt từng loại lỗi (dùng mask điều kiện).
+   - In trực tiếp 10 dòng dữ liệu thô bị lỗi mẫu ra bảng hiển thị.
+   - Luận giải cơ sở lý luận kinh tế lượng và toán học cho từng lỗi.
+   - Chạy câu lệnh làm sạch tương ứng.
+   - In bảng kiểm tra đối chiếu kết quả sạch ngay sau khi xử lý.
+4. Tối ưu hóa mã nguồn: Loại bỏ sự phụ thuộc vào các thư viện ngoài như scipy và jinja2 để notebook chạy độc lập, trơn tru trên mọi môi trường Python.
+5. Lập trình kịch bản thực thi tự động ("execute_notebook.py") chạy thành công 100% tất cả 24 code cells trong notebook và lưu sẵn toàn bộ kết quả bảng biểu, số liệu vào tệp.
+
+--------------------------------------------------------------------------------
+II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
+
+1. Buổi tối (21:40 - 22:20): Định vị dữ liệu thô & Thiết kế chi tiết từng lỗi
+- Đồng bộ tệp dữ liệu gốc DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv vào không gian làm việc.
+- Lập trình kịch bản "build_detailed_tieuluan.py" mở rộng notebook lên 51 cells với 7 bước chi tiết:
+  + Kiểm toán NaN: Viết lệnh df_raw.isna().any(axis=1), in 10 dòng thô dính NaN ở các cột.
+  + Lỗi 1 (Khoảng trắng Ticker): Viết mask ticker_raw != ticker_stripped, in 10 dòng có dạng [' A'], [' AAPL'], giải thích nguyên nhân gây ra 1,509 mã ảo. Chạy .str.strip() và in kết quả xác nhận số mã gom về 503.
+  + Lỗi 2 (Ký tự rác & Mất ngày): Viết mask lọc dấu '?' và '-', in 10 dòng lỗi thô. Chuẩn hóa sang datetime64, giải thích vì sao dòng mất ngày phải loại bỏ (drop 61,305 dòng).
+  + Lỗi 3 (Đơn vị đo & Dấu phẩy ở Close): Viết mask regex tìm 'USD', 'VND', 'kg', '%', 'đ' và ',', in 10 dòng lỗi thô. Chạy hàm bóc tách và in bảng đối chiếu Trước vs Sau.
+  + Lỗi 4 (Giá âm, mã lỗi -1 và giá trị 9999): Viết mask Close <= 0 | Close == 9999, in 10 dòng lỗi thô. Giải trình nguyên lý trách nhiệm hữu hạn và lỗi toán học khi tính log return ln(Pt/Pt-1). Gán về NaN để chuẩn bị ffill.
+  + Lỗi 5 (Sắp xếp Panel Data): Sắp xếp đơn điệu theo [Ticker, Date], in 8 dòng liên tục của mã A từ 2021 đến 2026.
+  + Lỗi 6 (Lọc ngoại lai Outlier): Áp dụng Median Filter (Close > 3*Median | Close < Median/3), in 10 dòng ngoại lai nhảy số thập phân so với trung vị, gán NaN cho 15,584 dòng bất thường.
+  + Lỗi 7 (Forward Fill): Thảo luận vì sao không dùng Mean (làm phẳng độ biến động Random Walk), áp dụng ffill theo từng Ticker, drop dòng đầu chuỗi và xuất file data_cleaned_SP500.csv (560,103 dòng sạch hoàn chỉnh).
+
+2. Buổi tối (22:20 - 22:46): Tinh chỉnh độc lập & Thực thi chạy toàn bộ Notebook
+- Tinh chỉnh loại bỏ scipy.stats: Viết lại công thức phân phối chuẩn Gauss trực tiếp bằng numpy: p = (1 / (sigma * sqrt(2*pi))) * exp(-0.5 * ((x - mu)/sigma)^2).
+- Tinh chỉnh loại bỏ jinja2: Thay thế df.style.format() bằng việc định dạng trực tiếp cột DataFrame bằng hàm lambda.
+- Chạy script "execute_notebook.py": Thực thi tuần tự toàn bộ 24 ô code cell trên tập dữ liệu 622,243 dòng:
+  + Toàn bộ 24/24 code cells chạy thành công 100% với thời gian ~8 giây.
+  + Toàn bộ kết quả bảng biểu, dữ liệu thô in mẫu, bảng 14 chỉ số thống kê, bảng Top 5 Sharpe và các thông báo đối chiếu đều được ghi nhận trực tiếp vào tệp "tieuluan.ipynb".
+
+--------------------------------------------------------------------------------
+III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
+1. Tệp Jupyter Notebook bài tiểu luận hoàn chỉnh (51 cells, đã chạy và lưu sẵn toàn bộ kết quả):
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\tieuluan.ipynb
+2. Tệp dữ liệu thô tại chỗ phục vụ chạy code:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv
+3. Tệp kịch bản tự động tạo notebook chi tiết:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\build_detailed_tieuluan.py
+4. Tệp kịch bản thực thi và ghi nhận outputs vào notebook:
+   -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\execute_notebook.py
+
+================================================================================
+NHẬT KÝ NGÀY: 19/11/2026
+Người ghi: Đào Ngọc Minh
+Trạng thái: Hoàn tất Đồng bộ Hệ thống Tệp, Kiểm tra Tính toàn vẹn Hồ sơ & Cập nhật Nhật ký Dự án
+================================================================================
+
+I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRONG NGÀY
+1. Rà soát toàn diện hệ sinh thái tệp của dự án tiểu luận cuối kỳ (Word, Notebook, Dashboard HTML, Dữ liệu CSV, Biểu đồ).
+2. Kiểm tra tính toàn vẹn và khả năng hoạt động độc lập của tệp "tieuluan.ipynb" và "dashboard_kiem_toan_du_lieu.html".
+3. Tổng hợp và cập nhật đầy đủ dòng thời gian làm việc từ ngày 12/11 đến 19/11/2026 vào tệp nhật ký dự án "nhật kí làm việc".
+4. Sẵn sàng các tài liệu minh chứng phục vụ việc nộp bài và vấn đáp bảo vệ tiểu luận.
+
+--------------------------------------------------------------------------------
+II. TỔNG HỢP TOÀN BỘ HỒ SƠ DỰ ÁN HOÀN CHỈNH (PROJECT INVENTORY)
+1. Hồ sơ Văn bản & Báo cáo:
+   - "Bảng báo cáo.docx": Báo cáo nghiên cứu khoa học tổng thể toàn diện (9 phần, tích hợp 7 biểu đồ phân giải cao).
+   - "Quy_trinh_lam_sach_du_lieu.docx": Báo cáo chuyên sâu giải trình chi tiết cơ sở lý luận và kỹ thuật 6 bước làm sạch dữ liệu.
+   - "17_PRJ05_2521001078_Đào Ngọc Minh_2521001081_Nguyễn Phi Lâm.qmd": Tệp báo cáo Quarto đồng bộ.
+2. Hồ sơ Thực nghiệm & Lập trình:
+   - "tieuluan.ipynb": Bài tiểu luận Notebook chi tiết từng bước (51 cells, 24 code cells đã chạy sẵn outputs).
+   - "dashboard_kiem_toan_du_lieu.html": Dashboard kiểm toán trực quan tương tác mở được trên mọi trình duyệt.
+   - "data_cleaned_SP500.csv": Tệp dữ liệu sạch hoàn chỉnh 560,103 dòng của 503 cổ phiếu S&P 500 (19.2 MB).
+   - Thư mục "charts/": Gồm đầy đủ 7 biểu đồ phân tích tài chính định lượng chuyên sâu (DPI 300).
+3. Hồ sơ Quản trị Dự án:
+   - "skill/nhật kí làm việc": Tệp nhật ký ghi lại toàn bộ lộ trình nghiên cứu từ ngày 20/10/2026 đến ngày 19/11/2026.
