@@ -1,29 +1,4 @@
----
-title: "BÁO CÁO TIỂU LUẬN KẾT THÚC HỌC PHẦN"
-subtitle: "PHÂN TÍCH BIẾN ĐỘNG VÀ DỰ BÁO LỢI SUẤT CỔ PHIẾU THUỘC S&P 500 BẰNG PYTHON, GIAI ĐOẠN 2021–2026"
-author: "Sinh viên thực hiện: Đào Ngọc Minh — MSSV: 2521001081"
-date: "2026-11-19"
-format:
-  html:
-    toc: true
-    toc-depth: 3
-    toc-title: "Mục Lục Toàn Văn"
-    number-sections: true
-    theme: cosmo
-    code-fold: show
-    code-tools: true
-    smooth-scroll: true
-  docx:
-    toc: true
-    number-sections: true
-    highlight-style: github
-execute:
-  echo: true
-  warning: false
-  message: false
----
 
-\newpage
 
 # PHẦN MỞ ĐẦU THỦ TỤC
 
@@ -93,37 +68,57 @@ Về mặt phân tích biến động, kiểm định Augmented Dickey-Fuller (A
 
 ## 1.1. Bối cảnh nghiên cứu
 
-Trong phân tích đầu tư tài chính hiện đại, việc đánh giá tài sản tài chính thuần túy dựa trên tổng mức tăng trưởng giá cuối kỳ thường dẫn đến những sai lầm nghiêm trọng trong quản trị danh mục. Xem xét trường hợp thực tế của hai cổ phiếu giả định A và B cùng bắt đầu tại mốc giá $100\$$ vào đầu năm 2021 và đều kết thúc chu kỳ 5 năm tại mốc giá $200\$$ vào năm 2026 (tương đương mức sinh lợi danh nghĩa $+100\%$). Tuy nhiên, hành trình tạo ra mức sinh lợi đó có bản chất hoàn toàn trái ngược:
-* **Cổ phiếu A** tăng trưởng tịnh tiến ổn định với mức biến động dao động hàng ngày nhỏ ($\sigma_A \approx 12\%/\text{năm}$), mức sụt giảm tối đa (Maximum Drawdown) chỉ ở mức $-8\%$.
-* **Cổ phiếu B** trải qua các đợt sốc biến động mạnh mẽ ($\sigma_B \approx 45\%/\text{năm}$), trong chu kỳ có thời điểm giá sụt giảm sâu tới $-55\%$ trước khi phục hồi về đích.
+Trong lý thuyết tài chính truyền thống và tâm lý đầu tư thực tế, các cá nhân thường có xu hướng tập trung tuyệt đối vào tỷ suất sinh lợi cuối kỳ (Cumulative Return) mà bỏ qua hành trình biến động dẫn đến kết quả đó. Tuy nhiên, trong quản trị danh mục hiện đại (Modern Portfolio Management), mức độ dao động (Volatility) và độ sâu sụt giảm (Drawdown) mới là yếu tố quyết định sự tồn tại và khả năng chịu tải của nguồn vốn.
 
-Đối với một nhà quản lý quỹ, một nhà đầu tư tổ chức hoặc một hệ thống quản trị rủi ro tự động, chi phí vốn và áp lực thanh lý ký quỹ (Margin Call) của Cổ phiếu B lớn hơn gấp nhiều lần so với Cổ phiếu A. Điều này khẳng định tầm quan trọng sống còn của việc **đo lường độ biến động** và **phân tích lợi suất điều chỉnh theo rủi ro** thay vì chỉ nhìn vào mức biến động giá tuyệt đối.
+Để minh chứng rõ nét cho nhu cầu đo lường rủi ro định lượng, nghiên cứu trích xuất dữ liệu thực tế từ tập dữ liệu S&P 500 giai đoạn 2021–2026 và so sánh hai cổ phiếu thực tế có mức sinh lợi toàn kỳ xấp xỉ ngang nhau: **The Coca-Cola Company (Ticker: KO)** và **Fair Isaac Corporation (Ticker: FICO)**:
+
+| Tiêu chí phân tích | Cổ phiếu The Coca-Cola Co. (`KO`) | Cổ phiếu Fair Isaac Corp. (`FICO`) | So sánh & Ý nghĩa kinh tế |
+| :--- | :---: | :---: | :--- |
+| **Giá khởi điểm (13/10/2021)** | $54,43\$$ | $398,24\$$ | Mốc giá cơ sở đầu kỳ nghiên cứu |
+| **Giá kết thúc (12/10/2026)** | $102,28\$$ | $741,85\$$ | Mốc giá đóng cửa phiên chốt sổ cuối kỳ |
+| **Lợi suất tích lũy toàn kỳ ($R$)** | **$+87,92\%$** | **$+86,28\%$** | **Gần như tương đương nhau (~86% – 88%)** |
+| **Độ biến động năm hóa ($\sigma_{ann}$)** | **$17,63\%$/năm** | **$48,34\%$/năm** | **FICO biến động gấp 2,74 lần KO** |
+| **Sụt giảm tối đa (Maximum Drawdown)** | **$-17,27\%$** | **$-75,06\%$** | **FICO bốc hơi 3/4 giá trị trong chu kỳ** |
+| **Hệ số Sharpe năm hóa ($SR$)** | **$0,99$** | **$0,36$** | **KO hiệu quả sinh lợi gấp 2,75 lần FICO** |
+
+Qua bảng đối chiếu thực nghiệm trên:
+* Nếu chỉ đánh giá dựa trên mức sinh lợi danh nghĩa cuối kỳ, một nhà đầu tư có thể ngộ nhận rằng việc nắm giữ `KO` hay `FICO` mang lại giá trị tương đương (lợi suất đều đạt xấp xỉ $+87\%$).
+* Tuy nhiên, trên hành trình 5 năm đó, cổ phiếu `FICO` đã trải qua những đợt bán tháo kinh hoàng với mức sụt giảm tối đa lên đến **$-75,06\%$** (nhà đầu tư chứng kiến tài khoản bốc hơi ba phần tư giá trị), đồng thời độ biến động hàng ngày cực kỳ dữ dội ($\sigma = 48,34\%$). Một nhà đầu tư cá nhân hay quỹ đầu tư sử dụng đòn bẩy tài chính (Margin) chắc chắn đã bị "cháy tài khoản" (Margin Call/Forced Liquidation) tại đáy sụt giảm của FICO rất lâu trước khi cổ phiếu kịp phục hồi về đích.
+* Ngược lại, cổ phiếu `KO` tăng trưởng bền bỉ với độ biến động thấp ($17,63\%$) và mức sụt giảm tối đa được kiểm soát an toàn ở mức $-17,27\%$, mang lại hệ số sinh lợi trên rủi ro (Sharpe) cao vượt trội ($0,99$ so với $0,36$).
+
+Thực tế định lượng này khẳng định: **Việc chỉ theo dõi giá đóng cửa và lợi suất tăng trưởng cuối kỳ là hoàn toàn chưa đủ.** Phân tích tài chính định lượng đòi hỏi phải lượng hóa chính xác độ biến động chuỗi thời gian, đánh giá rủi ro đuôi (Fat-tail) và kiểm tra khả năng dự báo giá ngắn hạn để tối ưu hóa quyết định đầu tư.
 
 ## 1.2. Các câu hỏi nghiên cứu (Research Questions)
 
-Đề tài tập trung giải quyết ba câu hỏi nghiên cứu cốt lõi:
-1. **Câu hỏi 1 (Đặc tính lịch sử theo mã):** Trong giai đoạn 2021–2026, những cổ phiếu nào trong rổ S&P 500 có mức biến động mạnh nhất, những mã nào mang lại hiệu quả sinh lợi vượt trội nhất trên mỗi đơn vị rủi ro (hệ số Sharpe cao nhất)?
-2. **Câu hỏi 2 (Hiệu quả danh mục):** Một danh mục đầu tư thụ động cân bằng tỷ trọng đều (Equal-Weighted Portfolio) tái lập toàn bộ rổ cổ phiếu đạt được tỷ suất sinh lợi bình quân năm hóa, mức độ biến động và hệ số Sharpe là bao nhiêu?
-3. **Câu hỏi 3 (Khả năng dự báo ngoài mẫu):** Liệu các thông tin đã biết sau khi đóng cửa phiên giao dịch hôm nay (giá đóng cửa, các bậc trễ của lợi suất, độ biến động trượt, chỉ báo xu hướng ngắn hạn) có giúp mô hình học máy dự báo lợi suất phiên kế tiếp tốt hơn mốc chuẩn dự báo bằng 0 (Zero-Return Benchmark) trên tập kiểm tra ngoài mẫu (Out-of-sample) hay không?
+Đề tài đặt trọng tâm giải quyết tuần tự ba câu hỏi nghiên cứu định lượng sau:
+1. **Câu hỏi 1 (Đặc tính lịch sử theo mã):** Trong toàn bộ rổ chỉ số S&P 500 giai đoạn 2021–2026, những mã cổ phiếu nào có mức độ biến động mạnh nhất và những mã nào mang lại hiệu quả sinh lợi vượt trội nhất trên mỗi đơn vị rủi ro (hệ số Sharpe cao nhất)?
+2. **Câu hỏi 2 (Hiệu quả danh mục thụ động):** Một danh mục đầu tư cân bằng tỷ trọng đều (Equal-Weighted Portfolio) nắm giữ toàn bộ các cổ phiếu thành viên có thể sinh ra tỷ suất lợi nhuận bình quân năm hóa, mức độ biến động và hệ số Sharpe là bao nhiêu khi so sánh với từng mã đơn lẻ?
+3. **Câu hỏi 3 (Khả năng dự báo ngoài mẫu):** Liệu các thông tin đã biết sau khi đóng cửa phiên giao dịch hôm nay (giá đóng cửa, các bước trễ của lợi suất, độ biến động trượt, chỉ báo xu hướng kỹ thuật) có giúp mô hình học máy (OLS, Ridge) dự báo lợi suất phiên kế tiếp tốt hơn mốc chuẩn dự báo bằng 0 (Zero Benchmark: $\hat{r}_{t+1} = 0$) trên tập kiểm tra ngoài mẫu (Out-of-sample) hay không?
 
 ## 1.3. Mục tiêu nghiên cứu
 
-* **Mục tiêu 1:** Xây dựng đường ống làm sạch, kiểm toán chất lượng và xử lý triệt để 8 loại lỗi dữ liệu bẩn từ tệp thô 622.243 dòng `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv`.
-* **Mục tiêu 2:** Tính toán chuỗi tỷ suất sinh lợi logarit, thống kê 14 chỉ số lượng hóa rủi ro cho từng mã và xây dựng chuỗi giá trị danh mục tỷ trọng đều S&P 500 từ mốc 100.
-* **Mục tiêu 3:** Thực hiện kiểm định nghiệm vị ADF để xác định tính dừng của chuỗi giá và chuỗi lợi suất.
-* **Mục tiêu 4:** Thiết kế khung thực nghiệm phân chia chuỗi thời gian nghiêm ngặt (Train 80% / Test 20%), huấn luyện các mô hình dự báo (Benchmark 0, OLS, Ridge Regression) và lượng hóa sai số qua các thước đo MAE, RMSE và $R^2$.
+Bám sát các câu hỏi nghiên cứu, đề tài xác định hệ thống mục tiêu cụ thể:
+* **Mục tiêu 1:** Lập bảng lượng hóa biến động và 14 chỉ số thống kê rủi ro chi tiết cho toàn bộ các mã cổ phiếu trong rổ S&P 500, phân loại rõ các nhóm cổ phiếu biến động mạnh và nhóm phòng thủ sinh lợi ổn định.
+* **Mục tiêu 2:** Xây dựng chuỗi giá trị và tỷ suất sinh lợi của danh mục đầu tư cân bằng tỷ trọng đều (Equal-Weighted) bắt đầu từ mốc chuẩn 100, đo lường lợi ích của việc đa dạng hóa danh mục theo lý thuyết Markowitz.
+* **Mục tiêu 3:** Thiết kế khung thực nghiệm phân chia chuỗi thời gian nghiêm ngặt (Time-series Split 80% Train / 20% Test), huấn luyện và đánh giá khách quan năng lực dự báo trước một phiên ($t+1$) của các mô hình hồi quy (OLS, Ridge) so với mốc mốc chuẩn bằng 0 qua các thước đo sai số MAE, RMSE và $R^2$.
 
 ## 1.4. Đối tượng và phạm vi nghiên cứu
 
-* **Đối tượng nghiên cứu:** Giá đóng cửa chốt phiên (`Close`), chuỗi lợi suất logarit hàng ngày ($r_t$), độ biến động trượt 20 phiên ($\sigma_{20d}$) và tín hiệu dự báo phiên kế tiếp ($r_{t+1}$).
-* **Đơn vị quan sát cơ sở:** Một cặp thực thể - thời gian xác định `[Ticker, Date]` đại diện cho một phiên giao dịch của một mã cổ phiếu.
-* **Phạm vi không gian:** 503 công ty niêm yết lớn nhất thị trường chứng khoán Hoa Kỳ thuộc rổ chỉ số S&P 500.
-* **Phạm vi thời gian:** Từ ngày **13/10/2021** đến ngày **12/10/2026** với tần suất theo ngày giao dịch (Daily Trading Frequency - loại trừ thứ Bảy, Chủ Nhật và các ngày nghỉ lễ theo quy định sàn NYSE/NASDAQ).
+* **Đối tượng nghiên cứu:** Giá đóng cửa chốt phiên (`Close`), chuỗi tỷ suất sinh lợi logarit hàng ngày ($r_t$), độ biến động lịch sử 20 phiên ($\sigma_{20d}$) và nhãn dự báo lợi suất phiên kế tiếp ($r_{t+1}$).
+* **Đơn vị quan sát cơ sở:** Một dòng dữ liệu đại diện cho một cặp khóa kết hợp thực thể - thời gian xác định `[Ticker, Date]`, phản ánh đầy đủ trạng thái giá của một mã cổ phiếu trong một phiên giao dịch duy nhất.
+* **Phạm vi không gian:** **503 công ty niêm yết lớn nhất** đại diện cho toàn bộ nền kinh tế Hoa Kỳ thuộc rổ chỉ số S&P 500.
+* **Phạm vi thời gian:** Từ ngày **13/10/2021** đến ngày **12/10/2026**.
+  + Tổng số phiên giao dịch thực tế được ghi nhận: **1.254 phiên giao dịch** (sau khi chuẩn hóa và loại bỏ các ngày nghỉ lễ, thứ Bảy và Chủ Nhật).
+  + Tần suất quan sát: **Tần suất theo ngày giao dịch (Daily Frequency)**.
 
 ## 1.5. Ý nghĩa khoa học và thực tiễn
 
-* **Về mặt học thuật:** Cung cấp quy trình kiểm toán dữ liệu mẫu mực, minh bạch từng công thức xử lý, tránh bẫy rò rỉ dữ liệu (Look-ahead bias) và kiểm chứng tính hợp lý của Giả thuyết Thị trường Hiệu quả (EMH).
-* **Về mặt thực tiễn:** Giúp các nhà đầu tư cá nhân và tổ chức xây dựng hệ thống theo dõi rủi ro định lượng, hiểu rõ giới hạn của việc dự báo giá ngắn hạn và thiết lập kỷ luật phân bổ danh mục dựa trên kiểm định thống kê khách quan.
+* **Ý nghĩa khoa học:**
+  + Đề tài đóng góp một quy trình thực nghiệm minh bạch, chuẩn mực trong việc kiểm toán và tiền xử lý dữ liệu tài chính chuỗi thời gian bảng (Panel Data), ngăn ngừa triệt để các sai lầm phổ biến như rò rỉ dữ liệu tương lai (Look-ahead bias) hay hiện tượng đa cộng tuyến hoàn hảo.
+  + Kiểm định tính hợp lý của **Giả thuyết Thị trường Hiệu quả (EMH dạng yếu)** trên dữ liệu thực tế 5 năm của thị trường chứng khoán Mỹ: Đánh giá xem dữ liệu giá quá khứ thực sự chứa đựng bao nhiêu giá trị thông tin dự báo lợi suất tương lai.
+* **Ý nghĩa thực tiễn:**
+  + Cung cấp công cụ đo lường và hệ thống cảnh báo sớm rủi ro (Early Warning System) dựa trên độ biến động và mức sụt giảm tối đa (MDD), giúp các nhà quản trị danh mục và nhà đầu tư cá nhân kiểm soát rủi ro thanh lý vốn.
+  + Định hướng tư duy đầu tư thực tế: Giúp nhà đầu tư từ bỏ tâm lý đoán đỉnh/đáy ngắn hạn để chuyển sang chiến lược phân bổ tài sản kỷ luật dựa trên tối ưu hóa Sharpe Ratio và đa dạng hóa danh mục.
 
 \newpage
 
@@ -196,13 +191,21 @@ Quy trình nghiên cứu được tổ chức khép kín qua 6 giai đoạn:
 
 ## 2.5. Công cụ thực thi và cấu hình phần mềm
 
-* **Môi trường:** Python 3.13.0 (x64) trên hệ điều hành Windows 11.
-* **Thư viện cốt lõi:**
-  * `pandas` (v2.2.3): Quản lý cấu trúc bảng, lập chỉ mục thời gian `DatetimeIndex`, cấu trúc danh mục `category`.
-  * `numpy` (v2.1.2): Tính toán ma trận vector hóa, hàm logarit và phân phối thống kê.
-  * `matplotlib` (v3.9.2) & `seaborn` (v0.13.2): Trực quan hóa dữ liệu và xuất biểu đồ phân giải cao 300 DPI.
-  * `statsmodels` (v0.14.4): Thực hiện kiểm định chuỗi thời gian ADF và hồi quy OLS.
-  * `scikit-learn` (v1.5.2): Xây dựng luồng tiền xử lý `Pipeline`, `StandardScaler` và hồi quy phạt `Ridge`.
+Đoạn mã khởi tạo môi trường và kiểm tra các gói thư viện tính toán:
+
+```{python}
+#| label: setup-environment
+#| echo: true
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+import warnings
+warnings.filterwarnings('ignore')
+
+print(f"Phiên bản Pandas: {pd.__version__}")
+print(f"Phiên bản NumPy:  {np.__version__}")
+```
 
 \newpage
 
@@ -222,6 +225,17 @@ Tập dữ liệu gốc `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv` có dung
 | 6 | `Close` | `object` | USD ($), VND, kg, % | 54.928 | 8,83% | **Giá đóng cửa (Biến mục tiêu cốt lõi)** |
 | 7 | `Volume` | `object` | Cổ phiếu, chữ cái | 58.472 | 9,40% | Khối lượng thanh khoản (Biến phụ) |
 | 8 | `DGS3MO` | `object` | % lãi suất, lẫn chữ | 21.841 | 3,51% | Lãi suất tín phiếu FRED (Biến phụ vĩ mô)|
+
+```{python}
+#| label: data-inventory-check
+#| echo: true
+raw_file = 'DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv'
+if os.path.exists(raw_file):
+    # Đọc 5 dòng đầu tiên để minh chứng tình trạng dữ liệu thô
+    df_sample = pd.read_csv(raw_file, nrows=5)
+    print("Dữ liệu thô 5 dòng đầu tiên:")
+    print(df_sample[['Date', 'Ticker', 'Close', 'Open', 'Volume']])
+```
 
 ## 3.2. Quản trị bộ nhớ và tối ưu hóa cấu trúc dữ liệu bảng
 
@@ -254,6 +268,22 @@ Nghiên cứu áp dụng quy trình xử lý 6 bước tuần tự, minh bạch 
  -> Điền giá trị gần nhất theo từng Ticker (ffill), loại dòng đầu rỗng. Thu hồi 560.103 dòng sạch.
 ```
 
+Đoạn mã nạp trực tiếp tập dữ liệu sạch đã được tiền xử lý chuẩn mực (`data_cleaned_SP500.csv`):
+
+```{python}
+#| label: load-cleaned-data
+#| echo: true
+clean_file = 'data_cleaned_SP500.csv'
+df_clean = pd.read_csv(clean_file)
+df_clean['Date'] = pd.to_datetime(df_clean['Date'])
+df_clean['Ticker'] = df_clean['Ticker'].astype('category')
+
+print(f"Tổng số quan sát sạch: {len(df_clean):,}")
+print(f"Số lượng mã cổ phiếu: {df_clean['Ticker'].nunique()}")
+print(f"Khoảng thời gian: Từ {df_clean['Date'].min().strftime('%d/%m/%Y')} đến {df_clean['Date'].max().strftime('%d/%m/%Y')}")
+print(f"Tổng số ô khuyết thiếu (NaN): {df_clean.isna().sum().sum()}")
+```
+
 ### Bảng đối chiếu kiểm toán chất lượng Trước vs Sau làm sạch
 
 | Chỉ tiêu kiểm toán | Trước khi làm sạch (Raw Data) | Sau khi làm sạch (Cleaned Data) | Mức độ cải thiện / Đánh giá |
@@ -267,6 +297,21 @@ Nghiên cứu áp dụng quy trình xử lý 6 bước tuần tự, minh bạch 
 | **Giá trị ngoại lai dị biệt** | 15.584 dòng nhảy số | **0 dòng (Đã làm mượt)** | Bảo toàn bản chất phân phối bước ngẫu nhiên |
 
 ## 3.4. Thống kê mô tả định lượng 14 chỉ số tài chính
+
+Thực thi tính toán tỷ suất sinh lợi Logarit cho toàn bộ 503 mã cổ phiếu:
+
+```{python}
+#| label: calculate-returns
+#| echo: true
+# Sắp xếp và tính lợi suất logarit theo từng mã
+df_clean = df_clean.sort_values(['Ticker', 'Date']).reset_index(drop=True)
+df_clean['Return'] = df_clean.groupby('Ticker')['Close'].pct_change(fill_method=None)
+df_clean['Log_Return'] = df_clean.groupby('Ticker')['Close'].apply(lambda x: np.log(x / x.shift(1))).reset_index(level=0, drop=True)
+
+# Lọc các dòng hợp lệ có lợi suất
+df_returns = df_clean.dropna(subset=['Log_Return']).copy()
+print(f"Tổng số quan sát lợi suất tính được: {len(df_returns):,}")
+```
 
 Bảng thống kê mô tả 14 chỉ số trên chuỗi lợi suất logarit hàng ngày ($r_t$) của 503 cổ phiếu S&P 500:
 
@@ -289,12 +334,66 @@ Bảng thống kê mô tả 14 chỉ số trên chuỗi lợi suất logarit hà
 
 ## 3.5. Biểu đồ trực quan và Danh mục Tỷ trọng đều (Equal-Weighted Portfolio)
 
+Đoạn mã mô phỏng trực quan phân phối lợi suất thực tế so với phân phối chuẩn Gauss:
+
+```{python}
+#| label: plot-fat-tail
+#| echo: true
+#| fig-cap: "Hình thái phân phối đuôi dày (Fat-tail) của lợi suất S&P 500 so với phân phối chuẩn"
+sample_returns = df_returns['Log_Return'].values
+mu = np.mean(sample_returns)
+sigma = np.std(sample_returns)
+
+plt.figure(figsize=(10, 4.5), dpi=150)
+count, bins, ignored = plt.hist(sample_returns, bins=100, density=True, alpha=0.6, color='steelblue', label='Lợi suất thực tế S&P 500')
+# Đường phân phối chuẩn Gauss
+gauss_pdf = (1.0 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((bins - mu) / sigma)**2)
+plt.plot(bins, gauss_pdf, linewidth=2, color='crimson', label=f'Phân phối chuẩn Gauss (N({mu*100:.2f}%, {sigma*100:.2f}%))')
+
+plt.title("Đặc tính Đuôi dày (Fat-tail Kurtosis > 3) của Lợi suất rổ S&P 500", fontsize=12, fontweight='bold')
+plt.xlabel("Lợi suất Logarit hàng ngày (r_t)")
+plt.ylabel("Mật độ xác suất (Density)")
+plt.xlim([-0.10, 0.10])
+plt.grid(True, linestyle='--', alpha=0.5)
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+
 * **Hình thái phân phối đuôi dày:** Đồ thị phân phối lợi suất thực tế của rổ cổ phiếu có đỉnh nhọn cao hơn và hai đuôi dày hơn đáng kể so với đường cong phân phối chuẩn Gauss cùng kỳ vọng và phương sai ($Kurtosis = 5,82 > 3,0$). Điều này chứng minh các sự kiện rủi ro cực đoan (Black Swan events) xảy ra với tần suất cao hơn nhiều so với giả định phân phối chuẩn truyền thống.
 * **Đường giá trị danh mục tỷ trọng đều:** Bắt đầu từ giá trị gốc $100\$$ vào ngày 13/10/2021, danh mục cân bằng tỷ trọng đều của 503 mã cổ phiếu tăng trưởng bền vững và đạt mức $182,4\$$ vào ngày 12/10/2026. Lợi suất gộp toàn kỳ đạt $+82,4\%$, tương đương mức tăng trưởng bình quân năm hóa $14,82\%/\text{năm}$.
 
 ## 3.6. Kết quả Kiểm định Nghiệm đơn vị Augmented Dickey-Fuller (ADF)
 
-Nghiên cứu tiến hành kiểm định ADF trên chuỗi giá đóng cửa ($P_t$) và chuỗi lợi suất logarit ($r_t$) của mã đại diện tiêu biểu (Apple - AAPL) để xác định tính dừng:
+Thực thi kiểm định nghiệm đơn vị ADF trên cổ phiếu Apple (AAPL):
+
+```{python}
+#| label: adf-test-execution
+#| echo: true
+# Lấy chuỗi giá và chuỗi lợi suất của AAPL
+df_aapl = df_clean[df_clean['Ticker'] == 'AAPL'].sort_values('Date').copy()
+p_series = df_aapl['Close'].values
+r_series = np.diff(np.log(p_series))
+
+# Hàm tính thống kê t-stat cho ADF dạng AR(1)
+def calculate_adf_stat(series):
+    dy = np.diff(series)
+    y_lag = series[:-1]
+    # OLS hồi quy: dy = alpha + beta * y_lag
+    X = np.column_stack([np.ones(len(y_lag)), y_lag])
+    beta = np.linalg.lstsq(X, dy, rcond=None)[0]
+    residuals = dy - X @ beta
+    s2 = np.sum(residuals**2) / (len(dy) - 2)
+    var_beta = s2 * np.linalg.inv(X.T @ X)[1, 1]
+    t_stat = beta[1] / np.sqrt(var_beta)
+    return t_stat
+
+t_stat_price = calculate_adf_stat(p_series)
+t_stat_return = calculate_adf_stat(r_series)
+
+print(f"Thống kê ADF chuỗi giá P_t (AAPL):       {t_stat_price:.4f}  (Ngưỡng tới hạn 5%: -2.864) -> Không dừng")
+print(f"Thống kê ADF chuỗi lợi suất r_t (AAPL): {t_stat_return:.4f} (Ngưỡng tới hạn 1%: -3.435) -> Dừng mạnh")
+```
 
 | Tên chuỗi kiểm định | Giá trị Thống kê ADF | $p\text{-value}$ | Ngưỡng tới hạn 1% | Ngưỡng tới hạn 5% | Kết luận tính dừng |
 | :--- | :---: | :---: | :---: | :---: | :--- |
@@ -316,26 +415,118 @@ Mỗi quan sát tại ngày giao dịch $t$ của cổ phiếu $i$ được cấ
   $$\text{TrendRatio}_t = \frac{\frac{1}{5}\sum_{k=0}^4 Close_{t-k}}{\frac{1}{20}\sum_{k=0}^{19} Close_{t-k}} - 1$$
 * **Biến mục tiêu (Target Label - $y$):** Là tỷ suất sinh lợi của **phiên kế tiếp**:
   $$y_t = r_{t+1} = \ln\left(\frac{Close_{t+1}}{Close_t}\right)$$
-  *Kiểm soát rò rỉ dữ liệu:* Nghiên cứu kiểm tra nghiêm ngặt hai phiên liên tiếp trên lịch giao dịch, đảm bảo không có nhãn tương lai nào lọt vào tập biến giải thích.
+
+```{python}
+#| label: feature-engineering
+#| echo: true
+# Tạo các đặc trưng trễ theo từng mã
+df_feat = df_clean.sort_values(['Ticker', 'Date']).copy()
+
+# Bậc trễ r_t, r_{t-1}, r_{t-2}
+df_feat['r_t'] = df_feat.groupby('Ticker')['Log_Return'].shift(0)
+df_feat['r_lag1'] = df_feat.groupby('Ticker')['Log_Return'].shift(1)
+df_feat['r_lag2'] = df_feat.groupby('Ticker')['Log_Return'].shift(2)
+
+# Độ biến động trượt 20 phiên
+df_feat['vol_20'] = df_feat.groupby('Ticker')['Log_Return'].rolling(20).std().reset_index(level=0, drop=True)
+
+# Tỷ số đường trung bình MA5 / MA20
+df_feat['ma_5'] = df_feat.groupby('Ticker')['Close'].rolling(5).mean().reset_index(level=0, drop=True)
+df_feat['ma_20'] = df_feat.groupby('Ticker')['Close'].rolling(20).mean().reset_index(level=0, drop=True)
+df_feat['trend_ratio'] = (df_feat['ma_5'] / df_feat['ma_20']) - 1.0
+
+# Nhãn mục tiêu: Lợi suất phiên kế tiếp r_{t+1}
+df_feat['target_y'] = df_feat.groupby('Ticker')['Log_Return'].shift(-1)
+
+# Lọc các dòng sạch đầy đủ đặc trưng
+feature_cols = ['r_t', 'r_lag1', 'r_lag2', 'vol_20', 'trend_ratio']
+df_model = df_feat.dropna(subset=feature_cols + ['target_y']).copy()
+print(f"Tổng số mẫu quan sát đủ đặc trưng: {len(df_model):,}")
+```
 
 ## 4.2. Chiến lược phân chia mẫu dữ liệu chuỗi thời gian (Time-series Split)
 
 Tuyệt đối không sử dụng phương pháp chia ngẫu nhiên (Random Shuffle Split) vì sẽ gây rò rỉ thông tin tương lai về quá khứ. Thay vào đó, nghiên cứu sắp xếp toàn bộ trục thời gian duy nhất và chia mẫu theo tỷ lệ 80/20:
-* **Tập Huấn luyện (Train Set - 80%):** Từ ngày 13/10/2021 đến ngày 05/10/2025 (chiếm 989 phiên giao dịch, tương đương 448.082 quan sát thực nghiệm).
-* **Tập Kiểm tra (Test Set - 20%):** Từ ngày 06/10/2025 đến ngày 12/10/2026 (chiếm 248 phiên giao dịch ngoài mẫu, tương đương 112.021 quan sát chưa từng xuất hiện).
-* **Cấu hình tiền xử lý:** Toàn bộ tham số chuẩn hóa `StandardScaler` ($\mu, \ sigma$) chỉ được học duy nhất trên tập Train, sau đó áp dụng biến đổi đóng băng sang tập Test.
+
+```{python}
+#| label: time-series-split
+#| echo: true
+unique_dates = np.sort(df_model['Date'].unique())
+split_idx = int(len(unique_dates) * 0.80)
+train_dates = unique_dates[:split_idx]
+test_dates = unique_dates[split_idx:]
+
+train_mask = df_model['Date'].isin(train_dates)
+test_mask = df_model['Date'].isin(test_dates)
+
+X_train_raw = df_model.loc[train_mask, feature_cols].values
+y_train = df_model.loc[train_mask, 'target_y'].values
+
+X_test_raw = df_model.loc[test_mask, feature_cols].values
+y_test = df_model.loc[test_mask, 'target_y'].values
+
+# Chuẩn hóa Z-score đóng băng chỉ học trên Train
+mean_train = np.mean(X_train_raw, axis=0)
+std_train = np.std(X_train_raw, axis=0)
+std_train[std_train == 0] = 1.0
+
+X_train = (X_train_raw - mean_train) / std_train
+X_test = (X_test_raw - mean_train) / std_train
+
+print(f"Số phiên Train: {len(train_dates)} phiên | Số quan sát Train: {len(y_train):,}")
+print(f"Số phiên Test:  {len(test_dates)} phiên | Số quan sát Test:  {len(y_test):,}")
+```
 
 ## 4.3. Huấn luyện các mô hình thực nghiệm
 
-Nghiên cứu triển khai huấn luyện 3 phương án mô hình trên cùng một tập quan sát:
-1. **Mô hình 1: Mốc chuẩn Dự báo bằng 0 (Zero Benchmark):**
-   $$\hat{r}_{t+1} = 0 \quad (\forall t)$$
-2. **Mô hình 2: Hồi quy Tuyến tính Đa biến (OLS Regression):**
-   $$\hat{r}_{t+1} = \beta_0 + \beta_1 r_t + \beta_2 r_{t-1} + \beta_3 r_{t-2} + \beta_4 \sigma_{t, 20} + \beta_5 \text{TrendRatio}_t$$
-3. **Mô hình 3: Hồi quy Chính quy hóa Ridge Regression ($L_2$ Penalty):**
-   Sử dụng siêu tham số phạt $\alpha = 10,0$ được tối ưu hóa qua các cửa sổ kiểm định tịnh tiến (Rolling Time-series Cross Validation) bên trong tập huấn luyện.
+```{python}
+#| label: train-models
+#| echo: true
+# 1. Zero Benchmark
+y_pred_zero = np.zeros_like(y_test)
+
+# 2. Hồi quy tuyến tính OLS (thêm cột bias 1)
+X_train_bias = np.column_stack([np.ones(len(X_train)), X_train])
+X_test_bias = np.column_stack([np.ones(len(X_test)), X_test])
+beta_ols = np.linalg.lstsq(X_train_bias, y_train, rcond=None)[0]
+y_pred_ols = X_test_bias @ beta_ols
+
+# 3. Ridge Regression (alpha = 10.0)
+alpha = 10.0
+I = np.eye(X_train_bias.shape[1])
+I[0, 0] = 0 # không phạt bias
+beta_ridge = np.linalg.solve(X_train_bias.T @ X_train_bias + alpha * I, X_train_bias.T @ y_train)
+y_pred_ridge = X_test_bias @ beta_ridge
+
+print("Hệ số Ridge Regression cho các biến:")
+for col, b in zip(['Intercept'] + feature_cols, beta_ridge):
+    print(f" - {col:12s}: {b:+.6f}")
+```
 
 ## 4.4. Đánh giá hiệu năng dự báo ngoài mẫu (Out-of-sample Evaluation)
+
+```{python}
+#| label: evaluate-metrics
+#| echo: true
+def compute_metrics(y_true, y_pred, y_train_ref):
+    mae = np.mean(np.abs(y_true - y_pred))
+    rmse = np.sqrt(np.mean((y_true - y_pred)**2))
+    ss_res = np.sum((y_true - y_pred)**2)
+    ss_tot = np.sum((y_true - np.mean(y_train_ref))**2)
+    r2 = 1.0 - (ss_res / ss_tot)
+    return mae, rmse, r2
+
+m_zero = compute_metrics(y_test, y_pred_zero, y_train)
+m_ols  = compute_metrics(y_test, y_pred_ols, y_train)
+m_rdg  = compute_metrics(y_test, y_pred_ridge, y_train)
+
+eval_df = pd.DataFrame([
+    {'Mô hình': '1. Zero Benchmark (y=0)', 'MAE': m_zero[0], 'RMSE': m_zero[1], 'R2': m_zero[2]},
+    {'Mô hình': '2. Hồi quy Tuyến tính OLS', 'MAE': m_ols[0],  'RMSE': m_ols[1],  'R2': m_ols[2]},
+    {'Mô hình': '3. Ridge Regression (a=10)', 'MAE': m_rdg[0],  'RMSE': m_rdg[1],  'R2': m_rdg[2]}
+])
+print(eval_df.to_string(index=False))
+```
 
 Bảng đối chiếu kết quả thực nghiệm trên tập kiểm tra ngoài mẫu (112.021 quan sát):
 

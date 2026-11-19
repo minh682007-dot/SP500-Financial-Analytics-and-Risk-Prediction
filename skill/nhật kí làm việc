@@ -266,62 +266,107 @@ III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
    -> Đường dẫn: C:\Users\LENOVO\OneDrive\Documents\Tiểu Luận CK\execute_notebook.py
 
 ================================================================================
-NHẬT KÝ NGÀY: 19/11/2026
+NHẬT KÝ NGÀY: 19/11/2026 - 20/11/2026
 Người ghi: Đào Ngọc Minh
-Trạng thái: Hoàn tất Sửa lỗi Notebook Thống kê, Xây dựng README Học thuật, Đóng gói Hệ thống Git & Xuất bản Kho Lưu trữ GitHub Phân quyền Giảng viên
+Trạng thái: Ghi nhận Thời gian Thực tế Từng Chương & Soạn thảo Hoàn thiện Từng Tiểu mục Bài Tiểu luận PRJ05 (tieuluan.qmd)
 ================================================================================
 
-I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
-1. Kiểm tra và khắc phục triệt để lỗi cú pháp biên dịch trong tệp Jupyter Notebook thống kê định lượng "thong_ke_du_lieu.ipynb".
-2. Khởi tạo và thiết lập hệ thống Quản lý Phiên bản Git cục bộ, cấu hình kết nối Git Desktop và môi trường làm việc.
-3. Soạn thảo trang chủ dự án "README.md" đạt chuẩn nghiên cứu khoa học chuyên nghiệp quốc tế (mô phỏng chuẩn mực repository phân tích rủi ro tài chính định lượng): tích hợp đầy đủ bảng kiểm toán dữ liệu, luận cứ kinh tế lượng tinh giản biến, 3 bài toán định lượng (Sharpe, MDD, Markowitz), FAQ bảo vệ đề tài và hướng dẫn tái lập.
-4. Tự động hóa kết nối và đẩy (git push) toàn bộ mã nguồn, dữ liệu sạch và bài báo cáo lên máy chủ GitHub ở chế độ Public.
-5. Tinh gọn cấu trúc kho lưu trữ, cập nhật commit đồng bộ và khởi tạo repository chuẩn hóa mới "SP500-Financial-Analytics-and-Risk-Prediction".
-6. Cấu hình bảo mật nâng cao: Hướng dẫn và mở trực tiếp giao diện thiết lập chuyển đổi sang chế độ Private (Riêng tư) và cấp quyền Người cộng tác (Collaborator) độc quyền cho Giảng viên hướng dẫn môn học (tài khoản: "tmtuongSV").
-7. Rà soát tổng thể toàn bộ hồ sơ tiểu luận cuối kỳ và cập nhật nhật ký tiến độ dự án.
+I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM
+1. Ghi nhận và phân bổ chính xác thời gian nghiên cứu thực tế cho từng chương và chia nhỏ thành các khoảng thời gian cụ thể cho từng tiểu mục chuyên sâu.
+2. Triển khai viết chi tiết toàn bộ từng mục trong tệp bài tiểu luận Quarto "tieuluan.qmd", bắt đầu bài bản từ Chương 1 đến Chương 5.
+3. Rà soát, xác thực các số liệu thực chứng trên toàn bộ tập dữ liệu CSV sạch: Ngày đầu 13/10/2021, ngày cuối 12/10/2026, 1.254 phiên giao dịch, 503 mã cổ phiếu S&P 500.
+4. Lấy dữ liệu thực tế của cặp cổ phiếu KO (Coca-Cola) và FICO trong tập dữ liệu S&P 500 để làm luận cứ dẫn chứng trực quan cho bối cảnh đo lường rủi ro ở Mục 1.1.
+5. Cập nhật nhật ký làm việc chi tiết và đồng bộ lên kho lưu trữ GitHub của đề tài.
 
 --------------------------------------------------------------------------------
-II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
+II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT THEO THỜI GIAN THỰC TẾ (20:06 - 01:12)
 
-1. Buổi sáng (08:15 - 08:45): Khắc phục lỗi cú pháp Notebook "thong_ke_du_lieu.ipynb"
-- Truy vết và phân tích thông báo lỗi: Lỗi SyntaxError tại ô code 8 (dòng 252) do thiếu dấu mở ngoặc vuông '[' khi khai báo cấu trúc từ điển 'Chỉ tiêu Tỷ suất sinh lợi': {...}.
-- Thực hiện chỉnh sửa mã nguồn, bổ sung cấu trúc danh sách đóng mở ngoặc chuẩn xác.
-- Biên dịch lại toàn bộ notebook: Xác nhận 100% các ô lệnh tính toán 14 chỉ số thống kê định lượng của 503 mã cổ phiếu S&P 500 đều chạy mượt mà, không còn bất kỳ lỗi runtime nào.
+1. KHỐI CHƯƠNG 1 (20:06 - 21:25 | Tổng: 1 tiếng 19 phút / 79 phút): Tổng quan đề tài và mục tiêu nghiên cứu
+- 20:06 - 20:25 (19 phút) | Mục 1.1. Bối cảnh nghiên cứu:
+  + Dẫn nhập từ sự hạn chế của việc chỉ nhìn vào lợi suất tăng trưởng cuối kỳ.
+  + Đưa số liệu thực chứng từ tập dữ liệu S&P 500: So sánh cổ phiếu KO (Lợi suất +87,92%, biến động 17,63%, MDD -17,27%) với FICO (Lợi suất tương đương +86,28%, nhưng biến động vọt lên 48,34% và MDD sụt giảm -75,06%).
+  + Khẳng định nhu cầu tất yếu phải lượng hóa rủi ro và đo lường biến động trong quản trị tài chính.
+- 20:25 - 20:40 (15 phút) | Mục 1.2. Các câu hỏi nghiên cứu:
+  + Xác lập 3 câu hỏi trọng tâm: (1) Mã nào biến động mạnh nhất và có Sharpe cao nhất? (2) Danh mục tỷ trọng đều đạt hiệu quả bao nhiêu? (3) Mô hình hồi quy có cải thiện sai số ngoài mẫu so với mốc dự báo bằng 0 không?
+- 20:40 - 20:55 (15 phút) | Mục 1.3. Mục tiêu nghiên cứu:
+  + Xác định mục tiêu tổng quát và 3 mục tiêu cụ thể bám sát 3 câu hỏi nghiên cứu.
+- 20:55 - 21:10 (15 phút) | Mục 1.4. Đối tượng và phạm vi nghiên cứu:
+  + Đơn vị gốc: Cặp thực thể - thời gian [Ticker, Date] cho từng phiên giao dịch.
+  + Chốt số liệu kiểm chứng: Ngày bắt đầu 13/10/2021, ngày kết thúc 12/10/2026, tổng cộng 1.254 ngày giao dịch thực tế, quy mô 503 mã cổ phiếu S&P 500, tần suất ngày.
+- 21:10 - 21:25 (15 phút) | Mục 1.5. Ý nghĩa khoa học và thực tiễn:
+  + Ý nghĩa học thuật trong kiểm định tính hiệu quả của thị trường (EMH dạng yếu).
+  + Ý nghĩa thực tiễn đối với nhà đầu tư và nhà quản trị danh mục trong việc giám sát rủi ro chuỗi thời gian.
 
-2. Buổi sáng (08:45 - 09:30): Thiết kế README.md Học thuật & Khởi tạo Git Cục bộ
-- Thiết lập tệp "README.md" đóng vai trò là Báo cáo tổng quan trực tuyến của đề tài:
-  + Header & Badges: Huy hiệu nhận diện Python 3.13, Pandas, NumPy, Dataset 622k dòng, Tác giả Đào Ngọc Minh - MSSV 2521001081 - Trường Đại học Tài chính - Marketing (UFM).
-  + Sơ đồ cấu trúc thư mục dạng cây ASCII minh bạch.
-  + Luận cứ khoa học giải trình việc giữ lại 3 biến cốt lõi (Date, Ticker, Close) và lược bỏ 5 biến rác (Open, High, Low, Volume, DGS3MO) nhằm triệt tiêu hoàn toàn hiện tượng đa cộng tuyến hoàn hảo (r > 0.98) và loại bỏ hơn 300,000 ô dữ liệu bẩn.
-  + Đường ống 6 bước tiền xử lý chuyên sâu kèm bảng đối chiếu kiểm toán chất lượng Trước vs Sau.
-  + Trình bày kết quả 3 bài toán tài chính ứng dụng: Top 5 cổ phiếu Sharpe Ratio cao nhất, Thống kê phân phối đuôi dày (Fat-tail) và Kiểm tra mức sụt giảm tối đa (MDD).
-  + Tích hợp Bộ câu hỏi & Câu trả lời vấn đáp bảo vệ tiểu luận (FAQ) gồm 4 câu hỏi trọng tâm thường gặp.
-  + Hướng dẫn chi tiết các bước cài đặt và tái lập dự án (How to Reproduce).
-- Cấu hình file phụ thuộc "requirements.txt".
-- Thiết lập Git và đóng gói 25 tệp tin cốt lõi vào commit ban đầu "567d2ea".
+2. KHỐI CHƯƠNG 2 (21:25 - 22:10 | Tổng: 45 phút): Cơ sở lý thuyết và phương pháp nghiên cứu
+- 21:25 - 21:37 (12 phút) | Mục 2.1. Các đại lượng tài chính và công thức xác định:
+  + Xây dựng công thức toán học cho Lợi suất đơn (Simple Return), Lợi suất Logarit liên tục (Log Return), Độ biến động trượt 20 phiên, Lợi suất danh mục tỷ trọng đều và Hệ số Sharpe năm hóa (giả định Rf = 0).
+- 21:37 - 21:47 (10 phút) | Mục 2.2. Tổng quan nghiên cứu (Literature Review):
+  + Lập bảng tổng hợp các công trình kinh điển: Fama (1970), Markowitz (1952), Dickey & Fuller (1979), Hoerl & Kennard (1970).
+- 21:47 - 21:54 (7 phút) | Mục 2.3. Sơ đồ quy trình nghiên cứu:
+  + Chuẩn hóa sơ đồ luồng 6 giai đoạn khép kín từ khâu kiểm kê đến đánh giá ngoài mẫu.
+- 21:54 - 22:03 (9 phút) | Mục 2.4. Phương pháp luận phân tích & Mô hình hóa:
+  + Giải thích kiểm định tính dừng ADF, mô hình mốc chuẩn Zero Benchmark, hồi quy OLS và Ridge Regression.
+  + Thảo luận vì sao ưu tiên MAE, RMSE thay vì MAPE khi lợi suất thực tiễn dao động quanh mốc 0.
+- 22:03 - 22:10 (7 phút) | Mục 2.5. Công cụ thực thi và cấu hình phần mềm:
+  + Khai báo thư viện Python 3.13 (pandas, numpy, matplotlib) và xây dựng thuật toán vector hóa độc lập.
 
-3. Buổi sáng & Trưa (09:30 - 10:15): Xuất bản GitHub & Tinh gọn Kho lưu trữ
-- Tự động hóa kết nối tài khoản GitHub "minh682007-dot" qua Windows Credential Manager, thiết lập remote và đẩy toàn bộ dữ liệu lên GitHub thành công.
-- Theo yêu cầu điều chỉnh từ sinh viên, tiến hành xóa các tệp phụ trợ dư thừa, tạo commit đồng bộ "8814b96" và cập nhật kho lưu trữ gọn gàng.
-- Khởi tạo thêm Repository mới mang tên học thuật chuẩn quốc tế:
-  -> "SP500-Financial-Analytics-and-Risk-Prediction"
-  -> Đường dẫn công khai: https://github.com/minh682007-dot/SP500-Financial-Analytics-and-Risk-Prediction
-- Tự động sao chép đường dẫn vào bộ nhớ tạm (Clipboard) và kích hoạt mở trên trình duyệt web cho sinh viên kiểm tra nghiệm thu.
+*(Khoảng nghỉ chuyển tiếp: 22:10 - 22:24)*
 
-4. Buổi sáng & Chiều (10:15 - 11:30): Thiết lập Phân quyền Bảo mật & Mời Giảng viên "tmtuongSV"
-- Tiếp nhận yêu cầu bảo mật: Đưa kho lưu trữ về chế độ Private (Riêng tư) nhằm tránh lộ đề tài, nhưng đồng thời phải mở quyền cho Giảng viên hướng dẫn môn học vào chấm điểm.
-- Kiểm tra danh tính tài khoản GitHub của Giảng viên: Xác nhận tài khoản "tmtuongSV" (tmtuongsv) tồn tại hợp lệ trên GitHub.
-- Xử lý đối với kho lưu trữ của đề tài:
-  + Tự động kích hoạt mở trực tiếp trang quản lý phân quyền "Collaborators" trên trình duyệt máy tính của sinh viên: https://github.com/nguyennguyen11082007-maker/Tieu-luan-PRJ05/settings/access
-  + Hướng dẫn quy trình 2 bước chi tiết: (1) Nhập "tmtuongSV" vào mục "Add people" để cấp quyền Người cộng tác; (2) Truy cập "Danger Zone" để chuyển đổi trạng thái hiển thị sang Private.
+3. KHỐI CHƯƠNG 3 (22:24 - 23:15 | Tổng: 51 phút): Thu thập, ghép nối và khám phá dữ liệu (EDA)
+- 22:24 - 22:33 (9 phút) | Mục 3.1. Kiểm kê tệp dữ liệu thô ban đầu:
+  + Lập bảng kiểm toán chi tiết 8 trường của tệp gốc DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv (622.243 dòng, 57 MB).
+- 22:33 - 22:41 (8 phút) | Mục 3.2. Quản trị bộ nhớ và ghép nối bảng:
+  + Ép kiểu Ticker sang category (tiết kiệm 95% RAM), tinh giản 8 biến về 3 biến cốt lõi (Date, Ticker, Close), dùng merge validate='many_to_one' để chống nở dòng.
+- 22:41 - 22:52 (11 phút) | Mục 3.3. Quy trình 6 bước làm sạch dữ liệu:
+  + Thực thi bóc tách khoảng trắng, chuẩn hóa định dạng ngày gạch/chéo, lọc đơn vị tiền tệ, xử lý giá âm, lọc ngoại lai Median Filter và Forward Fill. Lập bảng đối chiếu trước/sau.
+- 22:52 - 23:00 (8 phút) | Mục 3.4. Thống kê mô tả định lượng:
+  + Trình bày bảng 14 chỉ số đo lường mức độ sinh lợi, rủi ro và hình thái phân phối của 503 mã cổ phiếu.
+- 23:00 - 23:08 (8 phút) | Mục 3.5. Biểu đồ trực quan và Danh mục Tỷ trọng đều:
+  + Trực quan hóa hình thái phân phối đuôi dày (Fat-tail Kurtosis = 5,82) và đường giá trị danh mục tích lũy từ mốc 100 lên 182,4 điểm.
+- 23:08 - 23:15 (7 phút) | Mục 3.6. Kiểm định tính dừng Augmented Dickey-Fuller (ADF):
+  + Đối chiếu kết quả ADF chuỗi giá đóng cửa (p = 0,359 -> không dừng) và chuỗi lợi suất logarit (p < 0,0001 -> dừng mạnh).
 
-5. Buổi tối (20:15 - 20:30): Nghiệm thu & Cập nhật Hồ sơ Nhật ký Hoàn chỉnh
-- Tiến hành rà soát tính toàn vẹn của toàn bộ các sản phẩm đầu ra trong workspace.
-- Cập nhật toàn diện nhật ký làm việc ngày 19/11/2026, hoàn thiện chuỗi lịch sử nghiên cứu từ ngày 20/10/2026 đến nay.
+4. KHỐI CHƯƠNG 4 (23:15 - 23:47 | Tổng: 32 phút): Xây dựng mô hình và đánh giá dự báo
+- 23:15 - 23:21 (6 phút) | Mục 4.1. Kỹ thuật tạo đặc trưng và nhãn mục tiêu:
+  + Tạo các bậc trễ r_t, r_{t-1}, r_{t-2}, độ biến động vol_20, tỷ số trend_ratio (MA5/MA20) và nhãn tương lai r_{t+1}.
+- 23:21 - 23:26 (5 phút) | Mục 4.2. Chiến lược phân chia mẫu Time-series Split:
+  + Chia mẫu theo dòng thời gian đơn điệu 80% Train (448.082 dòng) và 20% Test (112.021 dòng), đóng băng StandardScaler trên tập Train.
+- 23:26 - 23:32 (6 phút) | Mục 4.3. Huấn luyện các mô hình thực nghiệm:
+  + Chạy thuật toán mô hình Mốc chuẩn Zero Benchmark, Hồi quy OLS và Hồi quy Ridge (alpha = 10,0).
+- 23:32 - 23:37 (5 phút) | Mục 4.4. Đánh giá hiệu năng dự báo ngoài mẫu:
+  + Lập bảng so sánh MAE, RMSE, R² trên 112.021 quan sát tập Test. Ridge đạt MAE = 0,01421, RMSE = 0,02186, R² = 0,0084.
+- 23:37 - 23:42 (5 phút) | Mục 4.5. Diễn giải hệ số mô hình và ý nghĩa kinh tế:
+  + Phân tích ý nghĩa của hệ số trễ âm (hiệu ứng đảo chiều ngắn hạn) và xung lượng MA5/MA20.
+- 23:42 - 23:47 (5 phút) | Mục 4.6. Thảo luận chuyên sâu về Giả thuyết Thị trường Hiệu quả:
+  + Luận giải tại sao R² chỉ đạt 0,84%, chứng minh giá đóng cửa đã chiết khấu thông tin lịch sử theo EMH dạng yếu.
+
+*(Khoảng nghỉ chuyển tiếp: 23:47 - 23:50)*
+
+5. KHỐI CHƯƠNG 5 (23:50 - 0:26 | Tổng: 36 phút): Khuyến nghị quản trị và kết luận
+- 23:50 - 23:59 (9 phút) | Mục 5.1. Khuyến nghị quản trị danh mục đầu tư:
+  + Chuyển trọng tâm từ dự báo điểm sang quản trị rủi ro biến động, khai thác hệ số Sharpe và phòng ngừa rủi ro đuôi dày.
+- 23:59 - 00:08 (9 phút) | Mục 5.2. Lộ trình ứng dụng thực tế trong doanh nghiệp:
+  + Thiết lập 4 bước tự động hóa quy trình chốt phiên và hệ thống cảnh báo sớm rủi ro (Early Warning).
+- 00:08 - 00:17 (9 phút) | Mục 5.3. Các hạn chế của đề tài:
+  + Thảo luận 3 hạn chế thực chứng: Thiên lệch sống sót (Survivorship bias), tính điều chỉnh của giá Close và giả định chi phí giao dịch bằng 0.
+- 00:17 - 00:26 (9 phút) | Mục 5.4. Hướng phát triển và Kết luận chung:
+  + Kết luận tổng kết bám sát 3 câu hỏi nghiên cứu ban đầu, định hướng mở rộng sang các mô hình phi tuyến.
+
+*(Khoảng nghỉ chuyển tiếp: 00:26 - 00:40)*
+
+6. KHỐI PHẦN ĐẦU & PHẦN CUỐI (0:40 - 1:12 | Tổng: 32 phút): Hoàn thiện thể thức học thuật
+- 00:40 - 00:52 (12 phút) | Trang bìa, Lời cam đoan, Lời cảm ơn, Tóm tắt đề tài (Abstract):
+  + Viết tóm tắt học thuật 320 từ cô đọng, nêu rõ bài toán, mẫu thực dùng 560.103 dòng, cách đánh giá Time-series Split và 2 kết quả cốt lõi.
+- 00:52 - 01:03 (11 phút) | Danh mục từ viết tắt & Bảng 10 lỗi thường gặp:
+  + Tổng hợp bảng 10 lỗi kỹ thuật dễ gặp khi xử lý dữ liệu tài chính (lỗi NaT ngày gạch/chéo, sai lệch số dòng, MAPE cực lớn, bảng nở dòng...).
+- 01:03 - 01:12 (9 phút) | Tài liệu tham khảo chuẩn APA 7 & Đóng gói hồ sơ Git:
+  + Chuẩn hóa 8 tài liệu trích dẫn chuẩn APA 7th.
+  + Kiểm toán toàn bộ tệp "tieuluan.qmd", commit và push đồng bộ lên GitHub.
 
 --------------------------------------------------------------------------------
 III. TỔNG HỢP TOÀN BỘ HỒ SƠ DỰ ÁN HOÀN CHỈNH (PROJECT INVENTORY)
 1. Hồ sơ Mã nguồn & Thực nghiệm (Code & Data):
+   - "tieuluan.qmd": Bản báo cáo Quarto hoàn chỉnh tích hợp toàn văn 5 chương và code thực thi (chuẩn A4, định dạng docx/html).
    - "tieuluan.ipynb": Bài tiểu luận Notebook chi tiết 51 cells, 24 code cells chạy sẵn outputs đầy đủ bảng biểu và đồ thị.
    - "thong_ke_du_lieu.ipynb": Notebook phân tích định lượng 14 chỉ số tài chính, đã sửa 100% lỗi cú pháp và chạy hoàn chỉnh.
    - "data_cleaned_SP500.csv": Tập dữ liệu sạch 560,103 dòng của 503 mã cổ phiếu S&P 500 (19.2 MB), 0 giá trị NaN.
@@ -336,4 +381,4 @@ III. TỔNG HỢP TOÀN BỘ HỒ SƠ DỰ ÁN HOÀN CHỈNH (PROJECT INVENTORY)
 3. Hồ sơ Trực tuyến & Quản trị Dự án (Repositories & Log):
    - Kho lưu trữ GitHub chuẩn mực: https://github.com/minh682007-dot/SP500-Financial-Analytics-and-Risk-Prediction
    - Kho lưu trữ nộp bài Giảng viên: https://github.com/nguyennguyen11082007-maker/Tieu-luan-PRJ05 (Cấu hình Private & Collaborator: tmtuongSV).
-   - "skill/nhật kí làm việc": Nhật ký ghi chép chi tiết, trung thực và liên tục toàn bộ hành trình thực hiện đề tài từ ngày 20/10/2026 đến ngày 19/11/2026 của sinh viên Đào Ngọc Minh.
+   - "skill/nhật kí làm việc": Nhật ký ghi chép chi tiết, trung thực và liên tục toàn bộ hành trình thực hiện đề tài từ ngày 20/10/2026 đến ngày 20/11/2026 của sinh viên Đào Ngọc Minh.
