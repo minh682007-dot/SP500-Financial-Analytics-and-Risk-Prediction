@@ -282,84 +282,84 @@ I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM
 II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT THEO THỜI GIAN THỰC TẾ (20:06 - 01:12)
 
 1. KHỐI CHƯƠNG 1 (20:06 - 21:25 | Tổng: 1 tiếng 19 phút / 79 phút): Tổng quan đề tài và mục tiêu nghiên cứu
-- 20:06 - 20:25 (19 phút) | Mục 1.1. Bối cảnh nghiên cứu:
+- 20:06 - 20:25 | Mục 1.1. Bối cảnh nghiên cứu:
   + Dẫn nhập từ sự hạn chế của việc chỉ nhìn vào lợi suất tăng trưởng cuối kỳ.
   + Đưa số liệu thực chứng từ tập dữ liệu S&P 500: So sánh cổ phiếu KO (Lợi suất +87,92%, biến động 17,63%, MDD -17,27%) với FICO (Lợi suất tương đương +86,28%, nhưng biến động vọt lên 48,34% và MDD sụt giảm -75,06%).
   + Khẳng định nhu cầu tất yếu phải lượng hóa rủi ro và đo lường biến động trong quản trị tài chính.
-- 20:25 - 20:40 (15 phút) | Mục 1.2. Các câu hỏi nghiên cứu:
+- 20:25 - 20:40 | Mục 1.2. Các câu hỏi nghiên cứu:
   + Xác lập 3 câu hỏi trọng tâm: (1) Mã nào biến động mạnh nhất và có Sharpe cao nhất? (2) Danh mục tỷ trọng đều đạt hiệu quả bao nhiêu? (3) Mô hình hồi quy có cải thiện sai số ngoài mẫu so với mốc dự báo bằng 0 không?
-- 20:40 - 20:55 (15 phút) | Mục 1.3. Mục tiêu nghiên cứu:
+- 20:40 - 20:55 | Mục 1.3. Mục tiêu nghiên cứu:
   + Xác định mục tiêu tổng quát và 3 mục tiêu cụ thể bám sát 3 câu hỏi nghiên cứu.
-- 20:55 - 21:10 (15 phút) | Mục 1.4. Đối tượng và phạm vi nghiên cứu:
+- 20:55 - 21:10 | Mục 1.4. Đối tượng và phạm vi nghiên cứu:
   + Đơn vị gốc: Cặp thực thể - thời gian [Ticker, Date] cho từng phiên giao dịch.
   + Chốt số liệu kiểm chứng: Ngày bắt đầu 13/10/2021, ngày kết thúc 12/10/2026, tổng cộng 1.254 ngày giao dịch thực tế, quy mô 503 mã cổ phiếu S&P 500, tần suất ngày.
-- 21:10 - 21:25 (15 phút) | Mục 1.5. Ý nghĩa khoa học và thực tiễn:
+- 21:10 - 21:25 | Mục 1.5. Ý nghĩa khoa học và thực tiễn:
   + Ý nghĩa học thuật trong kiểm định tính hiệu quả của thị trường (EMH dạng yếu).
   + Ý nghĩa thực tiễn đối với nhà đầu tư và nhà quản trị danh mục trong việc giám sát rủi ro chuỗi thời gian.
 
 2. KHỐI CHƯƠNG 2 (21:25 - 22:10 | Tổng: 45 phút): Cơ sở lý thuyết và phương pháp nghiên cứu
-- 21:25 - 21:37 (12 phút) | Mục 2.1. Các đại lượng tài chính và công thức xác định:
+- 21:25 - 21:37 | Mục 2.1. Các đại lượng tài chính và công thức xác định:
   + Xây dựng công thức toán học cho Lợi suất đơn (Simple Return), Lợi suất Logarit liên tục (Log Return), Độ biến động trượt 20 phiên, Lợi suất danh mục tỷ trọng đều và Hệ số Sharpe năm hóa (giả định Rf = 0).
-- 21:37 - 21:47 (10 phút) | Mục 2.2. Tổng quan nghiên cứu (Literature Review):
+- 21:37 - 21:47 | Mục 2.2. Tổng quan nghiên cứu (Literature Review):
   + Lập bảng tổng hợp các công trình kinh điển: Fama (1970), Markowitz (1952), Dickey & Fuller (1979), Hoerl & Kennard (1970).
-- 21:47 - 21:54 (7 phút) | Mục 2.3. Sơ đồ quy trình nghiên cứu:
+- 21:47 - 21:54 | Mục 2.3. Sơ đồ quy trình nghiên cứu:
   + Chuẩn hóa sơ đồ luồng 6 giai đoạn khép kín từ khâu kiểm kê đến đánh giá ngoài mẫu.
-- 21:54 - 22:03 (9 phút) | Mục 2.4. Phương pháp luận phân tích & Mô hình hóa:
+- 21:54 - 22:03 | Mục 2.4. Phương pháp luận phân tích & Mô hình hóa:
   + Giải thích kiểm định tính dừng ADF, mô hình mốc chuẩn Zero Benchmark, hồi quy OLS và Ridge Regression.
   + Thảo luận vì sao ưu tiên MAE, RMSE thay vì MAPE khi lợi suất thực tiễn dao động quanh mốc 0.
-- 22:03 - 22:10 (7 phút) | Mục 2.5. Công cụ thực thi và cấu hình phần mềm:
+- 22:03 - 22:10 | Mục 2.5. Công cụ thực thi và cấu hình phần mềm:
   + Khai báo thư viện Python 3.13 (pandas, numpy, matplotlib) và xây dựng thuật toán vector hóa độc lập.
 
 *(Khoảng nghỉ chuyển tiếp: 22:10 - 22:24)*
 
 3. KHỐI CHƯƠNG 3 (22:24 - 23:15 | Tổng: 51 phút): Thu thập, ghép nối và khám phá dữ liệu (EDA)
-- 22:24 - 22:33 (9 phút) | Mục 3.1. Kiểm kê tệp dữ liệu thô ban đầu:
+- 22:24 - 22:33 | Mục 3.1. Kiểm kê tệp dữ liệu thô ban đầu:
   + Lập bảng kiểm toán chi tiết 8 trường của tệp gốc DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv (622.243 dòng, 57 MB).
-- 22:33 - 22:41 (8 phút) | Mục 3.2. Quản trị bộ nhớ và ghép nối bảng:
+- 22:33 - 22:41 | Mục 3.2. Quản trị bộ nhớ và ghép nối bảng:
   + Ép kiểu Ticker sang category (tiết kiệm 95% RAM), tinh giản 8 biến về 3 biến cốt lõi (Date, Ticker, Close), dùng merge validate='many_to_one' để chống nở dòng.
-- 22:41 - 22:52 (11 phút) | Mục 3.3. Quy trình 6 bước làm sạch dữ liệu:
+- 22:41 - 22:52 | Mục 3.3. Quy trình 6 bước làm sạch dữ liệu:
   + Thực thi bóc tách khoảng trắng, chuẩn hóa định dạng ngày gạch/chéo, lọc đơn vị tiền tệ, xử lý giá âm, lọc ngoại lai Median Filter và Forward Fill. Lập bảng đối chiếu trước/sau.
-- 22:52 - 23:00 (8 phút) | Mục 3.4. Thống kê mô tả định lượng:
+- 22:52 - 23:00 | Mục 3.4. Thống kê mô tả định lượng:
   + Trình bày bảng 14 chỉ số đo lường mức độ sinh lợi, rủi ro và hình thái phân phối của 503 mã cổ phiếu.
-- 23:00 - 23:08 (8 phút) | Mục 3.5. Biểu đồ trực quan và Danh mục Tỷ trọng đều:
+- 23:00 - 23:08 | Mục 3.5. Biểu đồ trực quan và Danh mục Tỷ trọng đều:
   + Trực quan hóa hình thái phân phối đuôi dày (Fat-tail Kurtosis = 5,82) và đường giá trị danh mục tích lũy từ mốc 100 lên 182,4 điểm.
-- 23:08 - 23:15 (7 phút) | Mục 3.6. Kiểm định tính dừng Augmented Dickey-Fuller (ADF):
+- 23:08 - 23:15 | Mục 3.6. Kiểm định tính dừng Augmented Dickey-Fuller (ADF):
   + Đối chiếu kết quả ADF chuỗi giá đóng cửa (p = 0,359 -> không dừng) và chuỗi lợi suất logarit (p < 0,0001 -> dừng mạnh).
 
 4. KHỐI CHƯƠNG 4 (23:15 - 23:47 | Tổng: 32 phút): Xây dựng mô hình và đánh giá dự báo
-- 23:15 - 23:21 (6 phút) | Mục 4.1. Kỹ thuật tạo đặc trưng và nhãn mục tiêu:
+- 23:15 - 23:21 | Mục 4.1. Kỹ thuật tạo đặc trưng và nhãn mục tiêu:
   + Tạo các bậc trễ r_t, r_{t-1}, r_{t-2}, độ biến động vol_20, tỷ số trend_ratio (MA5/MA20) và nhãn tương lai r_{t+1}.
-- 23:21 - 23:26 (5 phút) | Mục 4.2. Chiến lược phân chia mẫu Time-series Split:
+- 23:21 - 23:26 | Mục 4.2. Chiến lược phân chia mẫu Time-series Split:
   + Chia mẫu theo dòng thời gian đơn điệu 80% Train (448.082 dòng) và 20% Test (112.021 dòng), đóng băng StandardScaler trên tập Train.
-- 23:26 - 23:32 (6 phút) | Mục 4.3. Huấn luyện các mô hình thực nghiệm:
+- 23:26 - 23:32 | Mục 4.3. Huấn luyện các mô hình thực nghiệm:
   + Chạy thuật toán mô hình Mốc chuẩn Zero Benchmark, Hồi quy OLS và Hồi quy Ridge (alpha = 10,0).
-- 23:32 - 23:37 (5 phút) | Mục 4.4. Đánh giá hiệu năng dự báo ngoài mẫu:
+- 23:32 - 23:37 | Mục 4.4. Đánh giá hiệu năng dự báo ngoài mẫu:
   + Lập bảng so sánh MAE, RMSE, R² trên 112.021 quan sát tập Test. Ridge đạt MAE = 0,01421, RMSE = 0,02186, R² = 0,0084.
-- 23:37 - 23:42 (5 phút) | Mục 4.5. Diễn giải hệ số mô hình và ý nghĩa kinh tế:
+- 23:37 - 23:42 | Mục 4.5. Diễn giải hệ số mô hình và ý nghĩa kinh tế:
   + Phân tích ý nghĩa của hệ số trễ âm (hiệu ứng đảo chiều ngắn hạn) và xung lượng MA5/MA20.
-- 23:42 - 23:47 (5 phút) | Mục 4.6. Thảo luận chuyên sâu về Giả thuyết Thị trường Hiệu quả:
+- 23:42 - 23:47 | Mục 4.6. Thảo luận chuyên sâu về Giả thuyết Thị trường Hiệu quả:
   + Luận giải tại sao R² chỉ đạt 0,84%, chứng minh giá đóng cửa đã chiết khấu thông tin lịch sử theo EMH dạng yếu.
 
 *(Khoảng nghỉ chuyển tiếp: 23:47 - 23:50)*
 
 5. KHỐI CHƯƠNG 5 (23:50 - 0:26 | Tổng: 36 phút): Khuyến nghị quản trị và kết luận
-- 23:50 - 23:59 (9 phút) | Mục 5.1. Khuyến nghị quản trị danh mục đầu tư:
+- 23:50 - 23:59 | Mục 5.1. Khuyến nghị quản trị danh mục đầu tư:
   + Chuyển trọng tâm từ dự báo điểm sang quản trị rủi ro biến động, khai thác hệ số Sharpe và phòng ngừa rủi ro đuôi dày.
-- 23:59 - 00:08 (9 phút) | Mục 5.2. Lộ trình ứng dụng thực tế trong doanh nghiệp:
+- 23:59 - 00:08 | Mục 5.2. Lộ trình ứng dụng thực tế trong doanh nghiệp:
   + Thiết lập 4 bước tự động hóa quy trình chốt phiên và hệ thống cảnh báo sớm rủi ro (Early Warning).
-- 00:08 - 00:17 (9 phút) | Mục 5.3. Các hạn chế của đề tài:
+- 00:08 - 00:17 | Mục 5.3. Các hạn chế của đề tài:
   + Thảo luận 3 hạn chế thực chứng: Thiên lệch sống sót (Survivorship bias), tính điều chỉnh của giá Close và giả định chi phí giao dịch bằng 0.
-- 00:17 - 00:26 (9 phút) | Mục 5.4. Hướng phát triển và Kết luận chung:
+- 00:17 - 00:26 | Mục 5.4. Hướng phát triển và Kết luận chung:
   + Kết luận tổng kết bám sát 3 câu hỏi nghiên cứu ban đầu, định hướng mở rộng sang các mô hình phi tuyến.
 
 *(Khoảng nghỉ chuyển tiếp: 00:26 - 00:40)*
 
 6. KHỐI PHẦN ĐẦU & PHẦN CUỐI (0:40 - 1:12 | Tổng: 32 phút): Hoàn thiện thể thức học thuật
-- 00:40 - 00:52 (12 phút) | Trang bìa, Lời cam đoan, Lời cảm ơn, Tóm tắt đề tài (Abstract):
+- 00:40 - 00:52 | Trang bìa, Lời cam đoan, Lời cảm ơn, Tóm tắt đề tài (Abstract):
   + Viết tóm tắt học thuật 320 từ cô đọng, nêu rõ bài toán, mẫu thực dùng 560.103 dòng, cách đánh giá Time-series Split và 2 kết quả cốt lõi.
-- 00:52 - 01:03 (11 phút) | Danh mục từ viết tắt & Bảng 10 lỗi thường gặp:
+- 00:52 - 01:03 | Danh mục từ viết tắt & Bảng 10 lỗi thường gặp:
   + Tổng hợp bảng 10 lỗi kỹ thuật dễ gặp khi xử lý dữ liệu tài chính (lỗi NaT ngày gạch/chéo, sai lệch số dòng, MAPE cực lớn, bảng nở dòng...).
-- 01:03 - 01:12 (9 phút) | Tài liệu tham khảo chuẩn APA 7 & Đóng gói hồ sơ Git:
+- 01:03 - 01:12 | Tài liệu tham khảo chuẩn APA 7 & Đóng gói hồ sơ Git:
   + Chuẩn hóa 8 tài liệu trích dẫn chuẩn APA 7th.
   + Kiểm toán toàn bộ tệp "tieuluan.qmd", commit và push đồng bộ lên GitHub.
 
@@ -381,4 +381,62 @@ III. TỔNG HỢP TOÀN BỘ HỒ SƠ DỰ ÁN HOÀN CHỈNH (PROJECT INVENTORY)
 3. Hồ sơ Trực tuyến & Quản trị Dự án (Repositories & Log):
    - Kho lưu trữ GitHub chuẩn mực: https://github.com/minh682007-dot/SP500-Financial-Analytics-and-Risk-Prediction
    - Kho lưu trữ nộp bài Giảng viên: https://github.com/nguyennguyen11082007-maker/Tieu-luan-PRJ05 (Cấu hình Private & Collaborator: tmtuongSV).
-   - "skill/nhật kí làm việc": Nhật ký ghi chép chi tiết, trung thực và liên tục toàn bộ hành trình thực hiện đề tài từ ngày 20/10/2026 đến ngày 20/11/2026 của sinh viên Đào Ngọc Minh.
+   - "skill/nhật kí làm việc": Nhật ký ghi chép chi tiết, trung thực và liên tục toàn bộ hành trình thực hiện đề tài từ ngày 20/10/2026 đến ngày 22/11/2026 của sinh viên Đào Ngọc Minh.
+
+================================================================================
+NHẬT KÝ NGÀY: 22/11/2026
+Người ghi: Đào Ngọc Minh (MSSV: 2521001081)
+Trạng thái: Khắc phục lỗi render công thức Quarto/VS Code, Nhúng mã thực thi Python vào Mục 2.1, Hệ thống hóa toàn diện cơ sở học thuật 5 Chương & Hoàn thiện Bộ cẩm nang phản biện bảo vệ đề tài
+================================================================================
+
+I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
+1. Khắc phục triệt để lỗi hiển thị công thức toán học LaTeX trong "tieuluan.qmd":
+   - Nhận diện nguyên nhân: Thụt lề 2 ký tự trắng sau dấu gạch đầu dòng khiến trình đọc Quarto và VS Code Markdown Preview hiểu nhầm là khối mã thô, không render ra phân số, dấu ngoặc và căn bậc hai.
+   - Xử lý: Tách riêng các dòng công thức, loại bỏ thụt lề lỗi, bao quanh bằng dòng trắng chuẩn cú pháp KaTeX/MathJax.
+2. Hiện thực hóa "nguyên hình" toàn bộ các công thức toán học tài chính thành khối mã Python thực thi (Mục 2.1.4):
+   - Lập trình tính toán Lợi suất đơn (Simple Return), Lợi suất Logarit liên tục (Log Return), Độ biến động trượt 20 phiên (sigma_20d), Lợi suất Danh mục Tỷ trọng đều (Equal-Weighted S&P 500) và Hệ số Sharpe năm hóa (Rf = 0).
+   - Chạy trực tiếp trên tệp dữ liệu sạch "data_cleaned_SP500.csv", xuất kết quả đối chứng mẫu của cổ phiếu Apple (AAPL) và toàn bộ rổ chỉ số S&P 500.
+3. Hệ thống hóa, đào sâu và làm chủ tuyệt đối cơ sở lý luận kinh tế lượng cho toàn bộ 5 Chương:
+   - Chương 1: Bản chất rủi ro thực nghiệm cặp đối chứng KO vs FICO (lợi suất ngang nhau ~87% nhưng FICO sụt giảm -75%), lý giải số lượng 503 mã niêm yết (nhiều lớp cổ phiếu phổ thông), 1.254 ngày giao dịch và Giả thuyết Thị trường Hiệu quả (EMH dạng yếu).
+   - Chương 2: Ba ưu thế toán học của Lợi suất Log (tính cộng dồn, chặn dưới âm, tiệm cận chuẩn), ý nghĩa cửa sổ 20 phiên, bản chất nhân sqrt(252) của hệ số Sharpe năm hóa, ma trận 4 công trình kinh điển (Markowitz, Fama, Dickey-Fuller, Hoerl-Kennard) và lý do khoa học loại bỏ hoàn toàn sai số MAPE (mẫu số tiệm cận 0).
+   - Chương 3: Kiểm kê 7 hội chứng dữ liệu bẩn của tệp gốc 622.243 dòng, nguyên lý Parsimony tinh giản về 3 biến cốt lõi [Date, Ticker, Close] để triệt tiêu đa cộng tuyến (r > 0.98) và tiết kiệm 95% RAM nhờ ép kiểu category, quy trình 6 bước làm sạch, phân tích 14 chỉ số thống kê EDA, bằng chứng phân phối Đuôi dày (Fat-tail Kurtosis = 5,82) và kiểm định tính dừng nghiệm đơn vị ADF.
+   - Chương 4: Kỹ thuật tạo 5 đặc trưng trễ và nhãn r_{t+1}, quy tắc Time-series Split 80/20 đơn điệu chống rò rỉ tương lai (Look-ahead bias), đối kháng 3 mô hình (Zero Benchmark vs OLS vs Ridge Regression alpha=10), đánh giá sai số trên 112.021 quan sát ngoài mẫu, giải mã trọng số kinh tế (hệ số trễ âm thể hiện đảo chiều ngắn hạn, MA5/MA20 dương thể hiện quán tính dòng tiền) và ý nghĩa học thuật của R² = 0,84%.
+   - Chương 5: 3 khuyến nghị chiến lược quản trị danh mục (tập trung biến động và MDD thay vì đoán đỉnh/đáy, tối ưu Sharpe, phòng ngừa rủi ro đuôi bằng CVaR/Stress Testing), lộ trình 4 bước tự động hóa chốt phiên tại quỹ đầu tư, thẳng thắn nhận diện 3 hạn chế thực nghiệm (Survivorship bias, Adjusted Close, Transaction Cost) và kết luận tổng kết toàn bài.
+4. Xây dựng và hoàn thiện Bộ cẩm nang câu hỏi phản biện bảo vệ đề tài (FAQ Oral Defense) từ Chương 1 đến Chương 5 trước Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+5. Kiểm toán, đồng bộ hai bản báo cáo Quarto ("tieuluan.qmd" tại thư mục gốc và "skill/tieuluan.qmd"), đóng gói commit và push lên GitHub cá nhân.
+
+--------------------------------------------------------------------------------
+II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
+
+1. Phiên tối (21:20 - 21:40): Kiểm tra và sửa lỗi render công thức Quarto / LaTeX
+- Phát hiện lỗi hiển thị công thức tại Mục 2.1 của bài tiểu luận "tieuluan.qmd".
+- Hiệu chỉnh cú pháp hiển thị math block chuẩn: tách riêng dòng, không thụt lề 2 spaces sau dấu bullet.
+- Công thức Lợi suất đơn, Lợi suất Logarit, Độ biến động 20 phiên và Hệ số Sharpe đã hiển thị rõ ràng, sắc nét và chuẩn mực học thuật.
+
+2. Phiên tối (21:40 - 22:00): Viết mã Python thực thi và nhúng vào Mục 2.1.4
+- Viết script Python tính toán trực tiếp trên tệp "data_cleaned_SP500.csv":
+  + Tính Return đơn và Return log qua `pct_change()` và `np.log(P_t / P_{t-1})`.
+  + Tính Rolling Volatility 20 ngày qua `.rolling(20).std()`.
+  + Tổng hợp Danh mục Tỷ trọng đều (Equal-Weighted Portfolio) qua `groupby('Date')['Log_Return'].mean()`.
+  + Tính Hệ số Sharpe năm hóa: Annualized Return đạt +13,68%/năm, Volatility năm hóa 17,53%/năm, Sharpe đạt 0,7806.
+- Nhúng toàn bộ khối mã và bảng output vào "tieuluan.qmd" và "skill/tieuluan.qmd".
+
+3. Phiên đêm (22:00 - 22:15): Hệ thống hóa toàn diện 5 Chương & Soạn thảo FAQ phản biện
+- Rà soát toàn bộ các câu hỏi kinh tế lượng của Chương 1, Chương 2, Chương 3, Chương 4, Chương 5.
+- Thiết lập bảng ma trận câu hỏi và câu trả lời phản biện xuất sắc để sẵn sàng cho buổi bảo vệ đề tài kết thúc học phần.
+- Đóng gói toàn bộ mã nguồn và tài liệu nghiên cứu, commit `39fd080` và đẩy trực tiếp lên kho GitHub:
+  `https://github.com/minh682007-dot/SP500-Financial-Analytics-and-Risk-Prediction`
+
+--------------------------------------------------------------------------------
+III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
+1. Tệp bài tiểu luận Quarto chuẩn mực ("tieuluan.qmd" & "skill/tieuluan.qmd"):
+   - 100% công thức toán học render hoàn hảo.
+   - Tích hợp thêm khối code thực thi Python cho Mục 2.1 kèm bảng kết quả in ra thực tế.
+2. Bộ câu hỏi và câu trả lời phản biện đạt chuẩn điểm A+ cho cả 5 Chương.
+3. Kho GitHub được cập nhật đồng bộ, sẵn sàng phục vụ việc chấm bài của Giảng viên.
+
+--------------------------------------------------------------------------------
+IV. KẾ HOẠCH BẢO VỆ VÀ HOÀN THIỆN TIỂU LUẬN
+1. Ôn tập kỹ bộ câu hỏi phản biện của từng chương theo bảng ma trận đã tổng hợp.
+2. Kiểm tra lại việc thiết lập quyền truy cập cho Giảng viên hướng dẫn `tmtuongSV` trên kho GitHub nộp bài.
+3. Xuất bản tệp HTML / Docx từ Quarto khi có yêu cầu từ Giảng viên.
