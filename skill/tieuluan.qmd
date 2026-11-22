@@ -127,22 +127,82 @@ Bám sát các câu hỏi nghiên cứu, đề tài xác định hệ thống m�
 ## 2.1. Các đại lượng tài chính và công thức xác định
 
 ### 2.1.1. Tỷ suất sinh lợi đơn và tỷ suất sinh lợi logarit
-* **Lợi suất đơn (Simple Return - $R_t$):**
-  $$R_t = \frac{Close_t - Close_{t-1}}{Close_{t-1}} = \frac{Close_t}{Close_{t-1}} - 1$$
-* **Lợi suất Logarit liên tục (Log Return - $r_t$):**
-  $$r_t = \ln\left(\frac{Close_t}{Close_{t-1}}\right) = \ln(Close_t) - \ln(Close_{t-1})$$
-  *Ưu thế của lợi suất Log:* Có tính cộng dồn hoàn hảo qua thời gian: $r_{0,T} = \sum_{t=1}^T r_t$, tiệm cận phân phối chuẩn tốt hơn và loại bỏ cận dưới biên độ giá âm.
+
+* **Lợi suất đơn (Simple Return - $R_t$):** Đo lường tỷ lệ phần trăm thay đổi giá trị của cổ phiếu giữa hai phiên giao dịch liên tiếp:
+
+$$R_t = \frac{Close_t - Close_{t-1}}{Close_{t-1}} = \frac{Close_t}{Close_{t-1}} - 1$$
+
+* **Lợi suất Logarit liên tục (Log Return - $r_t$):** Được xác định bằng logarit tự nhiên của tỷ số giá đóng cửa:
+
+$$r_t = \ln\left(\frac{Close_t}{Close_{t-1}}\right) = \ln(Close_t) - \ln(Close_{t-1})$$
+
+*Ưu thế vượt trội của lợi suất Log trong nghiên cứu tài chính định lượng:*
+1. **Tính cộng dồn theo thời gian (Time-additivity):** Lợi suất của chu kỳ $T$ ngày bằng đúng tổng đại số các lợi suất log từng ngày: $r_{0, T} = \sum_{t=1}^T r_t$.
+2. **Chặn dưới tự nhiên và tính đối xứng:** Do $\ln(0) \to -\infty$, lợi suất logarit loại bỏ hoàn toàn nghịch lý giá trị âm của tài sản và bảo đảm tính cân đối hai chiều tăng/giảm.
+3. **Tiệm cận phân phối chuẩn:** Phù hợp hoàn hảo với các giả định kinh tế lượng trong hồi quy và kiểm định thống kê.
 
 ### 2.1.2. Độ biến động trượt 20 phiên (20-day Rolling Volatility)
-Độ biến động ngắn hạn phản ánh mức độ dao động rủi ro của cổ phiếu trong khoảng 1 tháng giao dịch (20 phiên):
-$$\sigma_{t, 20} = \sqrt{\frac{1}{19} \sum_{k=0}^{19} (r_{t-k} - \bar{r}_t)^2} \quad \text{với} \quad \bar{r}_t = \frac{1}{20} \sum_{k=0}^{19} r_{t-k}$$
+
+Độ biến động ngắn hạn phản ánh mức độ rủi ro dao động giá của cổ phiếu trong phạm vi 1 tháng giao dịch thực tế (chuẩn 20 phiên), được tính theo độ lệch chuẩn mẫu hiệu chỉnh:
+
+$$\sigma_{t, 20} = \sqrt{\frac{1}{19} \sum_{k=0}^{19} \left(r_{t-k} - \bar{r}_t\right)^2}$$
+
+Trong đó, lợi suất trung bình trong cửa sổ 20 phiên được tính bằng:
+
+$$\bar{r}_t = \frac{1}{20} \sum_{k=0}^{19} r_{t-k}$$
 
 ### 2.1.3. Lợi suất và Hệ số Sharpe của Danh mục Tỷ trọng đều (Equal-Weighted)
-* **Lợi suất danh mục ngày $t$ ($r_{p, t}$):** Với $N_t$ là số lượng mã có dữ liệu giao dịch hợp lệ tại ngày $t$:
-  $$r_{p, t} = \frac{1}{N_t} \sum_{i=1}^{N_t} r_{i, t}$$
-* **Hệ số Sharpe năm hóa (Annualized Sharpe Ratio - $SR$):**
-  $$SR = \sqrt{252} \times \frac{\bar{r}_p - R_f}{\sigma_p}$$
-  *Giả định thực nghiệm:* Nhằm tập trung vào năng lực sinh lợi nội tại của rổ cổ phiếu và tránh sai lệch từ việc chuỗi lãi suất 3 tháng `DGS3MO` bị khuyết dữ liệu ngân hàng, nghiên cứu thiết lập giả định mốc lãi suất phi rủi ro tham chiếu $R_f = 0$ khi so sánh tương đối giữa các mã.
+
+* **Lợi suất danh mục tỷ trọng đều ngày $t$ ($r_{p, t}$):** Giả định phân bổ nguồn vốn ngang nhau cho tất cả $N_t$ cổ phiếu có phát sinh giao dịch hợp lệ tại ngày $t$:
+
+$$r_{p, t} = \frac{1}{N_t} \sum_{i=1}^{N_t} r_{i, t}$$
+
+* **Hệ số Sharpe năm hóa (Annualized Sharpe Ratio - $SR$):** Thước đo chuẩn mực lượng hóa tỷ suất sinh lợi thặng dư thu được trên mỗi đơn vị rủi ro chấp nhận gánh chịu:
+
+$$SR = \sqrt{252} \times \frac{\bar{r}_p - R_f}{\sigma_p}$$
+
+*Giả định thực nghiệm:* Nhằm tập trung vào năng lực sinh lợi nội tại của rổ cổ phiếu và tránh sai lệch từ việc chuỗi lãi suất 3 tháng `DGS3MO` bị khuyết dữ liệu ngân hàng, nghiên cứu thiết lập giả định mốc lãi suất phi rủi ro tham chiếu $R_f = 0$ khi so sánh tương đối giữa các mã.
+
+### 2.1.4. Mã nguồn Python thực thi các công thức tài chính trên dữ liệu thực nghiệm
+
+Đoạn mã Python hiện thực hóa toàn bộ các công thức toán học nêu trên trực tiếp trên tập dữ liệu sạch của rổ S&P 500:
+
+```{python}
+#| label: financial-formulas-implementation
+#| echo: true
+import pandas as pd
+import numpy as np
+
+# 1. Đọc dữ liệu sạch và chuẩn hóa trục thời gian
+df_sample = pd.read_csv('data_cleaned_SP500.csv')
+df_sample['Date'] = pd.to_datetime(df_sample['Date'])
+df_sample = df_sample.sort_values(['Ticker', 'Date']).reset_index(drop=True)
+
+# 2. Hiện thực hóa Công thức Lợi suất đơn (R_t) và Lợi suất Logarit (r_t)
+df_sample['Simple_Return'] = df_sample.groupby('Ticker')['Close'].pct_change(fill_method=None)
+df_sample['Log_Return'] = df_sample.groupby('Ticker')['Close'].apply(lambda x: np.log(x / x.shift(1))).reset_index(level=0, drop=True)
+
+# 3. Hiện thực hóa Công thức Độ biến động trượt 20 phiên (sigma_20)
+df_sample['Vol_20d'] = df_sample.groupby('Ticker')['Log_Return'].rolling(20).std().reset_index(level=0, drop=True)
+
+# 4. Hiện thực hóa Công thức Danh mục Tỷ trọng đều (Equal-Weighted) & Sharpe
+portfolio_daily = df_sample.groupby('Date')['Log_Return'].mean().dropna()
+mean_p = portfolio_daily.mean()
+std_p = portfolio_daily.std()
+sharpe_annual = np.sqrt(252) * (mean_p / std_p)
+
+# Hiển thị bảng kết quả tính toán thực nghiệm minh họa (Mã Apple - AAPL)
+print("=== MINH CHỨNG KẾT QUẢ TÍNH TOÁN CÁC ĐẠI LƯỢNG TÀI CHÍNH (AAPL) ===")
+aapl_demo = df_sample[df_sample['Ticker'] == 'AAPL'][['Date', 'Close', 'Simple_Return', 'Log_Return', 'Vol_20d']].dropna().head(5)
+print(aapl_demo.to_string(index=False))
+
+print("\n=== KẾT QUẢ DANH MỤC TỶ TRỌNG ĐỀU (EQUAL-WEIGHTED S&P 500) ===")
+print(f" - Lợi suất bình quân ngày (mean):       {mean_p*100:+.4f}%/ngày")
+print(f" - Độ lệch chuẩn danh mục ngày (std):    {std_p*100:.4f}%/ngày")
+print(f" - Lợi suất bình quân năm hóa:           {mean_p * 252 * 100:+.2f}%/năm")
+print(f" - Độ biến động năm hóa:                 {std_p * np.sqrt(252) * 100:.2f}%/năm")
+print(f" - Hệ số Sharpe năm hóa (Rf=0):          {sharpe_annual:.4f}")
+```
 
 ## 2.2. Tổng quan các nghiên cứu liên quan (Literature Review)
 
