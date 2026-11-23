@@ -1,27 +1,46 @@
-
+---
+title: "PHÂN TÍCH BIẾN ĐỘNG VÀ DỰ BÁO LỢI SUẤT CỔ PHIẾU TRÊN THỊ TRƯỜNG CHỨNG KHOÁN MỸ BẰNG PYTHON: NGHIÊN CỨU CÁC DOANH NGHIỆP THUỘC CHỈ SỐ S&P 500, GIAI ĐOẠN 2021–2026"
+subtitle: "BÁO CÁO TIỂU LUẬN KẾT THÚC HỌC PHẦN (MÃ ĐỀ TÀI: PRJ-05)"
+author: "Đào Ngọc Minh (MSSV: 2521001081)"
+date: "2026-11-23"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    code-fold: false
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
+execute:
+  echo: true
+  warning: false
+---
 
 # PHẦN MỞ ĐẦU THỦ TỤC
 
 ## THÔNG TIN CHUNG BÀI TIỂU LUẬN
 
-* **Đề tài đề xuất:** Phân tích biến động và dự báo lợi suất cổ phiếu thuộc S&P 500 bằng Python, giai đoạn 2021–2026.
-* **Học phần:** Phân tích Dữ liệu Kinh doanh / Tài chính Định lượng (Mã đề tài: `PRJ05`).
+* **Tên đề tài:** Phân tích biến động và dự báo lợi suất cổ phiếu trên thị trường chứng khoán Mỹ bằng Python: Nghiên cứu các doanh nghiệp thuộc chỉ số S&P 500, giai đoạn 2021–2026.
+* **Học phần:** Lập trình Python cho Khoa học Dữ liệu (Mã đề tài: `PRJ-05`).
 * **Đơn vị đào tạo:** Trường Đại học Tài chính – Marketing (UFM) — Khoa Công nghệ Thông tin & Kinh doanh Số.
 * **Sinh viên thực hiện:** Đào Ngọc Minh
 * **Mã số sinh viên (MSSV):** `2521001081`
 * **Giảng viên phụ trách học phần:** ThS. Nguyễn Mạnh Tường (`tmtuongSV`)
-* **Tệp dữ liệu thực nghiệm:** `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv` (622.243 dòng quan sát, 8 trường dữ liệu thô).
-* **Phạm vi nghiên cứu:** 503 mã cổ phiếu thuộc rổ chỉ số S&P 500 từ ngày 13/10/2021 đến ngày 12/10/2026 (1.237 ngày giao dịch thực tế).
+* **Tệp dữ liệu thực nghiệm gốc:** `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv` (622.243 dòng quan sát, 8 trường dữ liệu thô).
+* **Phạm vi nghiên cứu:** 503 mã cổ phiếu thuộc rổ chỉ số S&P 500 từ ngày 13/10/2021 đến ngày 12/10/2026 (1.254 ngày giao dịch thực tế).
 
 ---
 
 ## LỜI CAM ĐOAN
 
-Tôi xin cam đoan bài tiểu luận kết thúc học phần *"Phân tích biến động và dự báo lợi suất cổ phiếu thuộc S&P 500 bằng Python, giai đoạn 2021–2026"* là công trình nghiên cứu độc lập của cá nhân tôi dưới sự định hướng học thuật của Giảng viên phụ trách học phần. 
+Tôi xin cam đoan bài tiểu luận kết thúc học phần *"Phân tích biến động và dự báo lợi suất cổ phiếu trên thị trường chứng khoán Mỹ bằng Python: Nghiên cứu các doanh nghiệp thuộc chỉ số S&P 500, giai đoạn 2021–2026"* là công trình nghiên cứu độc lập của cá nhân tôi dưới sự định hướng học thuật của Giảng viên phụ trách học phần. 
 
-Toàn bộ các số liệu kiểm toán chất lượng dữ liệu, các bước làm sạch tiền xử lý, chuỗi lợi suất tính toán, kết quả kiểm định chuỗi thời gian Augmented Dickey-Fuller (ADF) và hiệu năng các mô hình dự báo ngoài mẫu (Out-of-sample Evaluation) trình bày trong báo cáo này đều được tính toán trực tiếp, trung thực từ tệp dữ liệu thô được cấp `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv`. Tôi hoàn toàn chịu trách nhiệm trước Nhà trường và Khoa về tính trung thực, liêm chính học thuật của công trình này.
+Toàn bộ các số liệu kiểm toán chất lượng dữ liệu, các bước làm sạch tiền xử lý, cấu trúc bảng tổng thể (Master Table), chuỗi lợi suất tính toán, kết quả kiểm định chuỗi thời gian Augmented Dickey-Fuller (ADF) và hiệu năng các mô hình dự báo ngoài mẫu (Out-of-sample Evaluation) trình bày trong báo cáo này đều được tính toán trực tiếp, trung thực từ tệp dữ liệu thô được cấp `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv`. Tôi hoàn toàn chịu trách nhiệm trước Nhà trường và Khoa về tính trung thực, liêm chính học thuật của công trình này.
 
-*TP. Hồ Chí Minh, ngày 19 tháng 11 năm 2026*  
+*TP. Hồ Chí Minh, ngày 23 tháng 11 năm 2026*  
 **Sinh viên cam đoan**  
 *Đào Ngọc Minh*
 
@@ -29,19 +48,34 @@ Toàn bộ các số liệu kiểm toán chất lượng dữ liệu, các bư�
 
 ## LỜI CẢM ƠN
 
-Lời đầu tiên, em xin gửi lời cảm ơn chân thành và sâu sắc nhất đến Quý Thầy/Cô Khoa Công nghệ Thông tin & Kinh doanh Số – Trường Đại học Tài chính – Marketing (UFM), đặc biệt là Giảng viên phụ trách học phần đã tận tình truyền đạt kiến thức nền tảng vững chắc về Khoa học Dữ liệu ứng dụng và Phân tích Dữ liệu Kinh doanh.
+Lời đầu tiên, em xin gửi lời cảm ơn chân thành và sâu sắc nhất đến Quý Thầy/Cô Khoa Công nghệ Thông tin & Kinh doanh Số – Trường Đại học Tài chính – Marketing (UFM), đặc biệt là Giảng viên phụ trách học phần ThS. Nguyễn Mạnh Tường đã tận tình truyền đạt kiến thức nền tảng vững chắc về Lập trình Python cho Khoa học Dữ liệu và tư duy kinh tế lượng ứng dụng.
 
-Học phần `PRJ05` đã trang bị cho em phương pháp luận khoa học, tư duy phản biện khi tiếp cận dữ liệu tài chính thực tế và kỹ năng lập trình Python chuyên sâu để giải quyết các bài toán kinh tế định lượng. Dù đã rất nỗ lực hoàn thiện đề tài, bài tiểu luận khó tránh khỏi những hạn chế nhất định. Em kính mong nhận được những nhận xét, góp ý quý báu từ Giảng viên để tiếp tục trau dồi và nâng cao năng lực chuyên môn trong tương lai.
+Học phần `PRJ-05` đã trang bị cho em phương pháp luận khoa học, kỹ năng lập trình đường ống dữ liệu (Data Pipeline) chuẩn mực, khả năng xử lý dữ liệu lớn (Big Data $> 100.000$ dòng) và tư duy phân tích định lượng sắc bén. Dù đã rất nỗ lực hoàn thiện đề tài, bài tiểu luận khó tránh khỏi những hạn chế nhất định. Em kính mong nhận được những nhận xét, góp ý quý báu từ Giảng viên để tiếp tục trau dồi và nâng cao năng lực chuyên môn trong tương lai.
 
 ---
 
 ## TÓM TẮT ĐỀ TÀI (ABSTRACT)
 
-Nghiên cứu này thực hiện kiểm toán toàn diện chất lượng dữ liệu, xây dựng đường ống làm sạch dữ liệu chuỗi thời gian bảng (Panel Time-series), phân tích đặc tính sinh lợi – rủi ro và đánh giá năng lực dự báo lợi suất phiên kế tiếp của 503 cổ phiếu thuộc rổ chỉ số S&P 500 giai đoạn 2021–2026. Bằng phương pháp tiếp cận thực nghiệm trên tệp dữ liệu gốc `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv` quy mô 622.243 dòng quan sát với 8 trường dữ liệu ban đầu, nghiên cứu chứng minh tính hợp lý của việc tinh giản biến về bộ ba cốt lõi `[Date, Ticker, Close]` nhằm triệt tiêu hiện tượng đa cộng tuyến hoàn hảo ($r > 0,98$) và loại bỏ hơn 300.000 ô dữ liệu bẩn. Sau quy trình 6 bước tiền xử lý chuẩn mực khoa học (chuẩn hóa khoảng trắng, đồng bộ định dạng ngày chéo/gạch ngang, bóc tách đơn vị tiền tệ, xử lý giá âm, lọc ngoại lai Median Filter và Forward Fill theo từng mã), tập dữ liệu sạch đạt quy mô 560.103 quan sát (bảo tồn 90,01% dung lượng thực nghiệm) với 0 ô khuyết thiếu.
+Nghiên cứu này thực hiện kiểm toán toàn diện chất lượng dữ liệu lớn, xây dựng đường ống làm sạch dữ liệu chuỗi thời gian bảng (Panel Time-series), phân tích đặc tính sinh lợi – rủi ro và đánh giá năng lực dự báo lợi suất phiên kế tiếp của 503 cổ phiếu thuộc rổ chỉ số S&P 500 giai đoạn 2021–2026. Bằng phương pháp tiếp cận thực nghiệm trên tệp dữ liệu gốc `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv` quy mô 622.243 dòng quan sát với 8 trường dữ liệu ban đầu, nghiên cứu chứng minh tính hợp lý của việc tinh giản biến về bộ ba cốt lõi `[Date, Ticker, Close]` nhằm triệt tiêu hiện tượng đa cộng tuyến hoàn hảo ($r > 0,98$) và tối ưu hóa 95% bộ nhớ RAM thông qua kiểu dữ liệu danh mục (`category`). Đồng thời, nghiên cứu thiết lập bảng tham chiếu Lịch phiên NYSE để thực hiện kỹ thuật ghép nối đa bảng (`merge validate='many_to_one'`) kiểm chứng tính liên tục của chuỗi thời gian. Sau quy trình 6 bước tiền xử lý chuẩn mực khoa học được ghi vết trên bảng Master (chuẩn hóa khoảng trắng, đồng bộ định dạng ngày chéo/gạch ngang, bóc tách đơn vị tiền tệ, xử lý giá âm, lọc ngoại lai Median Filter và Forward Fill theo từng mã), tập dữ liệu sạch đạt quy mô 560.103 quan sát (bảo tồn 90,01% dung lượng thực nghiệm) với 0 ô khuyết thiếu.
 
-Về mặt phân tích biến động, kiểm định Augmented Dickey-Fuller (ADF) xác nhận chuỗi giá đóng cửa không dừng ($p > 0,05$), trong khi chuỗi lợi suất logarit đạt tính dừng mạnh ($p < 0,001$) và thể hiện rõ hiện tượng phân phối đuôi dày (Fat-tail Kurtosis > 3). Danh mục đầu tư cân bằng tỷ trọng đều (Equal-Weighted Portfolio) đạt tỷ suất sinh lợi bình quân năm hóa 14,82% với hệ số Sharpe 0,78. Về mặt dự báo, nghiên cứu thiết lập khung đánh giá ngoài mẫu nghiêm ngặt theo thời gian (Time-series Split 80/20) để kiểm tra xem thông tin giá lịch sử có dự báo lợi suất phiên kế tiếp tốt hơn mốc chuẩn ngẫu nhiên (Zero Benchmark: $\hat{r}_{t+1} = 0$). Kết quả thực nghiệm chỉ ra rằng mô hình hồi quy Ridge Regression đạt sai số ngoài mẫu $MAE = 0,0142$ và $RMSE = 0,0218$, thu hẹp sai số so với mô hình OLS truyền thống nhưng hệ số $R^2$ xấp xỉ 0 ($R^2 = 0,0084$). Phát hiện định lượng này ủng hộ Giả thuyết Thị trường Hiệu quả (EMH dạng yếu), khẳng định chuỗi giá lịch sử phản ánh nhanh chóng vào giá đóng cửa và việc dự báo lợi suất phiên kế tiếp đơn thuần từ giá quá khứ không đem lại ưu thế vượt trội bền vững so với mốc ngẫu nhiên.
+Về mặt phân tích biến động, kiểm định Augmented Dickey-Fuller (ADF) xác nhận chuỗi giá đóng cửa không dừng ($p > 0,05$), trong khi chuỗi lợi suất logarit đạt tính dừng mạnh ($p < 0,001$) và thể hiện rõ hiện tượng phân phối đuôi dày (Fat-tail Kurtosis = 5,82 > 3). Danh mục đầu tư cân bằng tỷ trọng đều (Equal-Weighted Portfolio) đạt tỷ suất sinh lợi bình quân năm hóa 14,82% với hệ số Sharpe 0,78. Về mặt dự báo, nghiên cứu thiết lập khung đánh giá ngoài mẫu nghiêm ngặt theo thời gian (Time-series Split 80/20) để kiểm tra xem thông tin giá lịch sử có dự báo lợi suất phiên kế tiếp tốt hơn mốc chuẩn ngẫu nhiên (Zero Benchmark: $\hat{r}_{t+1} = 0$). Kết quả thực nghiệm chỉ ra rằng mô hình hồi quy Ridge Regression đạt sai số ngoài mẫu $MAE = 0,01421$ và $RMSE = 0,02186$, thu hẹp sai số so với mô hình OLS truyền thống nhưng hệ số $R^2$ xấp xỉ 0 ($R^2 = 0,0084$). Phát hiện định lượng này ủng hộ Giả thuyết Thị trường Hiệu quả (EMH dạng yếu), khẳng định chuỗi giá lịch sử phản ánh nhanh chóng vào giá đóng cửa và việc dự báo lợi suất phiên kế tiếp đơn thuần từ giá quá khứ không đem lại ưu thế vượt trội bền vững so với mốc ngẫu nhiên.
 
-* **Từ khóa:** S&P 500, Tiền xử lý dữ liệu, Kiểm toán chất lượng, Lợi suất Logarit, Kiểm định ADF, Hệ số Sharpe, Dự báo chuỗi thời gian, Ridge Regression.
+* **Từ khóa:** S&P 500, Tiền xử lý dữ liệu lớn, Lịch phiên NYSE, Lợi suất Logarit, Kiểm định ADF, Hệ số Sharpe, Dự báo chuỗi thời gian, Ridge Regression, Giả thuyết Thị trường Hiệu quả (EMH).
+
+---
+
+## DANH MỤC THUẬT NGỮ XUYÊN SUỐT (TERMINOLOGY DICTIONARY)
+
+Nhằm đảm bảo tính nhất quán tuyệt đối theo quy chuẩn đề cương nghiên cứu, các khái niệm về giá và chuỗi thời gian trong bài tiểu luận được quy ước định nghĩa thống nhất như sau:
+
+| Thuật ngữ chuyên môn | Ký hiệu kỹ thuật | Định nghĩa & Trạng thái dữ liệu | Vai trò trong nghiên cứu |
+| :--- | :---: | :--- | :--- |
+| **Giá gốc (Raw Price)** | `Close_raw` | Thị giá thô đọc trực tiếp từ tệp CSV ban đầu, dính tạp chất đơn vị ('USD', 'VND', '%', 'kg', 'đ'), lẫn dấu phẩy thập phân và chứa giá âm/mã lỗi -1. | Dữ liệu đối chứng kiểm toán ban đầu. |
+| **Giá tạm hợp lệ (Valid Price)** | `Close_valid` | Mức giá sau khi đã bóc tách sạch ký tự đơn vị, chuẩn hóa số thực `float64` và loại bỏ các giá trị không dương ($\le 0$). | Dữ liệu trung gian phục vụ kiểm tra ngoại lai. |
+| **Giá hiệu chỉnh (Corrected Price)** | `Close_clean` | Mức giá sau khi loại bỏ lỗi nhảy số thập phân thông qua bộ lọc trung vị (Median Filter: gán NaN cho các giá trị $> 3 \times Med$ hoặc $< Med / 3$). | Cơ sở tin cậy trước khi xử lý khuyết thiếu. |
+| **Giá nội suy thử (Imputed Price)** | `Close_impute` | Giá trị thử nghiệm điền khuyết bằng phương pháp nội suy tuyến tính chuỗi thời gian (Interpolation) để đánh giá độ chệch. | Đối chứng kỹ thuật xử lý dữ liệu. |
+| **Giá dùng phân tích (Analysis Price)** | `Close` | **Mức giá đóng cửa chính thức** thu được sau bước điền giá trị quá khứ gần nhất (Forward Fill - `ffill`) theo từng mã cổ phiếu riêng biệt. | **Biến số cốt lõi duy nhất** để tính Lợi suất và mô hình hóa. |
+| **Phiên giao dịch liên tiếp** | $t$ và $t-1$ | Hai ngày giao dịch kề nhau có phát sinh giao dịch trên lịch làm việc của sàn NYSE, không tính thứ Bảy, Chủ Nhật và ngày lễ. | Căn cứ tính tỷ suất sinh lợi thực tế. |
 
 ---
 
@@ -56,9 +90,10 @@ Về mặt phân tích biến động, kiểm định Augmented Dickey-Fuller (A
 | **MAE** | Mean Absolute Error | Sai số tuyệt đối trung bình |
 | **MDD** | Maximum Drawdown | Mức sụt giảm tối đa từ đỉnh |
 | **MSE** | Mean Squared Error | Sai số bình phương trung bình |
+| **NYSE**| New York Stock Exchange | Sở Giao dịch Chứng khoán New York |
 | **OLS** | Ordinary Least Squares | Phương pháp Hồi quy Bình phương Tối thiểu Thông thường |
 | **RMSE** | Root Mean Squared Error | Căn bậc hai sai số bình phương trung bình |
-| **S&P 500**| Standard & Poor's 500 Index | Chỉ số 503 công ty vốn hóa lớn nhất TTCK Hoa Kỳ |
+| **S&P 500**| Standard & Poor's 500 Index | Chỉ số 503 công ty niêm yết lớn nhất TTCK Hoa Kỳ |
 | **SR** | Sharpe Ratio | Hệ số Sharpe đo lường hiệu quả sinh lợi trên rủi ro |
 | **UFM** | University of Finance - Marketing | Trường Đại học Tài chính – Marketing |
 
@@ -106,7 +141,7 @@ Bám sát các câu hỏi nghiên cứu, đề tài xác định hệ thống m�
 
 * **Đối tượng nghiên cứu:** Giá đóng cửa chốt phiên (`Close`), chuỗi tỷ suất sinh lợi logarit hàng ngày ($r_t$), độ biến động lịch sử 20 phiên ($\sigma_{20d}$) và nhãn dự báo lợi suất phiên kế tiếp ($r_{t+1}$).
 * **Đơn vị quan sát cơ sở:** Một dòng dữ liệu đại diện cho một cặp khóa kết hợp thực thể - thời gian xác định `[Ticker, Date]`, phản ánh đầy đủ trạng thái giá của một mã cổ phiếu trong một phiên giao dịch duy nhất.
-* **Phạm vi không gian:** **503 công ty niêm yết lớn nhất** đại diện cho toàn bộ nền kinh tế Hoa Kỳ thuộc rổ chỉ số S&P 500.
+* **Phạm vi không gian:** **503 mã cổ phiếu niêm yết** đại diện cho toàn bộ nền kinh tế Hoa Kỳ thuộc rổ chỉ số S&P 500 (bao gồm các doanh nghiệp phát hành nhiều loại cổ phiếu như `GOOG`/`GOOGL`, `FOX`/`FOXA`).
 * **Phạm vi thời gian:** Từ ngày **13/10/2021** đến ngày **12/10/2026**.
   + Tổng số phiên giao dịch thực tế được ghi nhận: **1.254 phiên giao dịch** (sau khi chuẩn hóa và loại bỏ các ngày nghỉ lễ, thứ Bảy và Chủ Nhật).
   + Tần suất quan sát: **Tần suất theo ngày giao dịch (Daily Frequency)**.
@@ -114,7 +149,7 @@ Bám sát các câu hỏi nghiên cứu, đề tài xác định hệ thống m�
 ## 1.5. Ý nghĩa khoa học và thực tiễn
 
 * **Ý nghĩa khoa học:**
-  + Đề tài đóng góp một quy trình thực nghiệm minh bạch, chuẩn mực trong việc kiểm toán và tiền xử lý dữ liệu tài chính chuỗi thời gian bảng (Panel Data), ngăn ngừa triệt để các sai lầm phổ biến như rò rỉ dữ liệu tương lai (Look-ahead bias) hay hiện tượng đa cộng tuyến hoàn hảo.
+  + Đề tài đóng góp một quy trình thực nghiệm minh bạch, chuẩn mực trong việc kiểm toán và tiền xử lý dữ liệu tài chính chuỗi thời gian bảng quy mô lớn ($> 500.000$ dòng), ngăn ngừa triệt để các sai lầm phổ biến như rò rỉ dữ liệu tương lai (Look-ahead bias) hay hiện tượng đa cộng tuyến hoàn hảo.
   + Kiểm định tính hợp lý của **Giả thuyết Thị trường Hiệu quả (EMH dạng yếu)** trên dữ liệu thực tế 5 năm của thị trường chứng khoán Mỹ: Đánh giá xem dữ liệu giá quá khứ thực sự chứa đựng bao nhiêu giá trị thông tin dự báo lợi suất tương lai.
 * **Ý nghĩa thực tiễn:**
   + Cung cấp công cụ đo lường và hệ thống cảnh báo sớm rủi ro (Early Warning System) dựa trên độ biến động và mức sụt giảm tối đa (MDD), giúp các nhà quản trị danh mục và nhà đầu tư cá nhân kiểm soát rủi ro thanh lý vốn.
@@ -221,8 +256,8 @@ Quy trình nghiên cứu được tổ chức khép kín qua 6 giai đoạn:
 [1. Kiểm kê tệp thô CSV] 
        │ (622.243 dòng, 8 biến, nhận diện 8 hội chứng bẩn)
        ▼
-[2. Đường ống 6 bước làm sạch dữ liệu]
-       │ (Chuẩn hóa ngày chéo/gạch, bóc đơn vị, Median Filter, ffill)
+[2. Đường ống 6 bước làm sạch & Bảng Master]
+       │ (Ghép lịch NYSE, bóc đơn vị, Median Filter, ffill)
        ▼
 [3. Tạo chuỗi tỷ suất lợi nhuận & Danh mục]
        │ (Tính Log Returns, chuỗi tích lũy từ 100, đo độ biến động 20 phiên)
@@ -243,11 +278,14 @@ Quy trình nghiên cứu được tổ chức khép kín qua 6 giai đoạn:
 * **Mô hình Mốc chuẩn Không đổi (Zero Benchmark):** Dự báo lợi suất phiên tới luôn bằng 0 ($\hat{r}_{t+1} = 0$). Đây là thước đo đối chứng chuẩn mực theo lý thuyết Random Walk: nếu mô hình học máy phức tạp không thể vượt qua mốc này, mô hình không có giá trị thực tiễn.
 * **Mô hình Hồi quy Tuyến tính (OLS):** Thiết lập hàm dự báo tuyến tính: $\hat{r}_{t+1} = \beta_0 + \sum_{j=1}^k \beta_j X_{j, t}$.
 * **Mô hình Hồi quy Phạt Ridge ($L_2$ Regularization):** Tối thiểu hóa hàm mục tiêu có thành phần phạt bình phương độ lớn hệ số:
-  $$\min_{\beta} \left\{ \sum_{i=1}^n \left( y_i - \hat{y}_i \right)^2 + \alpha \sum_{j=1}^k \beta_j^2 \right\}$$
+
+$$\min_{\beta} \left\{ \sum_{i=1}^n \left( y_i - \hat{y}_i \right)^2 + \alpha \sum_{j=1}^k \beta_j^2 \right\}$$
+
 * **Thước đo đánh giá sai số:**
   * Sai số tuyệt đối trung bình: $\text{MAE} = \frac{1}{n}\sum_{i=1}^n |y_i - \hat{y}_i|$
   * Căn bậc hai sai số bình phương trung bình: $\text{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2}$
   * Hệ số xác định ngoài mẫu: $R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y}_{\text{train}})^2}$
+  * *Loại bỏ thước đo MAPE:* Do lợi suất thực tế dao động rất sát mốc 0, mẫu số tiệm cận 0 làm MAPE bùng nổ lên hàng nghìn phần trăm, gây méo mó hoàn toàn kết quả đo lường.
 
 ## 2.5. Công cụ thực thi và cấu hình phần mềm
 
@@ -291,29 +329,28 @@ Tập dữ liệu gốc `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv` có dung
 #| echo: true
 raw_file = 'DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv'
 if os.path.exists(raw_file):
-    # Đọc 5 dòng đầu tiên để minh chứng tình trạng dữ liệu thô
-    df_sample = pd.read_csv(raw_file, nrows=5)
+    df_sample_raw = pd.read_csv(raw_file, nrows=5)
     print("Dữ liệu thô 5 dòng đầu tiên:")
-    print(df_sample[['Date', 'Ticker', 'Close', 'Open', 'Volume']])
+    print(df_sample_raw[['Date', 'Ticker', 'Close', 'Open', 'Volume']])
 ```
 
-## 3.2. Quản trị bộ nhớ và tối ưu hóa cấu trúc dữ liệu bảng
+## 3.2. Ghép nối đa bảng (Multi-Table Join) & Quản trị bộ nhớ RAM
 
-Nhằm tối ưu hóa dung lượng RAM và tăng tốc độ xử lý các phép toán gom nhóm (`groupby`), nghiên cứu thực hiện:
-* Ép kiểu trường `Ticker` từ kiểu chuỗi tự do (`object`) sang kiểu dữ liệu danh mục phân loại (`category`). Kỹ thuật này giúp giảm bộ nhớ tiêu thụ của cột mã định danh từ 38,2 MB xuống còn 1,2 MB (tiết kiệm hơn 95% RAM cho biến này).
-* Sau khi tinh giản từ 8 cột về bộ ba `[Date, Ticker, Close]`, kích thước bảng dữ liệu hoàn chỉnh giảm 66,3% (từ 57 MB xuống còn 19,2 MB).
-* Khi tổng hợp các bảng thống kê theo ngày (như số mã giao dịch và lợi suất bình quân thị trường), nghiên cứu sử dụng lệnh `pd.merge()` với tham số kiểm định toàn vẹn `validate='many_to_one'`, bảo đảm số lượng quan sát của bảng chính không bị nở dòng ngoài ý muốn.
+Nhằm đáp ứng tiêu chí đồ án dữ liệu lớn ($> 100.000$ dòng) và kỹ thuật ghép nối đa bảng (Multi-table Pipeline), nghiên cứu thiết lập giải pháp:
+1. **Bảng tham chiếu Lịch phiên NYSE (`nyse_calendar`):** Trích xuất danh sách tất cả các ngày làm việc chính thức của sàn giao dịch chứng khoán New York (loại trừ thứ Bảy, Chủ Nhật và ngày nghỉ lễ). Ghép nối với bảng dữ liệu bằng lệnh `pd.merge(..., on='Date', how='left', validate='many_to_one')` để kiểm tra độ phủ của các phiên giao dịch.
+2. **Quản trị bộ nhớ RAM:** Ép kiểu trường `Ticker` từ kiểu chuỗi tự do (`object`) sang danh mục phân loại (`category`), giảm bộ nhớ tiêu thụ cột định danh từ 38,2 MB xuống còn 1,2 MB (tiết kiệm hơn 95% RAM).
+3. **Nguyên lý Parsimony:** Sau khi tinh giản từ 8 cột về bộ ba `[Date, Ticker, Close]`, kích thước bảng dữ liệu hoàn chỉnh giảm 66,3% (từ 57 MB xuống còn 19,2 MB), triệt tiêu hoàn toàn nguy cơ đa cộng tuyến ($r > 0,98$).
 
-## 3.3. Quy trình 6 bước làm sạch dữ liệu chuyên sâu
+## 3.3. Đường ống 6 bước làm sạch dữ liệu & Bảng dữ liệu tổng thể (Master Table)
 
-Nghiên cứu áp dụng quy trình xử lý 6 bước tuần tự, minh bạch và có thể tái lập 100%:
+Quy trình làm sạch được ghi vết minh bạch trên Bảng Master thông qua các cờ trạng thái (`flag_recovered`, `flag_outlier`, `flag_ffill`):
 
 ```
 [Bước 1: Chuẩn hóa Ticker] 
- -> Cắt khoảng trắng đầu cuối (.str.strip()). Hợp nhất 1.509 mã ảo về 503 mã chuẩn.
+ -> Cắt khoảng trắng (.str.strip()). Hợp nhất 1.509 mã ảo về 503 mã chuẩn S&P 500.
       │
 [Bước 2: Đồng bộ trục thời gian Date]
- -> Nhận diện cả dấu '/' và '-', ép sang datetime64[ns]. Loại bỏ 61.305 dòng mất ngày.
+ -> Nhận diện cả dấu '/' và '-', ép sang datetime64. Loại bỏ 61.305 dòng mất ngày.
       │
 [Bước 3: Bóc tách đơn vị đo lường & Giá âm]
  -> Bóc bỏ 'USD', 'VND', 'kg', '%', 'đ', đổi ',' thành '.'. Gán NaN cho giá âm và mã -1.
@@ -363,12 +400,10 @@ Thực thi tính toán tỷ suất sinh lợi Logarit cho toàn bộ 503 mã c�
 ```{python}
 #| label: calculate-returns
 #| echo: true
-# Sắp xếp và tính lợi suất logarit theo từng mã
 df_clean = df_clean.sort_values(['Ticker', 'Date']).reset_index(drop=True)
 df_clean['Return'] = df_clean.groupby('Ticker')['Close'].pct_change(fill_method=None)
 df_clean['Log_Return'] = df_clean.groupby('Ticker')['Close'].apply(lambda x: np.log(x / x.shift(1))).reset_index(level=0, drop=True)
 
-# Lọc các dòng hợp lệ có lợi suất
 df_returns = df_clean.dropna(subset=['Log_Return']).copy()
 print(f"Tổng số quan sát lợi suất tính được: {len(df_returns):,}")
 ```
@@ -399,14 +434,12 @@ Bảng thống kê mô tả 14 chỉ số trên chuỗi lợi suất logarit hà
 ```{python}
 #| label: plot-fat-tail
 #| echo: true
-#| fig-cap: "Hình thái phân phối đuôi dày (Fat-tail) của lợi suất S&P 500 so với phân phối chuẩn"
 sample_returns = df_returns['Log_Return'].values
 mu = np.mean(sample_returns)
 sigma = np.std(sample_returns)
 
 plt.figure(figsize=(10, 4.5), dpi=150)
 count, bins, ignored = plt.hist(sample_returns, bins=100, density=True, alpha=0.6, color='steelblue', label='Lợi suất thực tế S&P 500')
-# Đường phân phối chuẩn Gauss
 gauss_pdf = (1.0 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((bins - mu) / sigma)**2)
 plt.plot(bins, gauss_pdf, linewidth=2, color='crimson', label=f'Phân phối chuẩn Gauss (N({mu*100:.2f}%, {sigma*100:.2f}%))')
 
@@ -430,16 +463,13 @@ Thực thi kiểm định nghiệm đơn vị ADF trên cổ phiếu Apple (AAPL
 ```{python}
 #| label: adf-test-execution
 #| echo: true
-# Lấy chuỗi giá và chuỗi lợi suất của AAPL
 df_aapl = df_clean[df_clean['Ticker'] == 'AAPL'].sort_values('Date').copy()
 p_series = df_aapl['Close'].values
 r_series = np.diff(np.log(p_series))
 
-# Hàm tính thống kê t-stat cho ADF dạng AR(1)
 def calculate_adf_stat(series):
     dy = np.diff(series)
     y_lag = series[:-1]
-    # OLS hồi quy: dy = alpha + beta * y_lag
     X = np.column_stack([np.ones(len(y_lag)), y_lag])
     beta = np.linalg.lstsq(X, dy, rcond=None)[0]
     residuals = dy - X @ beta
@@ -472,33 +502,30 @@ Mỗi quan sát tại ngày giao dịch $t$ của cổ phiếu $i$ được cấ
 * **Các bậc trễ lợi suất (Lagged Returns):** $r_{t}, r_{t-1}, r_{t-2}$ nhằm nắm bắt hiện tượng tự tương quan ngắn hạn hoặc quán tính giá (Momentum / Mean-reversion).
 * **Độ biến động lịch sử 20 phiên ($\sigma_{t, 20}$):** Đại diện cho chế độ rủi ro hiện tại của cổ phiếu.
 * **Tỷ số xu hướng đường trung bình động ($MA_5 / MA_{20}$):** Đo lường xung lượng ngắn hạn so với trung hạn:
-  $$\text{TrendRatio}_t = \frac{\frac{1}{5}\sum_{k=0}^4 Close_{t-k}}{\frac{1}{20}\sum_{k=0}^{19} Close_{t-k}} - 1$$
+
+$$\text{TrendRatio}_t = \frac{\frac{1}{5}\sum_{k=0}^4 Close_{t-k}}{\frac{1}{20}\sum_{k=0}^{19} Close_{t-k}} - 1$$
+
 * **Biến mục tiêu (Target Label - $y$):** Là tỷ suất sinh lợi của **phiên kế tiếp**:
-  $$y_t = r_{t+1} = \ln\left(\frac{Close_{t+1}}{Close_t}\right)$$
+
+$$y_t = r_{t+1} = \ln\left(\frac{Close_{t+1}}{Close_t}\right)$$
 
 ```{python}
 #| label: feature-engineering
 #| echo: true
-# Tạo các đặc trưng trễ theo từng mã
 df_feat = df_clean.sort_values(['Ticker', 'Date']).copy()
 
-# Bậc trễ r_t, r_{t-1}, r_{t-2}
 df_feat['r_t'] = df_feat.groupby('Ticker')['Log_Return'].shift(0)
 df_feat['r_lag1'] = df_feat.groupby('Ticker')['Log_Return'].shift(1)
 df_feat['r_lag2'] = df_feat.groupby('Ticker')['Log_Return'].shift(2)
 
-# Độ biến động trượt 20 phiên
 df_feat['vol_20'] = df_feat.groupby('Ticker')['Log_Return'].rolling(20).std().reset_index(level=0, drop=True)
 
-# Tỷ số đường trung bình MA5 / MA20
 df_feat['ma_5'] = df_feat.groupby('Ticker')['Close'].rolling(5).mean().reset_index(level=0, drop=True)
 df_feat['ma_20'] = df_feat.groupby('Ticker')['Close'].rolling(20).mean().reset_index(level=0, drop=True)
 df_feat['trend_ratio'] = (df_feat['ma_5'] / df_feat['ma_20']) - 1.0
 
-# Nhãn mục tiêu: Lợi suất phiên kế tiếp r_{t+1}
 df_feat['target_y'] = df_feat.groupby('Ticker')['Log_Return'].shift(-1)
 
-# Lọc các dòng sạch đầy đủ đặc trưng
 feature_cols = ['r_t', 'r_lag1', 'r_lag2', 'vol_20', 'trend_ratio']
 df_model = df_feat.dropna(subset=feature_cols + ['target_y']).copy()
 print(f"Tổng số mẫu quan sát đủ đặc trưng: {len(df_model):,}")
@@ -525,7 +552,6 @@ y_train = df_model.loc[train_mask, 'target_y'].values
 X_test_raw = df_model.loc[test_mask, feature_cols].values
 y_test = df_model.loc[test_mask, 'target_y'].values
 
-# Chuẩn hóa Z-score đóng băng chỉ học trên Train
 mean_train = np.mean(X_train_raw, axis=0)
 std_train = np.std(X_train_raw, axis=0)
 std_train[std_train == 0] = 1.0
@@ -554,7 +580,7 @@ y_pred_ols = X_test_bias @ beta_ols
 # 3. Ridge Regression (alpha = 10.0)
 alpha = 10.0
 I = np.eye(X_train_bias.shape[1])
-I[0, 0] = 0 # không phạt bias
+I[0, 0] = 0
 beta_ridge = np.linalg.solve(X_train_bias.T @ X_train_bias + alpha * I, X_train_bias.T @ y_train)
 y_pred_ridge = X_test_bias @ beta_ridge
 
@@ -637,7 +663,7 @@ Mặc dù mô hình Ridge Regression giảm nhẹ sai số MAE và RMSE so với
 Đề tài nghiên cứu đã hoàn thành trọn vẹn và giải quyết thấu đáo ba câu hỏi đặt ra:
 * **Về câu hỏi 1:** Nghiên cứu đã lập bảng lượng hóa toàn diện 14 chỉ số rủi ro cho 503 cổ phiếu, xác định mức độ biến động phân hóa sâu sắc từ $14,6\%$ (JNJ) đến $57,9\%$ (TSLA) và hệ số Sharpe dao động từ $-0,52$ đến $1,85$.
 * **Về câu hỏi 2:** Danh mục đầu tư cân bằng tỷ trọng đều (Equal-Weighted) chứng minh tính ưu việt với lợi suất năm hóa $+14,82\%/\text{năm}$, đưa giá trị tài sản từ 100 lên 182,4 điểm sau 5 năm.
-* **Về câu hỏi 3:** Kiểm định ngoài mẫu trên 112.021 quan sát xác nhận mô hình Ridge Regression giảm nhẹ sai số tuyệt đối so với mốc chuẩn ($MAE = 0,0142$ so với $0,01438$), nhưng $R^2$ ở mức $0,84\%$ phản ánh tính chất ngẫu nhiên cao của thị trường, củng cố vững chắc nền tảng lý thuyết thị trường hiệu quả.
+* **Về câu hỏi 3:** Kiểm định ngoài mẫu trên 112.021 quan sát xác nhận mô hình Ridge Regression giảm nhẹ sai số tuyệt đối so với mốc chuẩn ($MAE = 0,01421$ so với $0,01438$), nhưng $R^2$ ở mức $0,84\%$ phản ánh tính chất ngẫu nhiên cao của thị trường, củng cố vững chắc nền tảng lý thuyết thị trường hiệu quả.
 
 \newpage
 
