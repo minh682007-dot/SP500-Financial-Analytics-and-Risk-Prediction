@@ -41,9 +41,9 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
     * Cột DGS3MO thiếu: 21,841 dòng (3.51%).
     * Cột Ticker: 0 dòng thiếu (0.00%).
   + Phát hiện 7 nhóm dữ liệu "bẩn" điển hình:
-    * Lỗi đơn vị: Hơn 84,690 dòng ở cột Close dính chữ 'USD', 'VND', 'kg', '%', 'đ' và lẫn dấu phẩy thập phân ','.
-    * Lỗi phân mảnh Ticker: 50,172 dòng dính khoảng trắng (' A', 'AAPL ') khiến 503 mã cổ phiếu thực tế bị nhân bản thành 1,509 mã ảo.
-    * Ký tự rác: 17,283 dòng cột Date dính dấu '?' và '-'.
+    * Lỗi đơn vị: Hơn 84,690 dòng ở cột Close dính chữ "USD", "VND", "kg", "%", "đ" và lẫn dấu phẩy thập phân ",".
+    * Lỗi phân mảnh Ticker: 50,172 dòng dính khoảng trắng (" A", "AAPL ") khiến 503 mã cổ phiếu thực tế bị nhân bản thành 1,509 mã ảo.
+    * Ký tự rác: 17,283 dòng cột Date dính dấu "?" và "-".
     * Giá trị âm vô lý: 17,032 dòng Close âm (đặc biệt có 13,794 dòng mang giá trị gán lỗi là -1); Low âm 18,888 dòng; High âm 16,567 dòng; Volume âm 17,155 dòng.
     * Vi phạm logic giá trong phiên: 30,730 dòng ghi nhận High < Low; 33,102 dòng ghi nhận High < Close.
     * Ngoại lai: Cột Open có 9,985 dòng bị gán cứng bằng 9999; DGS3MO vọt lên 50.0%.
@@ -104,12 +104,12 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 
 1. Buổi chiều (14:00 - 16:30): Lập trình Pipeline Tiền xử lý & Làm sạch dữ liệu
 - Triển khai kịch bản Python "visualize_and_clean.py" và "thong_ke_du_lieu.py":
-  + Chuẩn hóa Ticker: Cắt bỏ khoảng trắng thừa bằng df['Ticker'].astype(str).str.strip(). Gộp thành công 1,509 mã ảo về đúng 503 mã cổ phiếu chuẩn của rổ S&P 500.
-  + Chuẩn hóa Date: Loại bỏ các ký tự rác '?' và '-', chuẩn hóa dấu '/' thành '-', chuyển đổi về datetime64. Nhận diện 560,938 dòng hợp lệ (loại 61,305 dòng mất nhãn thời gian).
-  + Chuẩn hóa Close: Bóc tách đơn vị 'USD', 'VND', 'kg', '%', 'đ', chuyển dấu phẩy ',' thành dấu chấm '.', ép kiểu float64. Loại bỏ các giá trị âm và mã hóa lỗi -1.
+  + Chuẩn hóa Ticker: Cắt bỏ khoảng trắng thừa bằng df["Ticker"].astype(str).str.strip(). Gộp thành công 1,509 mã ảo về đúng 503 mã cổ phiếu chuẩn của rổ S&P 500.
+  + Chuẩn hóa Date: Loại bỏ các ký tự rác "?" và "-", chuẩn hóa dấu "/" thành "-", chuyển đổi về datetime64. Nhận diện 560,938 dòng hợp lệ (loại 61,305 dòng mất nhãn thời gian).
+  + Chuẩn hóa Close: Bóc tách đơn vị "USD", "VND", "kg", "%", "đ", chuyển dấu phẩy "," thành dấu chấm ".", ép kiểu float64. Loại bỏ các giá trị âm và mã hóa lỗi -1.
   + Sắp xếp dữ liệu bảng Panel Data theo thứ tự [Ticker, Date].
   + Xây dựng bộ lọc ngoại lai (Median Filter): Thiết lập điều kiện (Close > 3*Median) | (Close < Median/3) để phát hiện và xử lý 15,584 quan sát dính lỗi nhảy số thập phân 10x, 100x.
-  + Áp dụng Forward Fill: df['Close'] = df.groupby('Ticker')['Close'].ffill() để lấp đầy dữ liệu thiếu mà không làm phẳng độ biến động thị trường.
+  + Áp dụng Forward Fill: df["Close"] = df.groupby('Ticker')['Close'].ffill() để lấp đầy dữ liệu thiếu mà không làm phẳng độ biến động thị trường.
 - Kết quả làm sạch dữ liệu:
   + Cỡ mẫu sạch thu được: 560,103 dòng quan sát (đạt tỷ lệ sử dụng 90.01% dữ liệu gốc).
   + Giá Close trung bình sau làm sạch: 179,51 USD; Trung vị: 107,94 USD; Giá cao nhất: 9.924,40 USD (cổ phiếu NVR).
@@ -187,7 +187,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Phân tích và làm rõ từng bước làm sạch dữ liệu:
   + Bước 1: Xử lý 50,172 dòng dính khoảng trắng Ticker, gộp 1,509 mã ảo về 503 mã chuẩn.
   + Bước 2: Đồng bộ định dạng Date, loại bỏ 61,305 dòng không xác định nhãn ngày.
-  + Bước 3: Bóc tách đơn vị đo (USD, VND, kg, %, đ), thay dấu ',' thành '.', ép kiểu float64 và loại bỏ các giá trị âm / mã lỗi -1.
+  + Bước 3: Bóc tách đơn vị đo (USD, VND, kg, %, đ), thay dấu "," thành ".", ép kiểu float64 và loại bỏ các giá trị âm / mã lỗi -1.
   + Bước 4: Sắp xếp cấu trúc dữ liệu bảng Panel Data theo [Ticker, Date].
   + Bước 5: Ứng dụng Median Filter khoanh vùng và xử lý 15,584 dòng ngoại lai nhảy số thập phân.
   + Bước 6: Áp dụng Forward Fill theo từng Ticker để điền ô trống mà không làm phẳng độ biến động Random Walk.
@@ -239,9 +239,9 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Đồng bộ tệp dữ liệu gốc DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv vào không gian làm việc.
 - Lập trình kịch bản "build_detailed_tieuluan.py" mở rộng notebook lên 51 cells với 7 bước chi tiết:
   + Kiểm toán NaN: Viết lệnh df_raw.isna().any(axis=1), in 10 dòng thô dính NaN ở các cột.
-  + Lỗi 1 (Khoảng trắng Ticker): Viết mask ticker_raw != ticker_stripped, in 10 dòng có dạng [' A'], [' AAPL'], giải thích nguyên nhân gây ra 1,509 mã ảo. Chạy .str.strip() và in kết quả xác nhận số mã gom về 503.
-  + Lỗi 2 (Ký tự rác & Mất ngày): Viết mask lọc dấu '?' và '-', in 10 dòng lỗi thô. Chuẩn hóa sang datetime64, giải thích vì sao dòng mất ngày phải loại bỏ (drop 61,305 dòng).
-  + Lỗi 3 (Đơn vị đo & Dấu phẩy ở Close): Viết mask regex tìm 'USD', 'VND', 'kg', '%', 'đ' và ',', in 10 dòng lỗi thô. Chạy hàm bóc tách và in bảng đối chiếu Trước vs Sau.
+  + Lỗi 1 (Khoảng trắng Ticker): Viết mask ticker_raw != ticker_stripped, in 10 dòng có dạng [" A"], [" AAPL"], giải thích nguyên nhân gây ra 1,509 mã ảo. Chạy .str.strip() và in kết quả xác nhận số mã gom về 503.
+  + Lỗi 2 (Ký tự rác & Mất ngày): Viết mask lọc dấu "?" và "-", in 10 dòng lỗi thô. Chuẩn hóa sang datetime64, giải thích vì sao dòng mất ngày phải loại bỏ (drop 61,305 dòng).
+  + Lỗi 3 (Đơn vị đo & Dấu phẩy ở Close): Viết mask regex tìm "USD", "VND", "kg", "%", "đ" và ",", in 10 dòng lỗi thô. Chạy hàm bóc tách và in bảng đối chiếu Trước vs Sau.
   + Lỗi 4 (Giá âm, mã lỗi -1 và giá trị 9999): Viết mask Close <= 0 | Close == 9999, in 10 dòng lỗi thô. Giải trình nguyên lý trách nhiệm hữu hạn và lỗi toán học khi tính log return ln(Pt/Pt-1). Gán về NaN để chuẩn bị ffill.
   + Lỗi 5 (Sắp xếp Panel Data): Sắp xếp đơn điệu theo [Ticker, Date], in 8 dòng liên tục của mã A từ 2021 đến 2026.
   + Lỗi 6 (Lọc ngoại lai Outlier): Áp dụng Median Filter (Close > 3*Median | Close < Median/3), in 10 dòng ngoại lai nhảy số thập phân so với trung vị, gán NaN cho 15,584 dòng bất thường.
@@ -316,7 +316,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT THEO THỜI GIAN THỰC TẾ (20:06 -
 - 22:24 - 22:33 | Mục 3.1. Kiểm kê tệp dữ liệu thô ban đầu:
   + Lập bảng kiểm toán chi tiết 8 trường của tệp gốc DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv (622.243 dòng, 57 MB).
 - 22:33 - 22:41 | Mục 3.2. Quản trị bộ nhớ và ghép nối bảng:
-  + Ép kiểu Ticker sang category (tiết kiệm 95% RAM), tinh giản 8 biến về 3 biến cốt lõi (Date, Ticker, Close), dùng merge validate='many_to_one' để chống nở dòng.
+  + Ép kiểu Ticker sang category (tiết kiệm 95% RAM), tinh giản 8 biến về 3 biến cốt lõi (Date, Ticker, Close), dùng merge validate="many_to_one" để chống nở dòng.
 - 22:41 - 22:52 | Mục 3.3. Quy trình 6 bước làm sạch dữ liệu:
   + Thực thi bóc tách khoảng trắng, chuẩn hóa định dạng ngày gạch/chéo, lọc đơn vị tiền tệ, xử lý giá âm, lọc ngoại lai Median Filter và Forward Fill. Lập bảng đối chiếu trước/sau.
 - 22:52 - 23:00 | Mục 3.4. Thống kê mô tả định lượng:
@@ -417,7 +417,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Viết script Python tính toán trực tiếp trên tệp "data_cleaned_SP500.csv":
   + Tính Return đơn và Return log qua `pct_change()` và `np.log(P_t / P_{t-1})`.
   + Tính Rolling Volatility 20 ngày qua `.rolling(20).std()`.
-  + Tổng hợp Danh mục Tỷ trọng đều (Equal-Weighted Portfolio) qua `groupby('Date')['Log_Return'].mean()`.
+  + Tổng hợp Danh mục Tỷ trọng đều (Equal-Weighted Portfolio) qua `groupby("Date")['Log_Return'].mean()`.
   + Tính Hệ số Sharpe năm hóa: Annualized Return đạt +13,68%/năm, Volatility năm hóa 17,53%/năm, Sharpe đạt 0,7806.
 - Nhúng toàn bộ khối mã và bảng output vào "tieuluan.qmd" và "skill/tieuluan.qmd".
 
@@ -535,7 +535,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
     * Quy ước kỹ thuật đọc tệp nguyên trạng: Sử dụng `dtype=str` và `keep_default_na=False` để bảo tồn nguyên vẹn chuỗi thô và ô trống vật lý `""`.
     * Tách trích bộ ba biến lõi `[Date, Ticker, Close]` trước khi lọc dòng.
     * Thiết kế phân tách cột giá thô (`Close_raw`) và cột số phân tích (`Close_clean` / `Close_num`) trên Bảng Master.
-    * Lý giải kinh tế học sâu sắc về việc loại bỏ `Open`, `High`, `Low`, `Volume`, `DGS3MO`: Triệt tiêu đa cộng tuyến hoàn hảo (r > 0,98, VIF > 100 USD), loại bỏ nhiễu tạp chất và áp dụng nguyên lý Tinh giản (Parsimony / Ockham's Razor).
+    * Lý giải kinh tế học sâu sắc về việc loại bỏ `Open`, `High`, `Low`, `Volume`, `DGS3MO`: Triệt tiêu đa cộng tuyến hoàn hảo (r > 0,98, VIF > 100 USD), loại bỏ nhiễu tạp chất và áp dụng nguyên lý Tinh giản (Parsimony / Ockham Razor).
     * Thiết lập **Sơ đồ biến gốc và các biến dẫn xuất** cùng danh mục các cột xuất bản sau làm sạch.
   + **Mục 3.1.3 (Kiểm kê quy mô và tình trạng nhập tệp):**
     * Phân biệt rạch ròi ba tầng khuyết tật dữ liệu:
@@ -632,7 +632,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
     * Xây dựng Danh mục Tỷ trọng đều (Equal-Weighted S&P 500 Portfolio) gồm 1.253 phiên giao dịch.
     * Đo lường hiệu quả định lượng: Lợi suất ngày bình quân +0,0645%/ngày, Độ lệch chuẩn ngày 0,8654%/ngày (giảm hơn 70% rủi ro so với mức bình quân 2,97% của cổ phiếu đơn lẻ nhờ đa dạng hóa Markowitz).
     * Lợi suất năm hóa đạt +16,26%/năm, Độ biến động năm hóa 13,74%/năm, Hệ số Sharpe năm hóa với giả định R_f = 0 đạt **1,1834**.
-    * Tổng hợp chuỗi lợi suất tháng qua định dạng offset chuẩn `'ME'` (Pandas 3.0.5): 61 tháng khảo sát, tháng bùng nổ nhất là Tháng 11/2023 (+12,41%), tháng suy giảm sâu nhất là Tháng 09/2022 (-9,46%).
+    * Tổng hợp chuỗi lợi suất tháng qua định dạng offset chuẩn `"ME"` (Pandas 3.0.5): 61 tháng khảo sát, tháng bùng nổ nhất là Tháng 11/2023 (+12,41%), tháng suy giảm sâu nhất là Tháng 09/2022 (-9,46%).
     * Thiết lập **Bảng 3.17: Lợi suất, rủi ro và chỉ số Sharpe của Danh mục tỷ trọng đều theo năm (2021 – 2026)**.
     * Nhúng khối mã vẽ Biểu đồ giá trị tài sản tích lũy danh mục (`fig-portfolio-cumulative`), tăng trưởng từ cơ sở 100 USD lên 214,11 (+114,11%).
     * Nhấn mạnh 3 lưu ý phương pháp luận bắt buộc: Trình bày trung thực ngoại lai cực đoan; Nêu rõ giả định R_f = 0 là mốc quy ước kỹ thuật, không phải lãi suất thực tế của T-bill; Phân biệt rõ danh mục tỷ trọng đều minh họa với chỉ số S&P 500 thực tế tính theo vốn hóa.
