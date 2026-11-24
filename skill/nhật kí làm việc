@@ -112,7 +112,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
   + Áp dụng Forward Fill: df['Close'] = df.groupby('Ticker')['Close'].ffill() để lấp đầy dữ liệu thiếu mà không làm phẳng độ biến động thị trường.
 - Kết quả làm sạch dữ liệu:
   + Cỡ mẫu sạch thu được: 560,103 dòng quan sát (đạt tỷ lệ sử dụng 90.01% dữ liệu gốc).
-  + Giá Close trung bình sau làm sạch: $179.51; Trung vị: $107.94; Giá cao nhất: $9,924.40 (cổ phiếu NVR).
+  + Giá Close trung bình sau làm sạch: 179,51 USD; Trung vị: 107,94 USD; Giá cao nhất: 9.924,40 USD (cổ phiếu NVR).
 
 2. Buổi chiều (16:30 - 18:00): Trực quan hóa dữ liệu & Giải quyết 3 bài toán kinh doanh
 - Thiết kế và xuất thành công 7 biểu đồ đồ họa phân giải cao (DPI 300) vào thư mục "charts/":
@@ -458,7 +458,7 @@ I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
    - Hoàn thiện Chương 3 - Mục 3.1: Mô tả 8 trường dữ liệu thô, lý giải tinh giản 3 biến [Date, Ticker, Close], phân tích 3 tầng khuyết tật (8.823 ô trống vs 61.305 Date thiếu vs 145.093 Close cần xử lý).
    - Hoàn thiện Chương 3 - Mục 3.2: Lập bảng lịch NYSE 1.254 phiên, ghép nối Many-to-One xác thực `validate="many_to_one"`, đo lường RAM thực tế (giảm 96,1% RAM Ticker, 50,1% row_id).
    - Hoàn thiện Chương 3 - Mục 3.3: 7 tiểu mục làm sạch chuyên sâu (Bảng 3.5 đến 3.13), giải trình minh bạch 97 dòng Date khôi phục, bộ lọc Median 3x, phân tích độ nhạy 3 phương án dữ liệu, cấm nội suy 2 phía.
-   - Hoàn thiện Chương 3 - Mục 3.4: Mô tả tập sạch cuối cùng, thống kê lợi suất đơn 559.600 quan sát kèm vết tính tay AAPL, biến động 20 phiên ($\sigma_{20d}$ đạt độ phủ 98,21%), ma trận tương quan 8 mã và hiệu quả Danh mục tỷ trọng đều (+114,11%, Sharpe 1,1834).
+   - Hoàn thiện Chương 3 - Mục 3.4: Mô tả tập sạch cuối cùng, thống kê lợi suất đơn 559.600 quan sát kèm vết tính tay AAPL, biến động 20 phiên (σ_20d đạt độ phủ 98,21%), ma trận tương quan 8 mã và hiệu quả Danh mục tỷ trọng đều (+114,11%, Sharpe 1,1834).
 3. Đóng gói mã nguồn, đồng bộ hóa tuyệt đối giữa "tieuluan.qmd" và "skill/tieuluan.qmd", kiểm toán tính toàn vẹn (SHA256).
 
 --------------------------------------------------------------------------------
@@ -494,7 +494,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
   + **Mục 1.5 (Ý nghĩa lý luận và thực tiễn):**
     * Phân tích sâu 3 ý nghĩa lý luận - phương pháp: Minh bạch hóa quy trình tiền xử lý (Audit Trail), kiểm soát rò rỉ thông tin (Look-ahead Bias Control), kiểm định thực nghiệm Giả thuyết Thị trường Hiệu quả (EMH dạng yếu).
     * Trình bày 3 ý nghĩa ứng dụng thực tiễn trong quản trị rủi ro và đầu tư định lượng.
-    * Xây dựng **Tình huống ứng dụng thực tế cụ thể**: Quy trình 4 bước thiết lập hệ thống giám sát biến động trượt 20 phiên ($\sigma_{20d}$) và cơ chế tái phân bổ vốn theo nghịch đảo biến động giúp quỹ đầu tư giảm 25%–35% sụt giảm tối đa (MDD).
+    * Xây dựng **Tình huống ứng dụng thực tế cụ thể**: Quy trình 4 bước thiết lập hệ thống giám sát biến động trượt 20 phiên (σ_20d) và cơ chế tái phân bổ vốn theo nghịch đảo biến động giúp quỹ đầu tư giảm 25%–35% sụt giảm tối đa (MDD).
 - Kiểm tra tính toàn vẹn cú pháp và đồng bộ hóa thành công 100% giữa hai tệp báo cáo.
 
 5. Phiên tối (22:00 - 22:15): Triển khai chi tiết Mục 2.2, 2.3, 2.4, 2.5 theo Đề cương cập nhật
@@ -511,9 +511,9 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
     * 2.4.1. Công thức tỷ lệ khuyết thiếu và kiểm tra tính duy nhất của cặp khóa `[Ticker, Date]`.
     * 2.4.2. Khung lọc ngoại lai Median Filter (3x Median) theo từng mã; Nguyên tắc phương pháp luận: IQR và Z-score chỉ để nhận diện thống kê, tuyệt đối không tự động xóa bỏ điểm dữ liệu cực trị.
     * 2.4.3. Thiết kế thực nghiệm mô phỏng che giá ngẫu nhiên 5% (Masking Experiment) để kiểm tra sai số tái tạo và đánh giá hiệu ứng làm trơn (Smoothing Effect) của Forward Fill.
-    * 2.4.4. Kiểm định nghiệm đơn vị ADF: Giả thuyết $H_0/H_1$, phương trình tự sai phân, đặc tả số trễ AIC và giới hạn mẫu lớn.
-    * 2.4.5. Cơ chế đối kháng 3 mô hình: Zero Benchmark ($\hat{R}=0$), Hồi quy OLS và Hồi quy phạt Ridge ($L_2$, $\alpha=10$).
-    * 2.4.6. Hệ thống 4 chỉ tiêu sai số ngoài mẫu: MAE, RMSE, $R^2_{OOS}$ và bổ sung **Tỷ lệ dự báo đúng chiều biến động (Directional Accuracy - DA)**; Nêu rõ lý do khoa học loại bỏ hoàn toàn chỉ số MAPE.
+    * 2.4.4. Kiểm định nghiệm đơn vị ADF: Giả thuyết H_0/H_1, phương trình tự sai phân, đặc tả số trễ AIC và giới hạn mẫu lớn.
+    * 2.4.5. Cơ chế đối kháng 3 mô hình: Zero Benchmark (R^ = 0), Hồi quy OLS và Hồi quy phạt Ridge (L_2, alpha=10).
+    * 2.4.6. Hệ thống 4 chỉ tiêu sai số ngoài mẫu: MAE, RMSE, R^2_{OOS} và bổ sung **Tỷ lệ dự báo đúng chiều biến động (Directional Accuracy - DA)**; Nêu rõ lý do khoa học loại bỏ hoàn toàn chỉ số MAPE.
     * Thiết lập **Bảng 2.4: So sánh ưu/nhược điểm các phương pháp, điều kiện áp dụng và biện pháp kiểm soát rò rỉ dữ liệu**.
   + **Mục 2.5 (Môi trường thực nghiệm và công cụ Python):**
     * Báo cáo chính xác thông số môi trường đã kiểm tra thực tế: Windows 11 (bản dựng 10.0.26300), Python 3.13.7, Quarto CLI 1.10.18, Antigravity IDE / VS Code.
@@ -535,7 +535,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
     * Quy ước kỹ thuật đọc tệp nguyên trạng: Sử dụng `dtype=str` và `keep_default_na=False` để bảo tồn nguyên vẹn chuỗi thô và ô trống vật lý `""`.
     * Tách trích bộ ba biến lõi `[Date, Ticker, Close]` trước khi lọc dòng.
     * Thiết kế phân tách cột giá thô (`Close_raw`) và cột số phân tích (`Close_clean` / `Close_num`) trên Bảng Master.
-    * Lý giải kinh tế học sâu sắc về việc loại bỏ `Open`, `High`, `Low`, `Volume`, `DGS3MO`: Triệt tiêu đa cộng tuyến hoàn hảo ($r > 0,98$, VIF $> 100$), loại bỏ nhiễu tạp chất và áp dụng nguyên lý Tinh giản (Parsimony / Ockham's Razor).
+    * Lý giải kinh tế học sâu sắc về việc loại bỏ `Open`, `High`, `Low`, `Volume`, `DGS3MO`: Triệt tiêu đa cộng tuyến hoàn hảo (r > 0,98, VIF > 100 USD), loại bỏ nhiễu tạp chất và áp dụng nguyên lý Tinh giản (Parsimony / Ockham's Razor).
     * Thiết lập **Sơ đồ biến gốc và các biến dẫn xuất** cùng danh mục các cột xuất bản sau làm sạch.
   + **Mục 3.1.3 (Kiểm kê quy mô và tình trạng nhập tệp):**
     * Phân biệt rạch ròi ba tầng khuyết tật dữ liệu:
@@ -570,7 +570,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
     * Giới thiệu kỹ thuật đọc phân đoạn `chunksize` và tối ưu lưu trữ bằng định dạng nén Parquet.
     * Tuân thủ lưu ý phương pháp luận: Tuyệt đối không phóng đại tỷ lệ tiết kiệm RAM nếu chưa đo đạc thực tế.
     * Thiết lập **Bảng 3.4: Bảng đo lường dung lượng RAM thực tế trước và sau tối ưu hóa kiểu dữ liệu**.
-    * Nhúng khối mã Python thực nghiệm đo RAM và kiểm định bảo toàn $100\%$ giá trị dữ liệu qua câu lệnh `assert` (`memory-optimization-check`).
+    * Nhúng khối mã Python thực nghiệm đo RAM và kiểm định bảo toàn 100% giá trị dữ liệu qua câu lệnh `assert` (`memory-optimization-check`).
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd" và "skill/tieuluan.qmd".
 
 8. Phiên đêm (22:40 - 22:52): Triển khai chi tiết Mục 3.3 (3.3.1 đến 3.3.7) theo Đề cương cập nhật
@@ -583,7 +583,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
   + **Mục 3.3.2 (Chuẩn hóa và đối chiếu ngày Date):**
     * Chuẩn hóa dấu phân cách `/` và `-` về chuẩn ISO-8601 (`YYYY-MM-DD`).
     * Thiết lập quy tắc suy luận ngày có kiểm soát: Chỉ suy ra khi có đủ 2 mốc đầu–cuối xác định và đúng số phiên làm việc theo lịch NYSE.
-    * Giải trình minh bạch số liệu đối chiếu: $61.305 - 61.208 = 97$ dòng (61.208 dòng loại bỏ do không thể xác minh, đúng 97 dòng được khôi phục thành công).
+    * Giải trình minh bạch số liệu đối chiếu: 61.305 - 61.208 = 97 dòng (61.208 dòng loại bỏ do không thể xác minh, đúng 97 dòng được khôi phục thành công).
     * Thiết lập **Bảng 3.6: Thống kê trường Date trước và sau xử lý**.
   + **Mục 3.3.3 (Kiểm tra Ticker và bản ghi trùng):**
     * Cắt khoảng trắng thừa `.str.strip()`, hợp nhất 1.509 chuỗi text về đúng 503 mã niêm yết chuẩn S&P 500 (0 dòng mã rỗng).
@@ -595,7 +595,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
     * Xử lý 17.032 dòng giá âm/mã lỗi -1 và 1.820 dòng giá 9999 sang `NaN` có cờ kiểm toán `flag_suspicious=1`.
     * Thiết lập **Bảng 3.8: Phân loại nhóm định dạng Close và quy tắc chuẩn hóa sang số** kèm 8 ví dụ cụ thể trước/sau.
   + **Mục 3.3.5 (Phát hiện ngoại lai và nghi vấn sai quy mô):**
-    * Áp dụng bộ lọc Median Filter vững ($P > 3M_i$ hoặc $P < M_i/3$), phát hiện 15.584 ngoại lai nhảy số thập phân gấp 10, 100, 1.000 lần.
+    * Áp dụng bộ lọc Median Filter vững (P > 3M_i hoặc P < M_i/3), phát hiện 15.584 ngoại lai nhảy số thập phân gấp 10, 100, 1.000 lần.
     * Nêu rõ lưu ý phương pháp luận: IQR và Boxplot chỉ dùng để phát hiện bổ trợ, không coi mọi điểm vượt ngưỡng là lỗi, không xóa dữ liệu tùy tiện.
     * Thiết lập **Bảng 3.9: Phân loại dấu hiệu ngoại lai và giải pháp xử lý**.
   + **Mục 3.3.6 (Lựa chọn xử lý Close và thử nghiệm độ nhạy):**
@@ -604,7 +604,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
     * Tuân thủ nghiêm ngặt lưu ý phương pháp luận: Không ghép số từ hai lần chạy thành số liệu chính thức; nghiêm cấm nội suy hai phía (Linear Interpolation) gây rò rỉ dữ liệu tương lai.
     * Thiết lập **Bảng 3.10: So sánh độ nhạy của các chỉ tiêu tài chính giữa các phương án xử lý dữ liệu**.
   + **Mục 3.3.7 (Đánh giá kết quả làm sạch và kiểm tra bất biến dữ liệu):**
-    * Thực thi 4 phép kiểm tra tính bất biến: Tổng dòng bảo toàn ($622.243 = 560.103 + 62.140$), $100\%$ giá sạch $> 0$, cặp `[Ticker, Date]` duy nhất 100%, tỷ lệ cửa sổ đủ 21 giá đạt 98,4%.
+    * Thực thi 4 phép kiểm tra tính bất biến: Tổng dòng bảo toàn (622.243 = 560.103 + 62.140), 100% giá sạch > 0, cặp `[Ticker, Date]` duy nhất 100%, tỷ lệ cửa sổ đủ 21 giá đạt 98,4%.
     * Thiết lập **Bảng 3.11: Bảng đối chiếu kiểm toán chất lượng dữ liệu Trước vs Sau làm sạch**.
     * Thiết lập **Bảng 3.12: Thống kê chất lượng dữ liệu và độ phủ theo năm (2021–2026)**.
     * Thiết lập **Bảng 3.13: Top 10 mã cổ phiếu có số phiên thiếu nhiều nhất và tỷ lệ cửa sổ 21 giá**.
@@ -618,24 +618,24 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
     * Phân bổ số mẫu theo năm dương lịch: Năm 2021 (28.168 dòng, 55 phiên return), 2022 (126.253 dòng), 2023 (125.750 dòng), 2024 (126.756 dòng), 2025 (126.253 dòng), 2026 (97.582 dòng, đến 12/10).
     * Thiết lập **Bảng 3.14: Bảng phân vùng số liệu được phép sử dụng cho từng phép tính** (quy định chặt chẽ phạm vi mẫu cho Giá, Lợi suất, Biến động 20 phiên, Danh mục và Mô hình hồi quy ML).
   + **Mục 3.4.2 (Xây dựng và thống kê lợi suất cổ phiếu):**
-    * Công thức tính lợi suất đơn: $R_{i, t} = P_{i, t} / P_{i, t-1} - 1$.
+    * Công thức tính lợi suất đơn: R_{t} = P_{t} / P_{i, t-1} - 1.
     * Tuân thủ nghiêm ngặt 2 nguyên tắc phương pháp luận: Chỉ tính giữa hai phiên liền kề của cùng mã (cấm nối qua khoảng thiếu), tuyệt đối không biến `NaN` thành 0.
-    * Báo cáo đầy đủ hệ thống tham số thực nghiệm đo đạc trên 559.600 quan sát: Mean $= +0,0644\%$/ngày, Median $= 0,0000\%$, Std $= 2,9705\%$, Q25 $= -0,7090\%$, Q75 $= +0,8497\%$, IQR $= 1,5587\%$, Min $= -87,9501\%$, Max $= +784,2406\%$, Tỷ lệ dương $= 40,91\%$, Tỷ lệ âm $= 37,94\%$, Đứng giá $= 21,15\%$.
+    * Báo cáo đầy đủ hệ thống tham số thực nghiệm đo đạc trên 559.600 quan sát: Mean = +0,0644%/ngày, Median = 0,0000%, Std = 2,9705%, Q25 = -0,7090%, Q75 = +0,8497%, IQR = 1,5587%, Min = -87,9501%, Max = +784,2406%, Tỷ lệ dương = 40,91%, Tỷ lệ âm = 37,94%, Đứng giá = 21,15%.
     * Thiết lập **Bảng 3.15: Thống kê mô tả chuỗi lợi suất đơn của 503 cổ phiếu S&P 500**.
     * Trình bày vết kiểm toán tính tay (Audit Trail) trên cổ phiếu `AAPL` qua 4 phiên liên tiếp (14/10 đến 19/10/2021), chứng minh kết quả Python trùng khớp chính xác đến 6 chữ số thập phân.
   + **Mục 3.4.3 (Thống kê biến động lịch sử và tương quan):**
-    * Tính độ biến động 20 phiên ($\sigma_{20d}$) với tham số `min_periods=20`, không tính toán trên cửa sổ thiếu.
-    * Thống kê phân bố toàn rổ: 550.055 quan sát đạt chuẩn (độ phủ 98,21%), Mean $= 2,0045\%$/ngày, Median $= 1,7329\%$, Std $= 2,2184\%$.
+    * Tính độ biến động 20 phiên (σ_20d) với tham số `min_periods=20`, không tính toán trên cửa sổ thiếu.
+    * Thống kê phân bố toàn rổ: 550.055 quan sát đạt chuẩn (độ phủ 98,21%), Mean = 2,0045%/ngày, Median = 1,7329%, Std = 2,2184%.
     * Thiết lập **Bảng 3.16: Phân bố biến động 20 phiên theo mã và nhóm cổ phiếu tiêu biểu** (High Beta: TSLA 3,77%, AMD 3,29%, NVDA 5,66% kèm ghi chú sự kiện chia tách 10:1 chưa điều chỉnh; Defensive: JNJ 1,14%, PG 1,11%, KO 1,05%).
-    * Trích xuất ma trận tương quan Pearson giữa 8 cổ phiếu đầu ngành đại diện 4 khối kinh tế, phân tích hiệu ứng cụm ngành Tech ($r = 0,30 - 0,37$) và hiệu ứng triệt tiêu rủi ro phi hệ thống nhờ tương quan xấp xỉ 0 giữa Y tế / Năng lượng với Công nghệ.
+    * Trích xuất ma trận tương quan Pearson giữa 8 cổ phiếu đầu ngành đại diện 4 khối kinh tế, phân tích hiệu ứng cụm ngành Tech (r = 0,30 - 0,37) và hiệu ứng triệt tiêu rủi ro phi hệ thống nhờ tương quan xấp xỉ 0 giữa Y tế / Năng lượng với Công nghệ.
   + **Mục 3.4.4 (Đánh giá danh mục và chỉ số Sharpe):**
     * Xây dựng Danh mục Tỷ trọng đều (Equal-Weighted S&P 500 Portfolio) gồm 1.253 phiên giao dịch.
-    * Đo lường hiệu quả định lượng: Lợi suất ngày bình quân $+0,0645\%$/ngày, Độ lệch chuẩn ngày $0,8654\%$/ngày (giảm hơn $70\%$ rủi ro so với mức bình quân $2,97\%$ của cổ phiếu đơn lẻ nhờ đa dạng hóa Markowitz).
-    * Lợi suất năm hóa đạt $+16,26\%$/năm, Độ biến động năm hóa $13,74\%$/năm, Hệ số Sharpe năm hóa với giả định $R_f = 0$ đạt **1,1834**.
-    * Tổng hợp chuỗi lợi suất tháng qua định dạng offset chuẩn `'ME'` (Pandas 3.0.5): 61 tháng khảo sát, tháng bùng nổ nhất là Tháng 11/2023 ($+12,41\%$), tháng suy giảm sâu nhất là Tháng 09/2022 ($-9,46\%$).
+    * Đo lường hiệu quả định lượng: Lợi suất ngày bình quân +0,0645%/ngày, Độ lệch chuẩn ngày 0,8654%/ngày (giảm hơn 70% rủi ro so với mức bình quân 2,97% của cổ phiếu đơn lẻ nhờ đa dạng hóa Markowitz).
+    * Lợi suất năm hóa đạt +16,26%/năm, Độ biến động năm hóa 13,74%/năm, Hệ số Sharpe năm hóa với giả định R_f = 0 đạt **1,1834**.
+    * Tổng hợp chuỗi lợi suất tháng qua định dạng offset chuẩn `'ME'` (Pandas 3.0.5): 61 tháng khảo sát, tháng bùng nổ nhất là Tháng 11/2023 (+12,41%), tháng suy giảm sâu nhất là Tháng 09/2022 (-9,46%).
     * Thiết lập **Bảng 3.17: Lợi suất, rủi ro và chỉ số Sharpe của Danh mục tỷ trọng đều theo năm (2021 – 2026)**.
-    * Nhúng khối mã vẽ Biểu đồ giá trị tài sản tích lũy danh mục (`fig-portfolio-cumulative`), tăng trưởng từ cơ sở $100\$$ lên $214,11\$$ (+114,11%).
-    * Nhấn mạnh 3 lưu ý phương pháp luận bắt buộc: Trình bày trung thực ngoại lai cực đoan; Nêu rõ giả định $R_f = 0$ là mốc quy ước kỹ thuật, không phải lãi suất thực tế của T-bill; Phân biệt rõ danh mục tỷ trọng đều minh họa với chỉ số S&P 500 thực tế tính theo vốn hóa.
+    * Nhúng khối mã vẽ Biểu đồ giá trị tài sản tích lũy danh mục (`fig-portfolio-cumulative`), tăng trưởng từ cơ sở 100 USD lên 214,11 (+114,11%).
+    * Nhấn mạnh 3 lưu ý phương pháp luận bắt buộc: Trình bày trung thực ngoại lai cực đoan; Nêu rõ giả định R_f = 0 là mốc quy ước kỹ thuật, không phải lãi suất thực tế của T-bill; Phân biệt rõ danh mục tỷ trọng đều minh họa với chỉ số S&P 500 thực tế tính theo vốn hóa.
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd" và "skill/tieuluan.qmd".
 
 --------------------------------------------------------------------------------
@@ -645,7 +645,7 @@ III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
    - Chương 1: Bảng 1.1 (Ma trận nghiên cứu), Bảng 1.2 (KPIs), Bảng 1.3 (Phạm vi dữ liệu).
    - Chương 2: Bảng 2.1 (Công thức tài chính), Bảng 2.2 (APA 7th Review), Hình 2.1 (Pipeline), Bảng 2.3 (Đối chiếu giai đoạn), Bảng 2.4 (So sánh mô hình), Bảng 2.5 (Môi trường thực nghiệm), Hình 2.2 (Cây thư mục).
    - Chương 3 (Mục 3.1 - 3.4): Bảng 3.1 (Mô tả biến gốc), Sơ đồ biến dẫn xuất, Bảng 3.2 (Kiểm kê 3 tầng lỗi), Bảng 3.3 (Ghép nối NYSE), Bảng 3.4 (Đo RAM thực tế), Bảng 3.5 (Danh mục lỗi), Bảng 3.6 (Date), Bảng 3.7 (Ticker), Bảng 3.8 (Chuẩn hóa Close), Bảng 3.9 (Ngoại lai), Bảng 3.10 (Độ nhạy), Bảng 3.11 (Kiểm toán tổng thể), Bảng 3.12 (Chất lượng theo năm), Bảng 3.13 (Top 10 thiếu), Bảng 3.14 (Phân vùng số liệu được phép dùng), Bảng 3.15 (Thống kê lợi suất đơn & Vết tính tay AAPL), Bảng 3.16 (Biến động 20 phiên theo mã tiêu biểu), Bảng 3.17 (Hiệu quả danh mục & Sharpe theo năm 2021-2026).
-3. Tích hợp các đồ thị trực quan hóa dữ liệu chuẩn xác cao: Biểu đồ tỷ lệ khuyết thiếu gốc (`fig-missing-rates`), Biểu đồ tăng trưởng tích lũy danh mục 100$ (`fig-portfolio-cumulative`) và Ma trận tương quan 8 cổ phiếu đầu ngành.
+3. Tích hợp các đồ thị trực quan hóa dữ liệu chuẩn xác cao: Biểu đồ tỷ lệ khuyết thiếu gốc (`fig-missing-rates`), Biểu đồ tăng trưởng tích lũy danh mục 100 USD (`fig-portfolio-cumulative`) và Ma trận tương quan 8 cổ phiếu đầu ngành.
 4. Tệp "skill/nhật kí làm việc" cập nhật chi tiết tiến trình thực tế, minh bạch và khoa học.
 
 --------------------------------------------------------------------------------
@@ -665,12 +665,12 @@ Trạng thái: Hoàn thành trọn vẹn 100% TOÀN BỘ 5 CHƯƠNG TIỂU LUẬ
 I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
 1. Tiếp nhận và bám sát chỉ đạo triển khai hoàn tất Chương 3:
    - Mục 3.5: Trực quan hóa dữ liệu và phát hiện insight (Hình 3.1 đến Hình 3.8, Bảng 3.18 đúc kết 5 insight).
-   - Mục 3.6: Kiểm định giả thuyết thống kê sơ bộ (Kiểm định nghiệm đơn vị ADF trên chuỗi giá và chuỗi lợi suất của AAPL, MSFT, JNJ, XOM, Portfolio; Phân tích hàm tự tương quan ACF và tương quan đặc trưng trễ với $R_{t+1}$; Bảng 3.19, Bảng 3.20, Hình 3.9).
+   - Mục 3.6: Kiểm định giả thuyết thống kê sơ bộ (Kiểm định nghiệm đơn vị ADF trên chuỗi giá và chuỗi lợi suất của AAPL, MSFT, JNJ, XOM, Portfolio; Phân tích hàm tự tương quan ACF và tương quan đặc trưng trễ với R_{t+1}; Bảng 3.19, Bảng 3.20, Hình 3.9).
 2. Khởi động và triển khai CHƯƠNG 4 (XÂY DỰNG MÔ HÌNH VÀ ĐÁNH GIÁ HIỆU NĂNG):
-   - Mục 4.1: Kỹ thuật tạo lập và lựa chọn đặc trưng (Biến mục tiêu $R_{t+1}$ ràng buộc phiên liền kề NYSE, các biến giải thích $R_t, R_{t-1}, R_{t-2}, R_{t-5}, MA_5, MA_{20}, \text{TrendRatio}, \sigma_{20d}$, kiểm toán đối soát nhãn mẫu AAPL 5 phiên, so sánh và lựa chọn không gian đặc trưng tối ưu kèm Bảng 4.1).
+   - Mục 4.1: Kỹ thuật tạo lập và lựa chọn đặc trưng (Biến mục tiêu R_{t+1} ràng buộc phiên liền kề NYSE, các biến giải thích R_t, R_{t-1}, R_{t-2}, R_{t-5}, MA_5, MA_{20}, TrendRatio, σ_20d, kiểm toán đối soát nhãn mẫu AAPL 5 phiên, so sánh và lựa chọn không gian đặc trưng tối ưu kèm Bảng 4.1).
    - Mục 4.2: Chuẩn hóa và phân chia Train/Test (Phân chia 80/20 theo trục ngày giao dịch duy nhất sàn NYSE, cơ chế Purging 1 phiên ngăn ngừa nhãn chạm Test, đóng gói StandardScalerPipeline chỉ fit trên Train, bảo đảm tính công bằng trên tập giao chung 101.630 dòng, Hình 4.1 và Bảng 4.2).
-   - Mục 4.3: Huấn luyện mô hình học máy (Thiết lập Zero Benchmark $\hat{r}=0$, Linear Regression OLS, Ridge Regression; Chẩn đoán đa cộng tuyến $\kappa \approx 4.303$; Xác thực Time-Series Cross-Validation 3 phân đoạn chọn siêu tham số $\alpha$; Ghi nhận tính tiền định đại số và seed `random_state=42`; Bảng 4.3).
-   - Mục 4.4: Đánh giá hiệu năng mô hình (Đo lường MAE, RMSE, $R^2_{\text{OOS}}$, DA trên cùng tập test $101.630$ quan sát; Báo cáo trung thực $R^2$ âm/nhỏ; Phân rã sai số theo năm và theo 6 mã tiêu biểu; Hình 4.2 và Bảng 4.4).
+   - Mục 4.3: Huấn luyện mô hình học máy (Thiết lập Zero Benchmark r^ = 0, Linear Regression OLS, Ridge Regression; Chẩn đoán đa cộng tuyến kappa ≈ 4.303; Xác thực Time-Series Cross-Validation 3 phân đoạn chọn siêu tham số alpha; Ghi nhận tính tiền định đại số và seed `random_state=42`; Bảng 4.3).
+   - Mục 4.4: Đánh giá hiệu năng mô hình (Đo lường MAE, RMSE, R^2_{text{OOS}}, DA trên cùng tập test 101.630 quan sát; Báo cáo trung thực R^2 âm/nhỏ; Phân rã sai số theo năm và theo 6 mã tiêu biểu; Hình 4.2 và Bảng 4.4).
    - Mục 4.5: Diễn giải hệ số và kiểm tra độ ổn định (Giải thích dấu và độ lớn hệ số Z-score; Bóc tách đa cộng tuyến r = +0,999 giữa MA5 và MA20 và cơ chế co hẹp L2 của Ridge; Phân biệt liên hệ thống kê với quan hệ nhân quả; Phân rã sai số theo 5 phân vị biến động Q1 -> Q5 trên 101.630 dòng test ngoài mẫu; Bảng 4.5 và Hình 4.3).
    - Mục 4.6: Thảo luận kết quả thực nghiệm (Đánh giá khả năng vượt baseline, mức độ phụ thuộc vào mã High-Beta và các đợt biến động mạnh Q1 -> Q5, tác động của độ phủ dữ liệu, phân định ba tầng giới hạn phương pháp luận [Dữ liệu gốc - Tiền xử lý - Thuật toán], Bảng 4.6 kết nối trực tiếp với Chương 5).
 3. Khởi động và hoàn thành trọn vẹn CHƯƠNG 5 (KHUYẾN NGHỊ QUẢN TRỊ VÀ KẾT LUẬN):
@@ -696,31 +696,31 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Kiểm thử thành công 100% mã nguồn không phát sinh cảnh báo hay lỗi cú pháp.
 
 2. Phiên trưa (11:00 - 11:43): Triển khai toàn văn Mục 3.5 vào "tieuluan.qmd"
-- Viết chi tiết toàn bộ các đoạn luận giải khoa học, chú thích đầy đủ ngưỡng lọc ($3 \times \text{Median}$), đơn vị (USD, %) và số quan sát ($N = 559.600$, $N = 550.055$, $N = 15.584$).
+- Viết chi tiết toàn bộ các đoạn luận giải khoa học, chú thích đầy đủ ngưỡng lọc (3 x text{Median}), đơn vị (USD, %) và số quan sát (N = 559.600, N = 550.055, N = 15.584).
 - Thiết lập **Bảng 3.18: Ma trận đúc kết 5 Insight định lượng cốt lõi** theo cấu trúc 3 phần chuẩn học thuật: Bằng chứng thực nghiệm – Diễn giải kinh tế/kỹ thuật – Giới hạn mẫu & Cảnh báo suy rộng.
-- Viết 3 đoạn thảo luận chuyên sâu về nguyên tắc thận trọng khi lọc ngoại lai, ranh giới giả định $R_f = 0$ và cảnh báo thiên lệch kẻ sống sót (Survivorship bias).
+- Viết 3 đoạn thảo luận chuyên sâu về nguyên tắc thận trọng khi lọc ngoại lai, ranh giới giả định R_f = 0 và cảnh báo thiên lệch kẻ sống sót (Survivorship bias).
 - Đồng bộ hóa thành công 100% sang "skill/tieuluan.qmd".
 
 3. Phiên trưa (11:30 - 11:45): Triển khai toàn văn Mục 3.6 vào "tieuluan.qmd"
 - Thực hiện kiểm định nghiệm đơn vị Augmented Dickey-Fuller (ADF) trên chuỗi giá và chuỗi lợi suất của 4 cổ phiếu đại diện (`AAPL`, `MSFT`, `JNJ`, `XOM`) và Danh mục (`Portfolio`):
-  + Chuỗi giá đóng cửa: $t_{\text{ADF}} > -1,0$, $p\text{-value} > 0,35 \rightarrow$ Chấp nhận $H_0$ (Chuỗi chứa nghiệm đơn vị, không dừng $I(1)$). Khẳng định nguy cơ hồi quy giả mạo (Spurious Regression) nếu hồi quy trên giá.
-  + Chuỗi lợi suất đơn: $t_{\text{ADF}} < -21,8$, $p\text{-value} < 0,0001 \rightarrow$ Bác bỏ dứt khoát $H_0$ ở mức ý nghĩa $1\%$ (Chuỗi dừng mạnh $I(0)$). Đủ điều kiện kinh tế lượng đưa vào huấn luyện mô hình.
+  + Chuỗi giá đóng cửa: t_{text{ADF}} > -1,0, ptext{-value} > 0,35 rightarrow Chấp nhận H_0 (Chuỗi chứa nghiệm đơn vị, không dừng I(1)). Khẳng định nguy cơ hồi quy giả mạo (Spurious Regression) nếu hồi quy trên giá.
+  + Chuỗi lợi suất đơn: t_{text{ADF}} < -21,8, ptext{-value} < 0,0001 rightarrow Bác bỏ dứt khoát H_0 ở mức ý nghĩa 1% (Chuỗi dừng mạnh I(0)). Đủ điều kiện kinh tế lượng đưa vào huấn luyện mô hình.
   + Thiết lập **Bảng 3.19: Kết quả kiểm định nghiệm đơn vị Augmented Dickey-Fuller (ADF) cho chuỗi giá và lợi suất**.
 - Phân tích tương quan và hàm ý lựa chọn đặc trưng cho Chương 4:
-  + Phân tích hàm tự tương quan (ACF) 10 bậc trễ của chuỗi lợi suất: Hệ số nằm lọt thỏm trong dải tin cậy $95\%$ Bartlett ($\pm 0,058$), phù hợp với Giả thuyết Thị trường Hiệu quả dạng yếu (Weak-form EMH của Fama, 1970).
-  + Tính toán ma trận tương quan giữa 7 đặc trưng ($R_t, R_{t-1}, R_{t-2}, R_{t-3}, R_{t-4}, \sigma_{20d}, \text{TrendRatio}$) với biến mục tiêu lợi suất tương lai $R_{t+1}$ ($N = 545.025$).
-  + Thiết lập **Hình 3.9: Hàm tự tương quan (ACF) 10 bậc trễ và Hệ số tương quan giữa các đặc trưng đầu vào với Lợi suất tương lai $R_{t+1}$** (2 panel).
-  + Thiết lập **Bảng 3.20: Ma trận hệ số tương quan giữa các đặc trưng đầu vào và biến mục tiêu lợi suất tương lai ($R_{t+1}$)**.
-  + Đưa ra kết luận phương pháp luận thận trọng bắt buộc: Tính dừng ADF là điều kiện cần chứ không phải điều kiện đủ để chứng minh khả năng dự báo; tỷ lệ tín hiệu trên nhiễu cực thấp của thị trường tài chính là lý do kỳ vọng $R^2_{\text{OOS}}$ ngoài mẫu ở Chương 4 sẽ ở mức khiêm tốn ($0,5\% - 1,5\%$), trung thực với thực tiễn học thuật quốc tế.
+  + Phân tích hàm tự tương quan (ACF) 10 bậc trễ của chuỗi lợi suất: Hệ số nằm lọt thỏm trong dải tin cậy 95% Bartlett (± 0,058), phù hợp với Giả thuyết Thị trường Hiệu quả dạng yếu (Weak-form EMH của Fama, 1970).
+  + Tính toán ma trận tương quan giữa 7 đặc trưng (R_t, R_{t-1}, R_{t-2}, R_{t-3}, R_{t-4}, σ_20d, TrendRatio) với biến mục tiêu lợi suất tương lai R_{t+1} (N = 545.025).
+  + Thiết lập **Hình 3.9: Hàm tự tương quan (ACF) 10 bậc trễ và Hệ số tương quan giữa các đặc trưng đầu vào với Lợi suất tương lai R_{t+1}** (2 panel).
+  + Thiết lập **Bảng 3.20: Ma trận hệ số tương quan giữa các đặc trưng đầu vào và biến mục tiêu lợi suất tương lai (R_{t+1})**.
+  + Đưa ra kết luận phương pháp luận thận trọng bắt buộc: Tính dừng ADF là điều kiện cần chứ không phải điều kiện đủ để chứng minh khả năng dự báo; tỷ lệ tín hiệu trên nhiễu cực thấp của thị trường tài chính là lý do kỳ vọng R^2_{text{OOS}} ngoài mẫu ở Chương 4 sẽ ở mức khiêm tốn (0,5% - 1,5%), trung thực với thực tiễn học thuật quốc tế.
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd" và "skill/tieuluan.qmd".
 
 4. Phiên chiều (11:45 - 12:36): Triển khai toàn văn Mục 4.1 (Chương 4) vào "tieuluan.qmd"
-- **Mục 4.1.1 (Biến mục tiêu):** Thiết lập $y_{i, t} = R_{i, t+1} = (P_{i, t+1} - P_{i, t}) / P_{i, t}$ tại đúng phiên giao dịch liền kề theo lịch làm việc chính thức của NYSE. Thuật toán kiểm tra lịch loại bỏ dứt khoát 55.132 cặp quan sát bị đứt gãy phiên, ngăn ngừa triệt để lỗi gán nhãn nhảy cóc qua khoảng thiếu.
-- **Mục 4.1.2 (Biến giải thích từ lịch sử giá):** Xây dựng hệ thống 7 đặc trưng từ giá đóng cửa quá khứ: $R_t$ (Return tức thời), các bậc trễ $R_{t-1}, R_{t-2}, R_{t-5}$ (đảo chiều vi cấu trúc và chu kỳ tuần), đường trung bình động $MA_5, MA_{20}$, tỷ số xu hướng phân kỳ $\text{TrendRatio} = (MA_5 / MA_{20}) - 1$, và chế độ rủi ro biến động $\sigma_{20d}$ (Rolling std 20 phiên).
-- **Mục 4.1.3 (Kiểm tra nhãn và đối soát):** Lập trình quy trình tạo biến độc lập theo từng Ticker (`groupby`), in vết kiểm toán 5 phiên liên tiếp của cổ phiếu Apple (`AAPL` từ 29/11 đến 03/12/2021), đối soát chứng minh độ khớp chính xác 100% giữa nhãn tại phiên $t$ và lợi suất thực tế tại phiên $t+1$ (Zero Temporal Offset).
+- **Mục 4.1.1 (Biến mục tiêu):** Thiết lập y_{t} = R_{t+1} = (P_{t+1} - P_{t}) / P_{t} tại đúng phiên giao dịch liền kề theo lịch làm việc chính thức của NYSE. Thuật toán kiểm tra lịch loại bỏ dứt khoát 55.132 cặp quan sát bị đứt gãy phiên, ngăn ngừa triệt để lỗi gán nhãn nhảy cóc qua khoảng thiếu.
+- **Mục 4.1.2 (Biến giải thích từ lịch sử giá):** Xây dựng hệ thống 7 đặc trưng từ giá đóng cửa quá khứ: R_t (Return tức thời), các bậc trễ R_{t-1}, R_{t-2}, R_{t-5} (đảo chiều vi cấu trúc và chu kỳ tuần), đường trung bình động MA_5, MA_{20}, tỷ số xu hướng phân kỳ TrendRatio = (MA_5 / MA_{20}) - 1, và chế độ rủi ro biến động σ_20d (Rolling std 20 phiên).
+- **Mục 4.1.3 (Kiểm tra nhãn và đối soát):** Lập trình quy trình tạo biến độc lập theo từng Ticker (`groupby`), in vết kiểm toán 5 phiên liên tiếp của cổ phiếu Apple (`AAPL` từ 29/11 đến 03/12/2021), đối soát chứng minh độ khớp chính xác 100% giữa nhãn tại phiên t và lợi suất thực tế tại phiên t+1 (Zero Temporal Offset).
 - **Mục 4.1.4 (So sánh nhóm đặc trưng và lựa chọn tối ưu):**
-  + So sánh quy mô mẫu giữa Nhóm ngắn ($R_t, R_{lag1}, R_{lag2}, R_{lag5}, MA_5 \rightarrow N = 501.715$, độ phủ 89,58%) và Nhóm đầy đủ (thêm $MA_{20}, \text{TrendRatio}, \sigma_{20d} \rightarrow N = 495.393$, độ phủ 88,45%).
-  + Lập luận khoa học: Việc hy sinh 6.322 quan sát (1,13% độ phủ) đổi lại hai biến số cốt lõi về xu hướng trung hạn và biên độ rủi ro là hoàn toàn xứng đáng. Đề tài quyết định chọn Nhóm đặc trưng đầy đủ ($N = 495.393$ quan sát).
+  + So sánh quy mô mẫu giữa Nhóm ngắn (R_t, R_{lag1}, R_{lag2}, R_{lag5}, MA_5 rightarrow N = 501.715, độ phủ 89,58%) và Nhóm đầy đủ (thêm MA_{20}, TrendRatio, σ_20d rightarrow N = 495.393, độ phủ 88,45%).
+  + Lập luận khoa học: Việc hy sinh 6.322 quan sát (1,13% độ phủ) đổi lại hai biến số cốt lõi về xu hướng trung hạn và biên độ rủi ro là hoàn toàn xứng đáng. Đề tài quyết định chọn Nhóm đặc trưng đầy đủ (N = 495.393 quan sát).
   + Thiết lập **Bảng 4.1: Danh mục các biến số, công thức, thời điểm thông tin và quy mô mẫu hợp lệ**.
   + Nhấn mạnh 2 nguyên tắc phương pháp luận: Thời điểm thông tin có sẵn (Information Availability) và Tuyệt đối không rò rỉ dữ liệu tương lai (No Look-ahead bias / cấm nội suy hai phía).
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd" và "skill/tieuluan.qmd".
@@ -731,44 +731,44 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
   + Tuân thủ nghiêm ngặt Nguyên tắc bảo toàn cấu trúc bảng (Panel Integrity Principle): Toàn bộ 503 mã cổ phiếu trong cùng một ngày bắt buộc phải nằm trọn vẹn trong cùng một tập dữ liệu, cấm phân tán cùng ngày sang hai tập.
   + Phân chia chuẩn mực 80/20: Train ban đầu chiếm 1.003 ngày (13/10/2021 đến 10/10/2025), Test ngoài mẫu chiếm 251 ngày (13/10/2025 đến 12/10/2026).
 - **Mục 4.2.2 (Kiểm soát ranh giới nhãn và Cơ chế Purging):**
-  + Phát hiện và giải quyết triệt để rủi ro ranh giới nhãn: Do $y_t = R_{t+1}$, quan sát tại ngày cuối cùng của tập Train ban đầu ($10/10/2025$) sẽ có nhãn lợi suất tính từ giá đóng cửa phiên $13/10/2025$ (phiên đầu tiên của tập Test!).
-  + Áp dụng kỹ thuật Purging chuẩn quốc tế (López de Prado, 2018): Loại bỏ toàn bộ các quan sát tại ngày $10/10/2025$ ($399$ dòng có nhãn hợp lệ / $447$ dòng thô) ra khỏi tập Train.
-  + Tập Train thực tế còn 1.002 ngày ($13/10/2021$ đến $09/10/2025$, $N_{\text{train}} = 393.364$ dòng), tạo vùng đệm an toàn 1 phiên, loại trừ 100% rò rỉ dữ liệu tương lai sang tập Test.
+  + Phát hiện và giải quyết triệt để rủi ro ranh giới nhãn: Do y_t = R_{t+1}, quan sát tại ngày cuối cùng của tập Train ban đầu (10/10/2025) sẽ có nhãn lợi suất tính từ giá đóng cửa phiên 13/10/2025 (phiên đầu tiên của tập Test!).
+  + Áp dụng kỹ thuật Purging chuẩn quốc tế (López de Prado, 2018): Loại bỏ toàn bộ các quan sát tại ngày 10/10/2025 (399 dòng có nhãn hợp lệ / 447 dòng thô) ra khỏi tập Train.
+  + Tập Train thực tế còn 1.002 ngày (13/10/2021 đến 09/10/2025, N_{train} = 393.364 dòng), tạo vùng đệm an toàn 1 phiên, loại trừ 100% rò rỉ dữ liệu tương lai sang tập Test.
 - **Mục 4.2.3 (Quy trình chuẩn hóa đặc trưng trong Pipeline):**
   + Tích hợp class `StandardScalerPipeline` thuần NumPy theo nguyên tắc Hộp kín (Black-box Pipeline).
-  + Thuật toán `fit()` CHỈ học kỳ vọng $\bar{X}_{\text{train}}$ và phương sai $s_{\text{train}}$ độc quyền trên tập Train ($N_{\text{train}} = 393.364$ dòng).
-  + Đóng băng toàn bộ tham số và áp dụng `transform()` sang tập Test ($N_{\text{test}} = 101.630$ dòng). Ngăn chặn triệt để hiện tượng rò rỉ phân phối (Data Snooping Bias).
+  + Thuật toán `fit()` CHỈ học kỳ vọng X_mean_{train} và phương sai s_{train} độc quyền trên tập Train (N_{train} = 393.364 dòng).
+  + Đóng băng toàn bộ tham số và áp dụng `transform()` sang tập Test (N_{test} = 101.630 dòng). Ngăn chặn triệt để hiện tượng rò rỉ phân phối (Data Snooping Bias).
 - **Mục 4.2.4 (So sánh phương án dữ liệu và tính nhất quán mẫu):**
-  + Phân tích sự chênh lệch quy mô mẫu giữa Phương án ngắn ($501.315$ dòng sau Purge) và Phương án đầy đủ ($494.994$ dòng sau Purge).
-  + Thiết lập tập giao chung ngoài mẫu (Common Valid Rows): Trên tập Test, hai phương án giao nhau chính xác đến **$101.630$ quan sát**. Đề tài quyết định dùng tập chuẩn giao chung này để đánh giá đối đầu công bằng giữa các mô hình ở các mục tiếp theo.
+  + Phân tích sự chênh lệch quy mô mẫu giữa Phương án ngắn (501.315 dòng sau Purge) và Phương án đầy đủ (494.994 dòng sau Purge).
+  + Thiết lập tập giao chung ngoài mẫu (Common Valid Rows): Trên tập Test, hai phương án giao nhau chính xác đến **101.630 quan sát**. Đề tài quyết định dùng tập chuẩn giao chung này để đánh giá đối đầu công bằng giữa các mô hình ở các mục tiếp theo.
 - **Trực quan hóa và Bảng biểu hoàn thiện:**
   + **Hình 4.1: Sơ đồ trục thời gian phân chia Train / Test và Cơ chế Purging ngăn ngừa rò rỉ dữ liệu** (`fig-train-test-timeline`).
   + **Bảng 4.2: Thống kê số lượng mã, số ngày, số dòng và tỷ lệ loại do thiếu theo từng tập dữ liệu** (`tbl-train-test-summary`).
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd" và "skill/tieuluan.qmd" (kiểm toán mã băm SHA256 trùng khớp `0E0160492BF94B84145A72942B9FA662FAF976AC07C9F0BF4496547CD0309C46`).
 
 6. Phiên chiều (12:55 - 13:28): Triển khai toàn văn Mục 4.3 (Chương 4) vào "tieuluan.qmd"
-- **Mục 4.3.1 (Mô hình Dự báo cơ sở Zero Benchmark):** Thiết lập mô hình sàn $\hat{r} = 0$ dựa trên Giả thuyết Martingale Difference của Fama (1970). Mô hình không chứa tham số ($k=0$), đóng vai trò là "mốc thanh lọc" tối thượng để đo lường giá trị kinh tế thực tế của các thuật toán học máy.
-- **Mục 4.3.2 (Mô hình Hồi quy Tuyến tính Cổ điển OLS):** Ước lượng OLS giải tích chuẩn mực trên 393.364 dòng Train. Chẩn đoán ma trận thông tin ghi nhận số điều kiện $\kappa(\mathbf{X}^T \mathbf{X}) \approx 4.303,03$ do đa cộng tuyến nghiêm trọng giữa $MA_5$ và $MA_{20}$ ($r > 0,99$), dẫn đến hiện tượng hệ số ước lượng bị thổi phồng trái dấu nhau ($\beta_{MA5} = -0,001254$ và $\beta_{MA20} = +0,001173$).
+- **Mục 4.3.1 (Mô hình Dự báo cơ sở Zero Benchmark):** Thiết lập mô hình sàn r^ = 0 dựa trên Giả thuyết Martingale Difference của Fama (1970). Mô hình không chứa tham số (k=0), đóng vai trò là "mốc thanh lọc" tối thượng để đo lường giá trị kinh tế thực tế của các thuật toán học máy.
+- **Mục 4.3.2 (Mô hình Hồi quy Tuyến tính Cổ điển OLS):** Ước lượng OLS giải tích chuẩn mực trên 393.364 dòng Train. Chẩn đoán ma trận thông tin ghi nhận số điều kiện kappa(X^T X) ≈ 4.303,03 do đa cộng tuyến nghiêm trọng giữa MA_5 và MA_{20} (r > 0,99), dẫn đến hiện tượng hệ số ước lượng bị thổi phồng trái dấu nhau (beta_{MA5} = -0,001254 và beta_{MA20} = +0,001173).
 - **Mục 4.3.3 (Mô hình Hồi quy Ridge và Time-Series Cross Validation):**
-  + Bổ sung thành phần phạt chuẩn $L_2$ để co hẹp tham số (Shrinkage) và ổn định hệ số.
-  + Áp dụng quy trình Xác thực chuỗi thời gian (Time-Series Cross-Validation) 3 phân đoạn tịnh tiến (Expanding Window) độc quyền trên tập Train ($1.002$ phiên), khảo sát lưới $\alpha \in [0,1; 10.000]$.
-  + Kết quả định lượng: Khi $\alpha$ tăng từ 10 lên 10.000, chuẩn $L_2$ của vector trọng số giảm mạnh từ $0,001772$ (OLS) xuống $0,000442$ ($\alpha = 10.000$). Hai hệ số đối kháng $MA_5$ và $MA_{20}$ co hẹp về sát 0, triệt tiêu sự triệt tiêu giả tạo, trong khi các tín hiệu kinh tế đảo chiều ngắn hạn ($Return_{lag2} \approx -0,00021$) và rủi ro ($Vol_{20d} \approx +0,00020$) được bảo toàn ổn định.
+  + Bổ sung thành phần phạt chuẩn L_2 để co hẹp tham số (Shrinkage) và ổn định hệ số.
+  + Áp dụng quy trình Xác thực chuỗi thời gian (Time-Series Cross-Validation) 3 phân đoạn tịnh tiến (Expanding Window) độc quyền trên tập Train (1.002 phiên), khảo sát lưới alpha in [0,1; 10.000].
+  + Kết quả định lượng: Khi alpha tăng từ 10 lên 10.000, chuẩn L_2 của vector trọng số giảm mạnh từ 0,001772 (OLS) xuống 0,000442 (alpha = 10.000). Hai hệ số đối kháng MA_5 và MA_{20} co hẹp về sát 0, triệt tiêu sự triệt tiêu giả tạo, trong khi các tín hiệu kinh tế đảo chiều ngắn hạn (Return_{lag2} ≈ -0,00021) và rủi ro (Vol_{20d} ≈ +0,00020) được bảo toàn ổn định.
   + Nêu rõ tính tiền định nghiệm đóng đại số tuyến tính, đồng thời cố định hạt giống toàn cục `random_state = 42` để bảo đảm khả năng tái lập 100%.
 - **Bảng biểu tích hợp:**
   + **Bảng 4.3: Cấu hình kỹ thuật, tham số và số lượng biến số của các mô hình thực nghiệm** (`tbl-model-configuration`).
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd" và "skill/tieuluan.qmd" (kiểm toán mã băm SHA256 trùng khớp `32A0D50D45B0EC919332E32830A8FADE7117F928ADC580C026F3CA6D9AD93BFB`).
 
 7. Phiên chiều (15:20 - 15:45): Triển khai toàn văn Mục 4.4 (Chương 4) vào "tieuluan.qmd"
-- **Mục 4.4.1 (Hệ thống chỉ tiêu đánh giá ngoài mẫu):** Thiết lập công thức toán học và đơn vị tính thống nhất cho 4 thước đo trên cùng tập test $N_{\text{test}} = 101.630$ quan sát: MAE, RMSE, $R^2_{\text{OOS}}$ theo Campbell & Thompson (2008), $R^2_{\text{OOS}}$ so với Zero Benchmark, và Tỷ lệ dự báo đúng chiều (Directional Accuracy - DA).
+- **Mục 4.4.1 (Hệ thống chỉ tiêu đánh giá ngoài mẫu):** Thiết lập công thức toán học và đơn vị tính thống nhất cho 4 thước đo trên cùng tập test N_{test} = 101.630 quan sát: MAE, RMSE, R^2_{text{OOS}} theo Campbell & Thompson (2008), R^2_{text{OOS}} so với Zero Benchmark, và Tỷ lệ dự báo đúng chiều (Directional Accuracy - DA).
 - **Mục 4.4.2 (Bảng đối chiếu và Luận giải tính trung thực):**
   + Đo lường chính xác các chỉ tiêu:
-    * Zero Benchmark: $\text{MAE} = 0,012994$, $\text{RMSE} = 0,021899$, $R^2_{\text{OOS, Zero}} = 0,0000\%$, $R^2_{\text{OOS, Train}} = -0,0685\%$, $\text{DA} = 22,86\%$.
-    * Linear Regression (OLS): $\text{MAE} = 0,013119$, $\text{RMSE} = 0,021892$, $R^2_{\text{OOS, Zero}} = +0,0649\%$, $R^2_{\text{OOS, Train}} = -0,0036\%$, $\text{DA} = 39,31\%$.
-    * Ridge Regression ($\alpha = 10.000$): $\text{MAE} = 0,013118$, $\text{RMSE} = 0,021892$, $R^2_{\text{OOS, Zero}} = +0,0670\%$, $R^2_{\text{OOS, Train}} = -0,0015\%$, $\text{DA} = 39,29\%$.
-  + Báo cáo trung thực $100\%$ theo đúng yêu cầu giảng viên: $R^2$ ngoài mẫu tiệm cận 0 (hoặc âm nhẹ khi dùng trung bình lịch sử), MAE của mô hình tuyến tính hơi cao hơn Zero Benchmark do bản chất hàm mất mát bình phương $L_2$ và mật độ tập trung tại 0 của lợi suất. Khẳng định kết quả phản ánh bản chất ngẫu nhiên cao của thị trường hiệu quả theo Fama (1970).
+    * Zero Benchmark: MAE = 0,012994, RMSE = 0,021899, R^2_{OOS, Zero} = 0,0000%, R^2_{OOS, Train} = -0,0685%, DA = 22,86%.
+    * Linear Regression (OLS): MAE = 0,013119, RMSE = 0,021892, R^2_{OOS, Zero} = +0,0649%, R^2_{OOS, Train} = -0,0036%, DA = 39,31%.
+    * Ridge Regression (alpha = 10.000): MAE = 0,013118, RMSE = 0,021892, R^2_{OOS, Zero} = +0,0670%, R^2_{OOS, Train} = -0,0015%, DA = 39,29%.
+  + Báo cáo trung thực 100% theo đúng yêu cầu giảng viên: R^2 ngoài mẫu tiệm cận 0 (hoặc âm nhẹ khi dùng trung bình lịch sử), MAE của mô hình tuyến tính hơi cao hơn Zero Benchmark do bản chất hàm mất mát bình phương L_2 và mật độ tập trung tại 0 của lợi suất. Khẳng định kết quả phản ánh bản chất ngẫu nhiên cao của thị trường hiệu quả theo Fama (1970).
 - **Mục 4.4.3 (Phân rã sai số theo năm và theo mã):**
-  + Phân tích sai số qua 2 giai đoạn: Q4/2025 ($\text{RMSE} \approx 0,01925$) vs Năm 2026 ($\text{RMSE} \approx 0,02260$).
-  + Phân tích 6 mã tiêu biểu: Nhóm High Beta (`TSLA` $\text{RMSE} = 0,02917$, `NVDA` $\text{RMSE} = 0,02304$) có sai số cao hơn; nhóm phòng thủ (`JNJ` $\text{RMSE} = 0,01328$, `XOM` $\text{RMSE} = 0,01630$) đạt độ chính xác cao.
+  + Phân tích sai số qua 2 giai đoạn: Q4/2025 (RMSE ≈ 0,01925) vs Năm 2026 (RMSE ≈ 0,02260).
+  + Phân tích 6 mã tiêu biểu: Nhóm High Beta (`TSLA` RMSE = 0,02917, `NVDA` RMSE = 0,02304) có sai số cao hơn; nhóm phòng thủ (`JNJ` RMSE = 0,01328, `XOM` RMSE = 0,01630) đạt độ chính xác cao.
 - **Mục 4.4.4 (Trực quan hóa thực tế vs dự báo):**
   + **Hình 4.2: So sánh Lợi suất thực tế và Giá trị dự báo của cổ phiếu Apple (`AAPL`) ngoài mẫu (2025–2026)** (`fig-pred-vs-actual-aapl`) gồm 2 panel: Lợi suất thực tế vs dự báo Ridge và Sai số phần dư.
   + Luận giải cơ chế co cụm về trung bình (Bayesian Shrinkage) khi đối mặt dữ liệu có tỷ lệ tín hiệu trên nhiễu tiệm cận 0.
@@ -779,46 +779,46 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 8. Phiên chiều (15:45 - 16:20): Triển khai toàn văn Mục 4.5 (Chương 4) vào "tieuluan.qmd"
 - **Mục 4.5.1 (Diễn giải dấu và độ lớn hệ số chuẩn hóa Z-score):**
   + Đo lường và giải thích chi tiết ý nghĩa kinh tế có điều kiện của từng trọng số hồi quy sau chuẩn hóa Z-score:
-    * $Return_t$ ($\beta = -0,000070$): Tín hiệu đảo chiều vi cấu trúc tức thời rất nhẹ.
-    * $Return_{lag1}$ ($\beta = -0,000104$) và $Return_{lag2}$ ($\beta = -0,000209$): Tín hiệu phản ứng thái quá ngắn hạn (Short-term Mean Reversion) mạnh nhất tại độ trễ 2 phiên.
-    * $Return_{lag5}$ ($\beta = +0,000036$): Dấu dương phản ánh quán tính chu kỳ tuần (Weekly Momentum), song biên độ rất nhỏ.
-    * $\text{TrendRatio}$ ($\beta = -0,000302$): Trọng số âm lớn nhất, phản ánh xu hướng đảo chiều khi giá phân kỳ quá mức khỏi đường trung bình động 20 phiên.
-    * $Vol_{20d}$ ($\beta = +0,000198$): Hệ số dương có ý nghĩa thống kê, phản ánh phần bù rủi ro biến động (Volatility Risk Premium) theo lý thuyết định giá tài sản.
+    * Return_t (beta = -0,000070): Tín hiệu đảo chiều vi cấu trúc tức thời rất nhẹ.
+    * Return_{lag1} (beta = -0,000104) và Return_{lag2} (beta = -0,000209): Tín hiệu phản ứng thái quá ngắn hạn (Short-term Mean Reversion) mạnh nhất tại độ trễ 2 phiên.
+    * Return_{lag5} (beta = +0,000036): Dấu dương phản ánh quán tính chu kỳ tuần (Weekly Momentum), song biên độ rất nhỏ.
+    * TrendRatio (beta = -0,000302): Trọng số âm lớn nhất, phản ánh xu hướng đảo chiều khi giá phân kỳ quá mức khỏi đường trung bình động 20 phiên.
+    * Vol_{20d} (beta = +0,000198): Hệ số dương có ý nghĩa thống kê, phản ánh phần bù rủi ro biến động (Volatility Risk Premium) theo lý thuyết định giá tài sản.
 - **Mục 4.5.2 (Bóc tách đa cộng tuyến và Cơ chế co hẹp Ridge):**
-  + Ma trận tương quan bộc lộ cặp đặc trưng $MA_5$ và $MA_{20}$ có hệ số tương quan tuyến tính $r = +0,999$.
-  + Hậu quả ở OLS: Xuất hiện hiện tượng triệt tiêu giả tạo và thổi phồng phương sai ước lượng cực hạn ($\beta_{MA5} = -0,001254$ đối nghịch với $\beta_{MA20} = +0,001173$).
-  + Cơ chế kiểm soát Ridge ($\alpha = 10.000$): Hàm phạt chuẩn $L_2$ co hẹp dứt khoát hai hệ số này về sát 0 ($\beta_{MA5} = -0,000064$ và $\beta_{MA20} = -0,000015$), ổn định toàn diện hệ thống ước lượng.
+  + Ma trận tương quan bộc lộ cặp đặc trưng MA_5 và MA_{20} có hệ số tương quan tuyến tính r = +0,999.
+  + Hậu quả ở OLS: Xuất hiện hiện tượng triệt tiêu giả tạo và thổi phồng phương sai ước lượng cực hạn (beta_{MA5} = -0,001254 đối nghịch với beta_{MA20} = +0,001173).
+  + Cơ chế kiểm soát Ridge (alpha = 10.000): Hàm phạt chuẩn L_2 co hẹp dứt khoát hai hệ số này về sát 0 (beta_{MA5} = -0,000064 và beta_{MA20} = -0,000015), ổn định toàn diện hệ thống ước lượng.
 - **Mục 4.5.3 (Ranh giới Thống kê vs Nhân quả - Correlation vs Causation):**
-  + Phân tích phương pháp luận sâu sắc: Tương quan dự báo tuyến tính có điều kiện $\mathbb{E}[R_{t+1}|X_t]$ hoàn toàn không chứng minh quan hệ nhân quả kinh tế (Economic Causality).
+  + Phân tích phương pháp luận sâu sắc: Tương quan dự báo tuyến tính có điều kiện E[R_{t+1}|X_t] hoàn toàn không chứng minh quan hệ nhân quả kinh tế (Economic Causality).
   + Khuyến nghị thực tiễn: Tuyệt đối không can thiệp mua/bán máy móc chỉ dựa vào dấu hệ số hồi quy trong bối cảnh thị trường tài chính phức tạp và phi tuyến.
 - **Mục 4.5.4 (Kiểm tra độ ổn định và phân rã sai số theo phân vị biến động):**
-  + Chia tập Test ngoài mẫu ($101.630$ dòng) thành 5 phân vị biến động tăng dần từ $Q1$ đến $Q5$ ($20.326$ dòng/phân vị).
+  + Chia tập Test ngoài mẫu (101.630 dòng) thành 5 phân vị biến động tăng dần từ Q1 đến Q5 (20.326 dòng/phân vị).
   + Kết quả đo lường thực nghiệm:
-    * Chế độ biến động thấp $Q1$: $\sigma_{20d} \le 1,18\% \rightarrow \text{MAE} = 0,008139$, $\text{RMSE} = 0,013728$.
-    * Chế độ trung bình $Q2 \to Q4$: RMSE tăng dần từ $0,01639$ lên $0,02213$.
-    * Chế độ biến động cực đoan $Q5$: $\sigma_{20d} > 2,75\% \rightarrow \text{MAE} = 0,018449$, $\text{RMSE} = 0,030419$ (tăng gấp 2,2 lần so với $Q1$).
-  + Ridge Regression thể hiện ưu thế vượt trội khi kiểm soát sai số tốt nhất ở nhóm rủi ro cao ($Q4$ và $Q5$).
+    * Chế độ biến động thấp Q1: σ_20d <= 1,18% rightarrow MAE = 0,008139, RMSE = 0,013728.
+    * Chế độ trung bình Q2 -> Q4: RMSE tăng dần từ 0,01639 lên 0,02213.
+    * Chế độ biến động cực đoan Q5: σ_20d > 2,75% rightarrow MAE = 0,018449, RMSE = 0,030419 (tăng gấp 2,2 lần so với Q1).
+  + Ridge Regression thể hiện ưu thế vượt trội khi kiểm soát sai số tốt nhất ở nhóm rủi ro cao (Q4 và Q5).
 - **Bảng biểu và Trực quan hóa tích hợp:**
   + **Bảng 4.5: Trọng số hệ số chuẩn hóa của OLS và Ridge cùng diễn giải kinh tế có điều kiện** (`tbl-coefficient-interpretation`).
-  + **Hình 4.3: Phân rã sai số dự báo MAE và RMSE theo 5 phân vị biến động lịch sử $\sigma_{20d}$ ngoài mẫu** (`fig-error-by-volatility-regime`).
+  + **Hình 4.3: Phân rã sai số dự báo MAE và RMSE theo 5 phân vị biến động lịch sử σ_20d ngoài mẫu** (`fig-error-by-volatility-regime`).
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd" và "skill/tieuluan.qmd" (kiểm toán mã băm SHA256 trùng khớp `C086885C8E94ADE9EC4715F5305F1CEC6259DF73C3618FD792D66C68A067A398`).
 
 9. Phiên chiều (16:20 - 16:45): Triển khai toàn văn Mục 4.6 (Chương 4) vào "tieuluan.qmd"
 - **Mục 4.6.1 (Đánh giá năng lực dự báo thực tế so với mốc cơ sở Baseline):**
-  + Đo lường trên toàn bộ $101.630$ quan sát Test ngoài mẫu: Ridge giảm RMSE từ $0,021899$ xuống $0,021892$ ($R^2_{\text{OOS, Zero}} = +0,0670\%$), $R^2_{\text{OOS, Train}} = -0,0015\%$.
-  + Giải thích nghịch lý MAE: Baseline thấp hơn ($0,012994$ vs $0,013118$) do hàm mất mát $L_2$ tối ưu kỳ vọng thay vì trung vị và chuỗi lợi suất có $21,15\%$ đứng giá.
-  + Tỷ lệ đoán đúng chiều DA đạt $39,29\%$ (trên các phiên biến động đạt $49,83\% \approx 50\%$).
-  + Kết luận: Mô hình không vượt trội về mặt kinh tế sau chi phí giao dịch ($0,05\% - 0,10\%$), củng cố Giả thuyết Thị trường Hiệu quả (Fama, 1970).
+  + Đo lường trên toàn bộ 101.630 quan sát Test ngoài mẫu: Ridge giảm RMSE từ 0,021899 xuống 0,021892 (R^2_{OOS, Zero} = +0,0670%), R^2_{OOS, Train} = -0,0015%.
+  + Giải thích nghịch lý MAE: Baseline thấp hơn (0,012994 vs 0,013118) do hàm mất mát L_2 tối ưu kỳ vọng thay vì trung vị và chuỗi lợi suất có 21,15% đứng giá.
+  + Tỷ lệ đoán đúng chiều DA đạt 39,29% (trên các phiên biến động đạt 49,83% ≈ 50%).
+  + Kết luận: Mô hình không vượt trội về mặt kinh tế sau chi phí giao dịch (0,05% - 0,10%), củng cố Giả thuyết Thị trường Hiệu quả (Fama, 1970).
 - **Mục 4.6.2 (Mức độ phụ thuộc vào nhóm cổ phiếu và đợt biến động):**
-  + Ticker Heterogeneity: Nhóm phòng thủ (`JNJ`, `XOM`) có RMSE thấp ($0,013 - 0,016$) do biên độ dao động quanh 0 hẹp; nhóm công nghệ (`TSLA`, `NVDA`) có RMSE vọt lên $0,023 - 0,029$.
-  + Volatility Regimes: RMSE tăng đơn điệu gấp $2,2$ lần từ $1,37\%$ ($Q1$) lên $3,04\%$ ($Q5$). Ridge $\alpha=10.000$ phát huy ưu thế kiểm soát phương sai tốt nhất tại $Q4$ và $Q5$.
+  + Ticker Heterogeneity: Nhóm phòng thủ (`JNJ`, `XOM`) có RMSE thấp (0,013 - 0,016) do biên độ dao động quanh 0 hẹp; nhóm công nghệ (`TSLA`, `NVDA`) có RMSE vọt lên 0,023 - 0,029.
+  + Volatility Regimes: RMSE tăng đơn điệu gấp 2,2 lần từ 1,37% (Q1) lên 3,04% (Q5). Ridge alpha=10.000 phát huy ưu thế kiểm soát phương sai tốt nhất tại Q4 và Q5.
 - **Mục 4.6.3 (Tác động của độ phủ dữ liệu và quy mô mẫu quan sát):**
-  + Đánh đổi: Chấp nhận hy sinh $1,13\%$ mẫu ($6.322$ quan sát) để đưa thêm $MA_{20}$ và $\sigma_{20d}$ giúp ổn định tham số mô hình.
-  + Ràng buộc lịch NYSE loại bỏ $55.132$ cặp đứt gãy phiên, ngăn ngừa nhãn ảo đối với các mã IPO muộn (`GEV`, `SOLV`, `VLTO`).
+  + Đánh đổi: Chấp nhận hy sinh 1,13% mẫu (6.322 quan sát) để đưa thêm MA_{20} và σ_20d giúp ổn định tham số mô hình.
+  + Ràng buộc lịch NYSE loại bỏ 55.132 cặp đứt gãy phiên, ngăn ngừa nhãn ảo đối với các mã IPO muộn (`GEV`, `SOLV`, `VLTO`).
 - **Mục 4.6.4 (Phân định ba tầng giới hạn phương pháp luận):**
   + *Tầng 1 (Dữ liệu gốc):* Tỷ lệ tín hiệu/nhiễu tiệm cận 0, thiên lệch sống sót (Survivorship Bias), giá Close danh nghĩa chưa điều chỉnh cổ tức.
-  + *Tầng 2 (Tiền xử lý):* Forward Fill làm phẳng giá nhân tạo ($21,15\%$ đứng giá), ngưỡng lọc $3 \times \text{Median}$ có thể nén cú sốc thanh khoản.
-  + *Tầng 3 (Thuật toán học máy):* Giả định tuyến tính không thích ứng với cấu trúc phi tuyến, đa cộng tuyến $r = +0,999$ giữa $MA_5$ và $MA_{20}$, hàm mất mát $L_2$ ép dự báo co cụm sát 0.
+  + *Tầng 2 (Tiền xử lý):* Forward Fill làm phẳng giá nhân tạo (21,15% đứng giá), ngưỡng lọc 3 x text{Median} có thể nén cú sốc thanh khoản.
+  + *Tầng 3 (Thuật toán học máy):* Giả định tuyến tính không thích ứng với cấu trúc phi tuyến, đa cộng tuyến r = +0,999 giữa MA_5 và MA_{20}, hàm mất mát L_2 ép dự báo co cụm sát 0.
 - **Mục 4.6.5 (Bảng tổng hợp phát hiện và kết nối trực tiếp sang Chương 5):**
   + Tích hợp **Bảng 4.6: Ma trận tổng hợp phát hiện thực nghiệm, ba tầng giới hạn và hàm ý chuyển giao sang Chương 5** (`tbl-empirical-discussion-summary`).
   + Viết đoạn kết nối học thuật chặt chẽ mở đường sang Chương 5: Từ bỏ tư duy bắt đỉnh/đáy ngắn hạn, chuyển dịch sang Quản trị rủi ro biến động, Đa dạng hóa Markowitz/Sharpe và Quy trình vận hành chốt phiên 4 bước.
@@ -827,17 +827,17 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 10. Phiên chiều (16:45 - 17:15): Triển khai toàn văn Mục 5.1 (Chương 5) vào "tieuluan.qmd"
 - **Mục 5.1.1 (Phương án theo dõi rủi ro cổ phiếu dựa trên biến động và độ phủ thực có):**
   + Thiết lập Khung giám sát rủi ro hai chiều (Two-dimensional Risk Monitoring Framework):
-    * Mức độ biến động trượt 20 phiên ($\sigma_{20d}$): Cấp I (Thấp $\le 1,5\%$/ngày: `JNJ`, `PG`, `KO`), Cấp II (Trung bình $1,5\% - 2,5\%$/ngày: `AAPL`, `MSFT`, `XOM`), Cấp III (Cao $> 2,5\%$/ngày: `TSLA`, `NVDA`, `AMD`).
-    * Phân hạng độ phủ dữ liệu: Hạng A ($\ge 95\%$ phiên hợp lệ), Hạng B ($85\% - 95\%$), Hạng C ($< 85\%$ hoặc niêm yết muộn `GEV`, `SOLV`, `VLTO`).
-  + Cơ chế kiểm soát: Hạng A Cấp I-II làm tài sản lõi ($60\% - 80\%$ danh mục); Hạng A Cấp III giới hạn tỷ trọng $< 5\%$/mã kèm Stop-loss động $2,5\sigma$; Hạng C cấm dùng đòn bẩy.
+    * Mức độ biến động trượt 20 phiên (σ_20d): Cấp I (Thấp <= 1,5%/ngày: `JNJ`, `PG`, `KO`), Cấp II (Trung bình 1,5% - 2,5%/ngày: `AAPL`, `MSFT`, `XOM`), Cấp III (Cao > 2,5%/ngày: `TSLA`, `NVDA`, `AMD`).
+    * Phân hạng độ phủ dữ liệu: Hạng A (>= 95% phiên hợp lệ), Hạng B (85% - 95%), Hạng C (< 85% hoặc niêm yết muộn `GEV`, `SOLV`, `VLTO`).
+  + Cơ chế kiểm soát: Hạng A Cấp I-II làm tài sản lõi (60% - 80% danh mục); Hạng A Cấp III giới hạn tỷ trọng < 5%/mã kèm Stop-loss động 2,5σ; Hạng C cấm dùng đòn bẩy.
 - **Mục 5.1.2 (Diễn giải hệ số Sharpe trong giả định Rf=0 và tính thận trọng):**
-  + Làm rõ bản chất toán học: Sharpe danh mục $1,1834$ với $R_f=0$ là Tỷ số Lợi suất gộp trên Biến động. Khi đưa lãi suất tín phiếu kho bạc Mỹ thực tế $R_f \approx 4,5\%$/năm giai đoạn 2022–2026, Sharpe thực tế giảm còn $0,8559$.
-  + Cảnh báo "Sharpe ảo": Forward Fill nén độ lệch chuẩn $\sigma$ giả tạo ở các mã thiếu giá ($21,15\%$ đứng giá), khuyến nghị phạt Sharpe Haircut $20\% - 40\%$ cho nhóm Hạng B-C.
-  + Cảnh báo bẫy biến động cao: Các mã tăng nóng như NVDA có Sharpe quá khứ cao nhưng độ nhọn $Kurtosis > 5$ và sụt giảm tối đa $\text{MDD} > 40\% - 65\%$.
+  + Làm rõ bản chất toán học: Sharpe danh mục 1,1834 với R_f=0 là Tỷ số Lợi suất gộp trên Biến động. Khi đưa lãi suất tín phiếu kho bạc Mỹ thực tế R_f ≈ 4,5%/năm giai đoạn 2022–2026, Sharpe thực tế giảm còn 0,8559.
+  + Cảnh báo "Sharpe ảo": Forward Fill nén độ lệch chuẩn σ giả tạo ở các mã thiếu giá (21,15% đứng giá), khuyến nghị phạt Sharpe Haircut 20% - 40% cho nhóm Hạng B-C.
+  + Cảnh báo bẫy biến động cao: Các mã tăng nóng như NVDA có Sharpe quá khứ cao nhưng độ nhọn Kurtosis > 5 và sụt giảm tối đa MDD > 40% - 65%.
 - **Mục 5.1.3 (Khuyến nghị ứng dụng mô hình dự báo như tín hiệu hỗ trợ Overlay Filter):**
-  + Nghiêm cấm giao dịch tự động độc lập hoàn toàn vì chi phí giao dịch ($0,05\% - 0,10\%$/lệnh) triệt tiêu thặng dư phương sai nhỏ ($R^2_{\text{OOS, Zero}} = +0,0670\%$).
-  + Đề xuất cơ chế Tactical Execution Overlay: Dùng tín hiệu đảo chiều phân kỳ $\text{TrendRatio} < -1,5\sigma$ của Ridge làm bộ lọc trì hoãn lệnh mua $1 - 2$ phiên để đón điểm giá tối ưu hơn.
-  + Điều kiện áp dụng: Chỉ áp dụng cho cổ phiếu Hạng A và Cấp I-II ($Q1 \to Q3$); cấm áp dụng cho nhóm biến động cực đoan $Q5$ do $\text{RMSE} > 3,0\%$.
+  + Nghiêm cấm giao dịch tự động độc lập hoàn toàn vì chi phí giao dịch (0,05% - 0,10%/lệnh) triệt tiêu thặng dư phương sai nhỏ (R^2_{OOS, Zero} = +0,0670%).
+  + Đề xuất cơ chế Tactical Execution Overlay: Dùng tín hiệu đảo chiều phân kỳ TrendRatio < -1,5σ của Ridge làm bộ lọc trì hoãn lệnh mua 1 - 2 phiên để đón điểm giá tối ưu hơn.
+  + Điều kiện áp dụng: Chỉ áp dụng cho cổ phiếu Hạng A và Cấp I-II (Q1 -> Q3); cấm áp dụng cho nhóm biến động cực đoan Q5 do RMSE > 3,0%.
 - **Mục 5.1.4 (Bảng tổng hợp khuyến nghị và giới hạn áp dụng):**
   + Tích hợp **Bảng 5.1: Ma trận Phát hiện thực nghiệm – Hàm ý quản trị – Điều kiện / Giới hạn áp dụng** (`tbl-recommendations-matrix`).
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd" và "skill/tieuluan.qmd" (kiểm toán mã băm SHA256 trùng khớp `B950DAB250FBA638899D3741CD69956C0B806AE7AAFEDA977ABB263C7FE033EB`).
@@ -846,31 +846,31 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Xây dựng Quy trình chốt phiên 6 giai đoạn (End-of-Day Pipeline) khép kín:
   + Giai đoạn 1 (16:30 EST): Thu thập dữ liệu thô `Close_raw`, lưu Data Lake bất biến có dấu thời gian và mã băm SHA256 phục vụ Audit Trail.
   + Giai đoạn 2 (16:40 EST): Kiểm toán toàn vẹn khóa `[Ticker, Date]`, đối chiếu Lịch NYSE, cách ly phiên ảo vào vùng đệm Staging.
-  + Giai đoạn 3 (16:45 EST): Quét và gán 4 cờ kiểm toán (`flag_missing`, `flag_recovered`, `flag_suspicious`, `flag_outlier`), áp dụng lọc Median vững $3 \times \text{Median}$.
-  + Giai đoạn 4 (17:00 EST): Tính toán lợi suất đơn $R_t$, cập nhật $MA_5$, $MA_{20}$, $\text{TrendRatio}$, và độ biến động trượt $\sigma_{20d}$ với ràng buộc `min_periods=20`.
-  + Giai đoạn 5 (17:15 EST): Chuẩn hóa vector và đưa vào Ridge $\alpha=10.000$, phát tín hiệu dự báo $\hat{r}_{t+1}$, kích hoạt Bộ lọc phụ trợ (Tactical Execution Overlay) cảnh báo hoãn lệnh mua $1-2$ phiên nếu có phân kỳ đảo chiều.
-  + Giai đoạn 6 (16:35 EST ngày t+1): Hồi cứu sai số thực tế $e_{t+1} = y_{t+1} - \hat{y}_{t+1}$, cập nhật Rolling RMSE 60 phiên phát hiện Model Drift; nếu vượt $3\sigma$ kích hoạt quy trình tái hiệu chỉnh Walk-Forward.
+  + Giai đoạn 3 (16:45 EST): Quét và gán 4 cờ kiểm toán (`flag_missing`, `flag_recovered`, `flag_suspicious`, `flag_outlier`), áp dụng lọc Median vững 3 x text{Median}.
+  + Giai đoạn 4 (17:00 EST): Tính toán lợi suất đơn R_t, cập nhật MA_5, MA_{20}, TrendRatio, và độ biến động trượt σ_20d với ràng buộc `min_periods=20`.
+  + Giai đoạn 5 (17:15 EST): Chuẩn hóa vector và đưa vào Ridge alpha=10.000, phát tín hiệu dự báo r^_{t+1}, kích hoạt Bộ lọc phụ trợ (Tactical Execution Overlay) cảnh báo hoãn lệnh mua 1-2 phiên nếu có phân kỳ đảo chiều.
+  + Giai đoạn 6 (16:35 EST ngày t+1): Hồi cứu sai số thực tế e_{t+1} = y_{t+1} - y^_{t+1}, cập nhật Rolling RMSE 60 phiên phát hiện Model Drift; nếu vượt 3σ kích hoạt quy trình tái hiệu chỉnh Walk-Forward.
 - Tích hợp khối mã Python hiển thị **Hình 5.1: Sơ đồ Luồng Vận hành Chốt phiên (End-of-Day Pipeline) và Kiểm soát Chất lượng Dữ liệu Chuỗi thời gian** (`fig-eod-pipeline-flowchart`).
 
 12. Phiên chiều (17:35 - 17:50): Triển khai toàn văn Mục 5.3 (Chương 5) vào "tieuluan.qmd"
 - Phân tích toàn diện 9 hạn chế phương pháp luận:
   1. Dữ liệu gốc thiếu không ngẫu nhiên (MNAR) tập trung ở mã niêm yết muộn.
   2. Rủi ro vi mô từ 97 dòng ngày Date suy ra theo lịch NYSE.
-  3. Bộ lọc $3 \times \text{Median}$ có thể nén nhẹ các cú sốc thanh khoản thực tế.
+  3. Bộ lọc 3 x text{Median} có thể nén nhẹ các cú sốc thanh khoản thực tế.
   4. Giá Close danh nghĩa chưa loại trừ bước nhảy kỹ thuật của các đợt chia tách (NVDA chia 10:1).
-  5. Giả định $R_f = 0$ phóng đại Sharpe khoảng $0,30 - 0,33$ đơn vị so với lãi suất Fed thực tế $4,5\%$.
+  5. Giả định R_f = 0 phóng đại Sharpe khoảng 0,30 - 0,33 đơn vị so với lãi suất Fed thực tế 4,5%.
   6. Chưa khấu trừ chi phí hoa hồng, thuế và độ trượt giá (Slippage) khi giao dịch 503 mã.
   7. Thiên lệch sống sót (Survivorship Bias) với 503 mã chốt tại năm 2026.
   8. Danh mục tỷ trọng đều minh họa không thay thế chỉ số S&P 500 chính thức theo vốn hóa.
-  9. Minh bạch đạo đức AI: Ghi nhận sử dụng AI làm trợ lý kỹ thuật cú pháp và bảng biểu; sinh viên Đào Ngọc Minh cam kết chịu trách nhiệm cá nhân học thuật $100\%$ về toàn bộ nội dung, mã nguồn và kết quả nghiên cứu.
+  9. Minh bạch đạo đức AI: Ghi nhận sử dụng AI làm trợ lý kỹ thuật cú pháp và bảng biểu; sinh viên Đào Ngọc Minh cam kết chịu trách nhiệm cá nhân học thuật 100% về toàn bộ nội dung, mã nguồn và kết quả nghiên cứu.
 - Tích hợp **Bảng 5.2: Ma trận phân tích hạn chế nghiên cứu, tác động tiềm ẩn và biện pháp giảm thiểu** (`tbl-limitations-and-mitigations`).
 
 13. Phiên chiều (17:50 - 18:15): Triển khai toàn văn Mục 5.4 (Chương 5) vào "tieuluan.qmd"
 - Xác lập 4 định hướng nghiên cứu tương lai: Multi-regime testing qua 3 chu kỳ vĩ mô; Tích hợp dữ liệu Adjusted Close cấp phép; Đánh giá Rolling-Origin (Walk-Forward Retraining); Khám phá mô hình phi tuyến (LightGBM, LSTM) và NLP sentiment tin tức.
 - Viết phần Kết luận toàn văn đề tài chuẩn mực học thuật (2 trang):
-  + Trả lời dứt khoát Câu hỏi 1: Lợi suất bình quân $+0,0644\%$/ngày, độ lệch chuẩn $2,97\%$, $Kurtosis = 5,82$ (đuôi dày), biến động $\sigma_{20d}$ từ $1,05\%$ (KO) đến $5,66\%$ (NVDA), kiểm định ADF khẳng định giá $I(1)$ không dừng và lợi suất $I(0)$ dừng mạnh mẽ.
-  + Trả lời dứt khoát Câu hỏi 2: Danh mục tỷ trọng đều giảm $> 70\%$ rủi ro so với cổ phiếu đơn lẻ, lợi suất năm hóa $+16,26\%$, tăng trưởng $+114,11\%$ (từ 100 lên 214,11 USD), Sharpe đạt $1,1834$ với $R_f=0$ và $0,8559$ với $R_f=4,5\%$.
-  + Trả lời dứt khoát Câu hỏi 3: Trên $101.630$ quan sát Test ngoài mẫu sau khi Purge 1 phiên, Ridge đạt $\text{RMSE} = 0,021892$ ($R^2_{\text{OOS, Zero}} = +0,0670\%$), MAE của Baseline thấp hơn ($0,012994$ vs $0,013118$), sai số vọt gấp $2,2$ lần tại $Q5$ ($3,04\%$). Kết luận đanh thép: Mô hình học máy dựa trên giá quá khứ không thể đánh bại thị trường sau chi phí giao dịch, củng cố vững chắc Giả thuyết Thị trường Hiệu quả (Fama, 1970).
+  + Trả lời dứt khoát Câu hỏi 1: Lợi suất bình quân +0,0644%/ngày, độ lệch chuẩn 2,97%, Kurtosis = 5,82 (đuôi dày), biến động σ_20d từ 1,05% (KO) đến 5,66% (NVDA), kiểm định ADF khẳng định giá I(1) không dừng và lợi suất I(0) dừng mạnh mẽ.
+  + Trả lời dứt khoát Câu hỏi 2: Danh mục tỷ trọng đều giảm > 70% rủi ro so với cổ phiếu đơn lẻ, lợi suất năm hóa +16,26%, tăng trưởng +114,11% (từ 100 lên 214,11 USD), Sharpe đạt 1,1834 với R_f=0 và 0,8559 với R_f=4,5%.
+  + Trả lời dứt khoát Câu hỏi 3: Trên 101.630 quan sát Test ngoài mẫu sau khi Purge 1 phiên, Ridge đạt RMSE = 0,021892 (R^2_{OOS, Zero} = +0,0670%), MAE của Baseline thấp hơn (0,012994 vs 0,013118), sai số vọt gấp 2,2 lần tại Q5 (3,04%). Kết luận đanh thép: Mô hình học máy dựa trên giá quá khứ không thể đánh bại thị trường sau chi phí giao dịch, củng cố vững chắc Giả thuyết Thị trường Hiệu quả (Fama, 1970).
 
 14. Phiên chiều (18:15 - 18:45): Triển khai Toàn bộ Danh mục, Tài liệu Tham khảo (APA 7th) và Phụ lục A, B, C, D
 - Cập nhật Danh mục Bảng biểu học thuật (28 bảng) và Danh mục Hình ảnh trực quan hóa (14 hình) tại Phần Mở đầu thủ tục.
