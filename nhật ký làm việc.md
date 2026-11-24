@@ -65,6 +65,23 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
   + Bổ sung chuyên sâu phần Giới thiệu bộ dữ liệu và loại bỏ phần Slide theo đúng yêu cầu.
 - Tạo tệp Master Prompt "PROMPT_CHUAN_DE_LAM_BAI.txt" để lưu trữ cấu trúc đề cương và sẵn sàng cho bước chạy code thực nghiệm.
 
+15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
+- Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
+  + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
+  + Chương 2 - Kiểm kê 3 Tầng Khuyết tật Dữ liệu trên 622.243 quan sát gốc (Taxonomy lỗi E1 - E7 + V0).
+  + Chương 3 - Cơ sở Khoa học và Kinh tế lượng của việc Lựa chọn Biến số (Phân tích đa cộng tuyến VIF > 250, loại bỏ Volume và DGS3MO).
+  + Chương 4 - Đặc tả Quy trình Làm sạch Khóa Thời gian (Date): Chuẩn hóa ISO-8601, phân tách 61.305 dòng lỗi, phục hồi chính xác 97 dòng thỏa mãn 3 điều kiện nghiêm ngặt, ghép nối 1.254 phiên làm việc NYSE với ràng buộc many-to-one.
+  + Chương 5 - Đặc tả Quy trình Định danh Mã Cổ phiếu (Ticker): Hợp nhất 1.509 chuỗi văn bản thô về đúng 503 mã niêm yết chuẩn S&P 500 (giải trình 3 công ty phát hành 2 lớp cổ phiếu kép), tối ưu bộ nhớ dạng `category` giúp tiết kiệm 96,10% RAM (31,05 MB xuống 1,21 MB).
+  + Chương 6 - Đặc tả Quy trình Xử lý Giá Đóng cửa (Close): Bóc tách Regex 33.281 dòng dính tạp chất tiền tệ ($ và USD), xử lý 8.240 dòng sai đơn vị, gán NaN cho 18.852 dòng vi phạm (giá âm, mã -1, giá 9999), xây dựng Bộ lọc Trung vị (Median Filter) ngưỡng 3x và 1/3x phân biệt với biến động thực tế, áp dụng Forward Fill có kiểm soát cho 15.584 dòng (2,78%), nghiêm cấm nội suy hai phía (Linear Interpolation).
+  + Chương 7 - Quy trình Sinh biến Phái sinh và Tập Đặc trưng Định lượng: Công thức và ràng buộc phiên liên tục NYSE cho Simple Return (R_t), Log Return (r_t), Độ biến động lịch sử 20 phiên (Vol_20d, Bessel ddof=1, độ phủ 98,4%), Danh mục Tỷ trọng đều và Hệ số Sharpe năm hóa (0,6953 với giả định kỹ thuật R_f = 0), tập đặc trưng Lags (Lag 1, 2, 5), MA5, MA20, RSI_14, nhãn ngoài mẫu Target y, quy tắc phân chia mẫu theo thời gian (Time-based Split 60/10/30%).
+  + Chương 8 - Đo lường RAM và Bốn Phép Kiểm định Tính Bất biến (Assertions): Phân tích tối ưu RAM từ 108,49 MB xuống 36,88 MB (-66,0%), lý giải duy trì float64 cho Close, xuất định dạng nén Parquet; thiết lập 4 phép kiểm định fail-fast bảo vệ pipeline (Positivity P > 0, Key Uniqueness duy nhất, Scale Conservation 622.243 = 560.103 + 62.140, Window Coverage >= 98%).
+  + Chương 9 - Bảng Tổng hợp Đối chiếu Chất lượng Trước và Sau làm sạch (Ma trận kiểm toán 10 tiêu chí).
+  + Chương 10 - Mã nguồn Python Khép kín Toàn bộ Pipeline (Self-contained Runnable Script).
+  + Chương 11 - Kết luận, Ma trận Vấn đề - Giải pháp, Bảng 10 con số chính thức bất biến, Hướng dẫn tích hợp chéo với "tieuluan.qmd" và Cẩm nang 4 câu hỏi trọng tâm khi demo vấn đáp trực tiếp với Giảng viên.
+- Đóng gói và lưu trữ an toàn mã nguồn vào Git: Hoàn thành các commit (13644f7, 1b9962f, 6a01737) với cây thư mục làm việc sạch sẽ (Working tree clean).
+
 --------------------------------------------------------------------------------
 III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
 1. Tệp văn bản báo cáo chính thức:
@@ -203,6 +220,23 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
   + Tab 3: Bảng đối chiếu Trước vs Sau khi tiền xử lý.
   + Tab 4: Trình mô phỏng Live Simulator cho phép nhập dữ liệu bẩn để quan sát thuật toán bóc tách trực tiếp.
 
+15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
+- Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
+  + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
+  + Chương 2 - Kiểm kê 3 Tầng Khuyết tật Dữ liệu trên 622.243 quan sát gốc (Taxonomy lỗi E1 - E7 + V0).
+  + Chương 3 - Cơ sở Khoa học và Kinh tế lượng của việc Lựa chọn Biến số (Phân tích đa cộng tuyến VIF > 250, loại bỏ Volume và DGS3MO).
+  + Chương 4 - Đặc tả Quy trình Làm sạch Khóa Thời gian (Date): Chuẩn hóa ISO-8601, phân tách 61.305 dòng lỗi, phục hồi chính xác 97 dòng thỏa mãn 3 điều kiện nghiêm ngặt, ghép nối 1.254 phiên làm việc NYSE với ràng buộc many-to-one.
+  + Chương 5 - Đặc tả Quy trình Định danh Mã Cổ phiếu (Ticker): Hợp nhất 1.509 chuỗi văn bản thô về đúng 503 mã niêm yết chuẩn S&P 500 (giải trình 3 công ty phát hành 2 lớp cổ phiếu kép), tối ưu bộ nhớ dạng `category` giúp tiết kiệm 96,10% RAM (31,05 MB xuống 1,21 MB).
+  + Chương 6 - Đặc tả Quy trình Xử lý Giá Đóng cửa (Close): Bóc tách Regex 33.281 dòng dính tạp chất tiền tệ ($ và USD), xử lý 8.240 dòng sai đơn vị, gán NaN cho 18.852 dòng vi phạm (giá âm, mã -1, giá 9999), xây dựng Bộ lọc Trung vị (Median Filter) ngưỡng 3x và 1/3x phân biệt với biến động thực tế, áp dụng Forward Fill có kiểm soát cho 15.584 dòng (2,78%), nghiêm cấm nội suy hai phía (Linear Interpolation).
+  + Chương 7 - Quy trình Sinh biến Phái sinh và Tập Đặc trưng Định lượng: Công thức và ràng buộc phiên liên tục NYSE cho Simple Return (R_t), Log Return (r_t), Độ biến động lịch sử 20 phiên (Vol_20d, Bessel ddof=1, độ phủ 98,4%), Danh mục Tỷ trọng đều và Hệ số Sharpe năm hóa (0,6953 với giả định kỹ thuật R_f = 0), tập đặc trưng Lags (Lag 1, 2, 5), MA5, MA20, RSI_14, nhãn ngoài mẫu Target y, quy tắc phân chia mẫu theo thời gian (Time-based Split 60/10/30%).
+  + Chương 8 - Đo lường RAM và Bốn Phép Kiểm định Tính Bất biến (Assertions): Phân tích tối ưu RAM từ 108,49 MB xuống 36,88 MB (-66,0%), lý giải duy trì float64 cho Close, xuất định dạng nén Parquet; thiết lập 4 phép kiểm định fail-fast bảo vệ pipeline (Positivity P > 0, Key Uniqueness duy nhất, Scale Conservation 622.243 = 560.103 + 62.140, Window Coverage >= 98%).
+  + Chương 9 - Bảng Tổng hợp Đối chiếu Chất lượng Trước và Sau làm sạch (Ma trận kiểm toán 10 tiêu chí).
+  + Chương 10 - Mã nguồn Python Khép kín Toàn bộ Pipeline (Self-contained Runnable Script).
+  + Chương 11 - Kết luận, Ma trận Vấn đề - Giải pháp, Bảng 10 con số chính thức bất biến, Hướng dẫn tích hợp chéo với "tieuluan.qmd" và Cẩm nang 4 câu hỏi trọng tâm khi demo vấn đáp trực tiếp với Giảng viên.
+- Đóng gói và lưu trữ an toàn mã nguồn vào Git: Hoàn thành các commit (13644f7, 1b9962f, 6a01737) với cây thư mục làm việc sạch sẽ (Working tree clean).
+
 --------------------------------------------------------------------------------
 III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
 1. Tệp Word chuyên sâu về quy trình làm sạch dữ liệu:
@@ -253,6 +287,23 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Chạy script "execute_notebook.py": Thực thi tuần tự toàn bộ 24 ô code cell trên tập dữ liệu 622,243 dòng:
   + Toàn bộ 24/24 code cells chạy thành công 100% với thời gian ~8 giây.
   + Toàn bộ kết quả bảng biểu, dữ liệu thô in mẫu, bảng 14 chỉ số thống kê, bảng Top 5 Sharpe và các thông báo đối chiếu đều được ghi nhận trực tiếp vào tệp "tieuluan.ipynb".
+
+15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
+- Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
+  + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
+  + Chương 2 - Kiểm kê 3 Tầng Khuyết tật Dữ liệu trên 622.243 quan sát gốc (Taxonomy lỗi E1 - E7 + V0).
+  + Chương 3 - Cơ sở Khoa học và Kinh tế lượng của việc Lựa chọn Biến số (Phân tích đa cộng tuyến VIF > 250, loại bỏ Volume và DGS3MO).
+  + Chương 4 - Đặc tả Quy trình Làm sạch Khóa Thời gian (Date): Chuẩn hóa ISO-8601, phân tách 61.305 dòng lỗi, phục hồi chính xác 97 dòng thỏa mãn 3 điều kiện nghiêm ngặt, ghép nối 1.254 phiên làm việc NYSE với ràng buộc many-to-one.
+  + Chương 5 - Đặc tả Quy trình Định danh Mã Cổ phiếu (Ticker): Hợp nhất 1.509 chuỗi văn bản thô về đúng 503 mã niêm yết chuẩn S&P 500 (giải trình 3 công ty phát hành 2 lớp cổ phiếu kép), tối ưu bộ nhớ dạng `category` giúp tiết kiệm 96,10% RAM (31,05 MB xuống 1,21 MB).
+  + Chương 6 - Đặc tả Quy trình Xử lý Giá Đóng cửa (Close): Bóc tách Regex 33.281 dòng dính tạp chất tiền tệ ($ và USD), xử lý 8.240 dòng sai đơn vị, gán NaN cho 18.852 dòng vi phạm (giá âm, mã -1, giá 9999), xây dựng Bộ lọc Trung vị (Median Filter) ngưỡng 3x và 1/3x phân biệt với biến động thực tế, áp dụng Forward Fill có kiểm soát cho 15.584 dòng (2,78%), nghiêm cấm nội suy hai phía (Linear Interpolation).
+  + Chương 7 - Quy trình Sinh biến Phái sinh và Tập Đặc trưng Định lượng: Công thức và ràng buộc phiên liên tục NYSE cho Simple Return (R_t), Log Return (r_t), Độ biến động lịch sử 20 phiên (Vol_20d, Bessel ddof=1, độ phủ 98,4%), Danh mục Tỷ trọng đều và Hệ số Sharpe năm hóa (0,6953 với giả định kỹ thuật R_f = 0), tập đặc trưng Lags (Lag 1, 2, 5), MA5, MA20, RSI_14, nhãn ngoài mẫu Target y, quy tắc phân chia mẫu theo thời gian (Time-based Split 60/10/30%).
+  + Chương 8 - Đo lường RAM và Bốn Phép Kiểm định Tính Bất biến (Assertions): Phân tích tối ưu RAM từ 108,49 MB xuống 36,88 MB (-66,0%), lý giải duy trì float64 cho Close, xuất định dạng nén Parquet; thiết lập 4 phép kiểm định fail-fast bảo vệ pipeline (Positivity P > 0, Key Uniqueness duy nhất, Scale Conservation 622.243 = 560.103 + 62.140, Window Coverage >= 98%).
+  + Chương 9 - Bảng Tổng hợp Đối chiếu Chất lượng Trước và Sau làm sạch (Ma trận kiểm toán 10 tiêu chí).
+  + Chương 10 - Mã nguồn Python Khép kín Toàn bộ Pipeline (Self-contained Runnable Script).
+  + Chương 11 - Kết luận, Ma trận Vấn đề - Giải pháp, Bảng 10 con số chính thức bất biến, Hướng dẫn tích hợp chéo với "tieuluan.qmd" và Cẩm nang 4 câu hỏi trọng tâm khi demo vấn đáp trực tiếp với Giảng viên.
+- Đóng gói và lưu trữ an toàn mã nguồn vào Git: Hoàn thành các commit (13644f7, 1b9962f, 6a01737) với cây thư mục làm việc sạch sẽ (Working tree clean).
 
 --------------------------------------------------------------------------------
 III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
@@ -426,6 +477,23 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Thiết lập bảng ma trận câu hỏi và câu trả lời phản biện xuất sắc để sẵn sàng cho buổi bảo vệ đề tài kết thúc học phần.
 - Đóng gói toàn bộ mã nguồn và tài liệu nghiên cứu, commit `39fd080` và đẩy trực tiếp lên kho GitHub:
   `https://github.com/minh682007-dot/SP500-Financial-Analytics-and-Risk-Prediction`
+
+15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
+- Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
+  + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
+  + Chương 2 - Kiểm kê 3 Tầng Khuyết tật Dữ liệu trên 622.243 quan sát gốc (Taxonomy lỗi E1 - E7 + V0).
+  + Chương 3 - Cơ sở Khoa học và Kinh tế lượng của việc Lựa chọn Biến số (Phân tích đa cộng tuyến VIF > 250, loại bỏ Volume và DGS3MO).
+  + Chương 4 - Đặc tả Quy trình Làm sạch Khóa Thời gian (Date): Chuẩn hóa ISO-8601, phân tách 61.305 dòng lỗi, phục hồi chính xác 97 dòng thỏa mãn 3 điều kiện nghiêm ngặt, ghép nối 1.254 phiên làm việc NYSE với ràng buộc many-to-one.
+  + Chương 5 - Đặc tả Quy trình Định danh Mã Cổ phiếu (Ticker): Hợp nhất 1.509 chuỗi văn bản thô về đúng 503 mã niêm yết chuẩn S&P 500 (giải trình 3 công ty phát hành 2 lớp cổ phiếu kép), tối ưu bộ nhớ dạng `category` giúp tiết kiệm 96,10% RAM (31,05 MB xuống 1,21 MB).
+  + Chương 6 - Đặc tả Quy trình Xử lý Giá Đóng cửa (Close): Bóc tách Regex 33.281 dòng dính tạp chất tiền tệ ($ và USD), xử lý 8.240 dòng sai đơn vị, gán NaN cho 18.852 dòng vi phạm (giá âm, mã -1, giá 9999), xây dựng Bộ lọc Trung vị (Median Filter) ngưỡng 3x và 1/3x phân biệt với biến động thực tế, áp dụng Forward Fill có kiểm soát cho 15.584 dòng (2,78%), nghiêm cấm nội suy hai phía (Linear Interpolation).
+  + Chương 7 - Quy trình Sinh biến Phái sinh và Tập Đặc trưng Định lượng: Công thức và ràng buộc phiên liên tục NYSE cho Simple Return (R_t), Log Return (r_t), Độ biến động lịch sử 20 phiên (Vol_20d, Bessel ddof=1, độ phủ 98,4%), Danh mục Tỷ trọng đều và Hệ số Sharpe năm hóa (0,6953 với giả định kỹ thuật R_f = 0), tập đặc trưng Lags (Lag 1, 2, 5), MA5, MA20, RSI_14, nhãn ngoài mẫu Target y, quy tắc phân chia mẫu theo thời gian (Time-based Split 60/10/30%).
+  + Chương 8 - Đo lường RAM và Bốn Phép Kiểm định Tính Bất biến (Assertions): Phân tích tối ưu RAM từ 108,49 MB xuống 36,88 MB (-66,0%), lý giải duy trì float64 cho Close, xuất định dạng nén Parquet; thiết lập 4 phép kiểm định fail-fast bảo vệ pipeline (Positivity P > 0, Key Uniqueness duy nhất, Scale Conservation 622.243 = 560.103 + 62.140, Window Coverage >= 98%).
+  + Chương 9 - Bảng Tổng hợp Đối chiếu Chất lượng Trước và Sau làm sạch (Ma trận kiểm toán 10 tiêu chí).
+  + Chương 10 - Mã nguồn Python Khép kín Toàn bộ Pipeline (Self-contained Runnable Script).
+  + Chương 11 - Kết luận, Ma trận Vấn đề - Giải pháp, Bảng 10 con số chính thức bất biến, Hướng dẫn tích hợp chéo với "tieuluan.qmd" và Cẩm nang 4 câu hỏi trọng tâm khi demo vấn đáp trực tiếp với Giảng viên.
+- Đóng gói và lưu trữ an toàn mã nguồn vào Git: Hoàn thành các commit (13644f7, 1b9962f, 6a01737) với cây thư mục làm việc sạch sẽ (Working tree clean).
 
 --------------------------------------------------------------------------------
 III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
@@ -637,6 +705,23 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
     * Nhúng khối mã vẽ Biểu đồ giá trị tài sản tích lũy danh mục (`fig-portfolio-cumulative`), tăng trưởng từ cơ sở 100 USD lên 214,11 (+114,11%).
     * Nhấn mạnh 3 lưu ý phương pháp luận bắt buộc: Trình bày trung thực ngoại lai cực đoan; Nêu rõ giả định R_f = 0 là mốc quy ước kỹ thuật, không phải lãi suất thực tế của T-bill; Phân biệt rõ danh mục tỷ trọng đều minh họa với chỉ số S&P 500 thực tế tính theo vốn hóa.
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd" và "skill/tieuluan.qmd".
+
+15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
+- Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
+  + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
+  + Chương 2 - Kiểm kê 3 Tầng Khuyết tật Dữ liệu trên 622.243 quan sát gốc (Taxonomy lỗi E1 - E7 + V0).
+  + Chương 3 - Cơ sở Khoa học và Kinh tế lượng của việc Lựa chọn Biến số (Phân tích đa cộng tuyến VIF > 250, loại bỏ Volume và DGS3MO).
+  + Chương 4 - Đặc tả Quy trình Làm sạch Khóa Thời gian (Date): Chuẩn hóa ISO-8601, phân tách 61.305 dòng lỗi, phục hồi chính xác 97 dòng thỏa mãn 3 điều kiện nghiêm ngặt, ghép nối 1.254 phiên làm việc NYSE với ràng buộc many-to-one.
+  + Chương 5 - Đặc tả Quy trình Định danh Mã Cổ phiếu (Ticker): Hợp nhất 1.509 chuỗi văn bản thô về đúng 503 mã niêm yết chuẩn S&P 500 (giải trình 3 công ty phát hành 2 lớp cổ phiếu kép), tối ưu bộ nhớ dạng `category` giúp tiết kiệm 96,10% RAM (31,05 MB xuống 1,21 MB).
+  + Chương 6 - Đặc tả Quy trình Xử lý Giá Đóng cửa (Close): Bóc tách Regex 33.281 dòng dính tạp chất tiền tệ ($ và USD), xử lý 8.240 dòng sai đơn vị, gán NaN cho 18.852 dòng vi phạm (giá âm, mã -1, giá 9999), xây dựng Bộ lọc Trung vị (Median Filter) ngưỡng 3x và 1/3x phân biệt với biến động thực tế, áp dụng Forward Fill có kiểm soát cho 15.584 dòng (2,78%), nghiêm cấm nội suy hai phía (Linear Interpolation).
+  + Chương 7 - Quy trình Sinh biến Phái sinh và Tập Đặc trưng Định lượng: Công thức và ràng buộc phiên liên tục NYSE cho Simple Return (R_t), Log Return (r_t), Độ biến động lịch sử 20 phiên (Vol_20d, Bessel ddof=1, độ phủ 98,4%), Danh mục Tỷ trọng đều và Hệ số Sharpe năm hóa (0,6953 với giả định kỹ thuật R_f = 0), tập đặc trưng Lags (Lag 1, 2, 5), MA5, MA20, RSI_14, nhãn ngoài mẫu Target y, quy tắc phân chia mẫu theo thời gian (Time-based Split 60/10/30%).
+  + Chương 8 - Đo lường RAM và Bốn Phép Kiểm định Tính Bất biến (Assertions): Phân tích tối ưu RAM từ 108,49 MB xuống 36,88 MB (-66,0%), lý giải duy trì float64 cho Close, xuất định dạng nén Parquet; thiết lập 4 phép kiểm định fail-fast bảo vệ pipeline (Positivity P > 0, Key Uniqueness duy nhất, Scale Conservation 622.243 = 560.103 + 62.140, Window Coverage >= 98%).
+  + Chương 9 - Bảng Tổng hợp Đối chiếu Chất lượng Trước và Sau làm sạch (Ma trận kiểm toán 10 tiêu chí).
+  + Chương 10 - Mã nguồn Python Khép kín Toàn bộ Pipeline (Self-contained Runnable Script).
+  + Chương 11 - Kết luận, Ma trận Vấn đề - Giải pháp, Bảng 10 con số chính thức bất biến, Hướng dẫn tích hợp chéo với "tieuluan.qmd" và Cẩm nang 4 câu hỏi trọng tâm khi demo vấn đáp trực tiếp với Giảng viên.
+- Đóng gói và lưu trữ an toàn mã nguồn vào Git: Hoàn thành các commit (13644f7, 1b9962f, 6a01737) với cây thư mục làm việc sạch sẽ (Working tree clean).
 
 --------------------------------------------------------------------------------
 III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
@@ -880,6 +965,23 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Tích hợp **Phụ lục C**: Từ điển dữ liệu tổng thể Master (`tbl-data-dictionary`) và Nhật ký đối chiếu trạng thái giá (`tbl-price-status-reconciliation`).
 - Tích hợp **Phụ lục D**: Bảng Kiểm tra Nghiệm thu Đề tài (Checklist 10 tiêu chí ĐẠT 100%, 3 quyết định phương pháp luận và ghi chú liêm chính học thuật).
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd", "skill/tieuluan.qmd" và "nhật ký làm việc.md" (kiểm toán mã băm SHA256 trùng khớp `47958EAC6BCC90DCA0AE82C0BF030FFCF6144F37D979D12931630E2514FF2FC2`).
+
+15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
+- Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
+  + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
+  + Chương 2 - Kiểm kê 3 Tầng Khuyết tật Dữ liệu trên 622.243 quan sát gốc (Taxonomy lỗi E1 - E7 + V0).
+  + Chương 3 - Cơ sở Khoa học và Kinh tế lượng của việc Lựa chọn Biến số (Phân tích đa cộng tuyến VIF > 250, loại bỏ Volume và DGS3MO).
+  + Chương 4 - Đặc tả Quy trình Làm sạch Khóa Thời gian (Date): Chuẩn hóa ISO-8601, phân tách 61.305 dòng lỗi, phục hồi chính xác 97 dòng thỏa mãn 3 điều kiện nghiêm ngặt, ghép nối 1.254 phiên làm việc NYSE với ràng buộc many-to-one.
+  + Chương 5 - Đặc tả Quy trình Định danh Mã Cổ phiếu (Ticker): Hợp nhất 1.509 chuỗi văn bản thô về đúng 503 mã niêm yết chuẩn S&P 500 (giải trình 3 công ty phát hành 2 lớp cổ phiếu kép), tối ưu bộ nhớ dạng `category` giúp tiết kiệm 96,10% RAM (31,05 MB xuống 1,21 MB).
+  + Chương 6 - Đặc tả Quy trình Xử lý Giá Đóng cửa (Close): Bóc tách Regex 33.281 dòng dính tạp chất tiền tệ ($ và USD), xử lý 8.240 dòng sai đơn vị, gán NaN cho 18.852 dòng vi phạm (giá âm, mã -1, giá 9999), xây dựng Bộ lọc Trung vị (Median Filter) ngưỡng 3x và 1/3x phân biệt với biến động thực tế, áp dụng Forward Fill có kiểm soát cho 15.584 dòng (2,78%), nghiêm cấm nội suy hai phía (Linear Interpolation).
+  + Chương 7 - Quy trình Sinh biến Phái sinh và Tập Đặc trưng Định lượng: Công thức và ràng buộc phiên liên tục NYSE cho Simple Return (R_t), Log Return (r_t), Độ biến động lịch sử 20 phiên (Vol_20d, Bessel ddof=1, độ phủ 98,4%), Danh mục Tỷ trọng đều và Hệ số Sharpe năm hóa (0,6953 với giả định kỹ thuật R_f = 0), tập đặc trưng Lags (Lag 1, 2, 5), MA5, MA20, RSI_14, nhãn ngoài mẫu Target y, quy tắc phân chia mẫu theo thời gian (Time-based Split 60/10/30%).
+  + Chương 8 - Đo lường RAM và Bốn Phép Kiểm định Tính Bất biến (Assertions): Phân tích tối ưu RAM từ 108,49 MB xuống 36,88 MB (-66,0%), lý giải duy trì float64 cho Close, xuất định dạng nén Parquet; thiết lập 4 phép kiểm định fail-fast bảo vệ pipeline (Positivity P > 0, Key Uniqueness duy nhất, Scale Conservation 622.243 = 560.103 + 62.140, Window Coverage >= 98%).
+  + Chương 9 - Bảng Tổng hợp Đối chiếu Chất lượng Trước và Sau làm sạch (Ma trận kiểm toán 10 tiêu chí).
+  + Chương 10 - Mã nguồn Python Khép kín Toàn bộ Pipeline (Self-contained Runnable Script).
+  + Chương 11 - Kết luận, Ma trận Vấn đề - Giải pháp, Bảng 10 con số chính thức bất biến, Hướng dẫn tích hợp chéo với "tieuluan.qmd" và Cẩm nang 4 câu hỏi trọng tâm khi demo vấn đáp trực tiếp với Giảng viên.
+- Đóng gói và lưu trữ an toàn mã nguồn vào Git: Hoàn thành các commit (13644f7, 1b9962f, 6a01737) với cây thư mục làm việc sạch sẽ (Working tree clean).
 
 --------------------------------------------------------------------------------
 III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
