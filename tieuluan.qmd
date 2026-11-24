@@ -696,12 +696,14 @@ Tiểu Luận CK/
 ├── DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv    # Tệp dữ liệu thô ban đầu (622.243 dòng, 57.06 MB)
 ├── data_cleaned_SP500.csv                           # Tệp dữ liệu sạch 560.103 dòng sau tiền xử lý (19.2 MB)
 ├── tieuluan.qmd                                     # Toàn văn báo cáo khoa học Quarto tích hợp code thực thi
+├── quytrinhlamsach.qmd                              # Báo cáo chuyên đề đặc tả quy trình kiểm toán và làm sạch dữ liệu (1.247 dòng)
 ├── tieuluan.ipynb                                   # Sổ tay Jupyter Notebook thực nghiệm chi tiết 51 cells
 ├── thong_ke_du_lieu.ipynb                           # Sổ tay Notebook tính toán 14 chỉ số thống kê EDA
 │
 ├── skill/                                           # Thư mục quản trị tiến độ và tri thức nghiên cứu
 │   ├── tieuluan.qmd                                 # Bản sao lưu đồng bộ của báo cáo chính
-│   └── nhật kí làm việc                             # Nhật ký nghiên cứu chi tiết từ 20/10/2026 đến 23/11/2026
+│   ├── quytrinhlamsach.qmd                          # Bản sao lưu đồng bộ báo cáo đặc tả làm sạch
+│   └── nhật kí làm việc                             # Nhật ký nghiên cứu chi tiết từ 20/10/2026 đến 24/11/2026
 │
 └── output/                                          # Thư mục xuất bản tài liệu nghiệm thu (Word, HTML, PDF)
 ```
@@ -1051,6 +1053,8 @@ print("\n-> XÁC NHẬN KIỂM ĐỊNH: 100% giá trị dữ liệu được b�
 ## 3.3. Quy trình làm sạch và xử lý dữ liệu khuyết, ngoại lai
 
 Tiền xử lý dữ liệu tài chính quy mô lớn ($> 600.000$ dòng) là khâu then chốt quyết định tính tin cậy của toàn bộ kết quả phân tích và mô hình hóa. Nghiên cứu thiết lập quy trình làm sạch có kiểm toán (Audit Trail Data Cleaning) gồm 7 bước chuyên sâu, bảo đảm mọi quyết định can thiệp đều được ghi vết minh bạch và đối chiếu được với dữ liệu gốc.
+
+> **Tài liệu Tham chiếu Chuyên sâu:** Toàn bộ đặc tả kỹ thuật chi tiết của 6 Trạm kiểm soát chất lượng, thuật toán lọc trung vị theo từng mã, bằng chứng chứng minh toán học của 4 phép kiểm định bất biến, phân tích kinh tế học loại bỏ biến và kịch bản thực thi Python khép kín từ tệp thô đến tệp sạch được trình bày toàn diện trong **Báo cáo Đặc tả Quy trình Xử lý và Làm sạch Dữ liệu** ([`quytrinhlamsach.qmd`](file:///c:/Users/LENOVO/OneDrive/Documents/Tiểu%20Luận%20CK/quytrinhlamsach.qmd), quy mô 1.247 dòng, 11 chương kỹ thuật độc lập).
 
 ### 3.3.1. Thiết lập quy tắc phân loại và bảo toàn dữ liệu
 
@@ -3475,7 +3479,7 @@ Căn cứ yêu cầu nghiệm thu của Giảng viên hướng dẫn ThS. Nguy�
 | **6. Tính toán lợi suất ngặt** | Không nối qua khoảng trống; không dùng nội suy 2 phía trong mô hình. | Ràng buộc phiên liền kề NYSE, loại bỏ $55.132$ cặp đứt gãy; cấm biến NaN thành 0; cấm nội suy tương lai. | $\boxtimes$ ĐẠT |
 | **7. Đúc kết Insight định lượng** | Có ít nhất 3–5 insight có bằng chứng thực nghiệm đối chứng. | Ma trận Bảng 3.18 đúc kết 5 Insight định lượng theo cấu trúc: Bằng chứng – Diễn giải – Giới hạn mẫu. | $\boxtimes$ ĐẠT |
 | **8. Đánh giá mô hình chuẩn** | Có baseline, chia chuỗi thời gian, Pipeline và so sánh MAE/RMSE/R². | Baseline Zero ($\hat{r}=0$), OLS, Ridge ($\alpha=10.000$); Split 80/20 trục ngày NYSE; Purging 1 phiên; đo MAE, RMSE, $R^2_{\text{OOS}}$, DA. | $\boxtimes$ ĐẠT |
-| **9. Nhật ký & Khả năng demo** | Có `nhật ký làm việc.md` tối thiểu 4–6 phiên độc lập, mã chạy xuyên suốt. | `nhật ký làm việc.md` tại thư mục gốc ghi nhận 7 phiên độc lập (20/10 đến 24/11/2026); mã chạy mượt mà. | $\boxtimes$ ĐẠT |
+| **9. Nhật ký & Khả năng demo** | Có `nhật ký làm việc.md` tối thiểu 4–6 phiên độc lập, mã chạy xuyên suốt. | `nhật ký làm việc.md` ghi nhận đầy đủ các phiên độc lập; kèm tài liệu đặc tả `quytrinhlamsach.qmd` sẵn sàng demo. | $\boxtimes$ ĐẠT |
 | **10. Định dạng báo cáo Quarto** | Khổ A4, lề chuẩn, font chữ học thuật, bảng tên trên, hình tên dưới, APA 7. | Báo cáo Quarto chuẩn mực; Bảng 1.1–5.2 tên trên; Hình 2.1–5.1 tên dưới; Trích dẫn 15 tài liệu APA 7th. | $\boxtimes$ ĐẠT |
 
 ### D.2. Giải trình Ba quyết định phương pháp luận trọng tâm
