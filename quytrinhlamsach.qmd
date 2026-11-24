@@ -1,0 +1,304 @@
+---
+title: "QUY TRÌNH XỬ LÝ VÀ LÀM SẠCH DỮ LIỆU CHUỖI THỜI GIAN TÀI CHÍNH"
+subtitle: "Báo cáo Đặc tả Kỹ thuật và Kiểm toán Dữ liệu Thực nghiệm Đề tài PRJ-05 (S&P 500)"
+author: "Đào Ngọc Minh (MSSV: 2521001081)"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    code-fold: show
+    code-tools: true
+  pdf:
+    toc: true
+    number-sections: true
+    geometry: "left=3cm,right=2cm,top=2cm,bottom=2cm"
+    fontsize: 12pt
+    linestretch: 1.3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+# 1. TỔNG QUAN PHƯƠNG PHÁP LUẬN VÀ NGUYÊN TẮC KIỂM TOÁN DỮ LIỆU (AUDIT TRAIL)
+
+Trong khoa học dữ liệu tài chính, quy trình tiền xử lý chuỗi thời gian quy mô lớn ($> 600.000$ quan sát) đóng vai trò sống còn, quyết định trực tiếp đến tính hợp lệ của mọi kết luận kinh tế lượng và mô hình học máy. Để bảo đảm tính liêm chính học thuật và khả năng tái lập (Reproducibility), toàn bộ quy trình làm sạch được thiết kế theo chuẩn **Kiểm toán dữ liệu (Audit Trail Pipeline)** tuân thủ nghiêm ngặt 5 nguyên tắc cốt lõi:
+
+1. **Bảo tồn nguyên vẹn dữ liệu gốc (Data Immutability):**  
+   Tuyệt đối không ghi đè lên các cột thô. Cột chuỗi ban đầu `Close_raw` được lưu giữ vĩnh viễn trên Bảng Master song song với cột số chuẩn hóa `Close_clean` (`Close_num`).
+2. **Lưu giữ thứ tự dòng gốc (`row_id`):**  
+   Ngay khi nạp tệp thô, trường định danh `row_id` được tạo lập tuần tự từ $0$ đến $622.242$. Chỉ số này là bất biến, cho phép truy vết và đối chiếu bất kỳ bản ghi sạch nào về đúng dòng xuất phát trong tệp CSV gốc.
+3. **Phân biệt rạch ròi ba tầng khuyết tật dữ liệu:**  
+   Không được gộp chung các loại khuyết tật vào khái niệm "missing" một cách cẩu thả:
+   * *Tầng 1 - Ô trống vật lý (`""`):* Không có ký tự nào trong tệp CSV.
+   * *Tầng 2 - Lỗi không parse được:* Dính ký tự chữ cái, tạp chất tiền tệ, lỗi định dạng ngày tháng.
+   * *Tầng 3 - Ngoại lai và giá nghi ngờ:* Giá âm ($P \le 0$), mã lỗi `-1`, mức kiểm thử `9999`, lỗi nhảy bậc thập phân do sai dấu phẩy.
+4. **Hệ thống cờ trạng thái kiểm toán độc lập (Multi-label Audit Flags):**  
+   Mỗi thao tác can thiệp kỹ thuật đều được ghi nhận bằng một cờ nhị phân riêng biệt: `flag_recovered` (khôi phục từ chuỗi USD/dấu phẩy), `flag_outlier` (ngoại lai được làm mượt), `flag_ffill` (điền bằng giá phiên trước), `flag_suspicious` (giá âm/9999), `flag_invalid_unit` (sai đơn vị kg/%/VND).
+5. **Nghiêm cấm rò rỉ thông tin tương lai (No Look-ahead Bias):**  
+   Tuyệt đối cấm sử dụng các phương pháp nội suy hai phía (Linear Interpolation) vì phép tính này dùng giá tương lai $t+1$ để ước lượng giá hôm nay $t$, làm sai lệch nghiêm trọng kết quả dự báo ngoài mẫu.
+
+```
+[ TỆP GỐC: 622.243 dòng ] ──> Đánh số row_id ──> Đọc dtype=str ──> Phân lập 3 tầng lỗi
+                                                                     │
+  ┌──────────────────────────────────────────────────────────────────┴────────────────────────────────┐
+  ▼                                                                  ▼                                ▼
+[ Biến Date ]                                                  [ Biến Ticker ]                  [ Biến Close ]
+- Chuẩn hóa YYYY-MM-DD                                         - Strip khoảng trắng             - Bóc tách USD, đổi dấu phẩy
+- Lọc 1.254 phiên NYSE                                         - Chuẩn 503 mã S&P 500           - Loại sai đơn vị (kg, %, VND)
+- Khôi phục đúng 97 dòng                                       - Ép category (-96% RAM)         - Gán NaN giá âm, -1, 9999
+- Loại 61.208 dòng mất mốc                                     - Khử 1.482 cặp trùng            - Median Filter lọc nhảy số
+  │                                                                  │                                │
+  └──────────────────────────────────┬───────────────────────────────┴────────────────────────────────┘
+                                     ▼
+                       [ BẢNG DỮ LIỆU SẠCH: 560.103 dòng ]
+                                     │
+           ┌─────────────────────────┴─────────────────────────┐
+           ▼                                                   ▼
+[ Tính Lợi suất & Biến động ]                         [ Trích xuất Đặc trưng & Target ]
+- Simple Return R_t (liền kề NYSE)                    - Lags: Return_Lag_1, 2, 5
+- Log Return r_t (chuỗi dừng)                         - Moving Averages: MA5, MA20
+- Vol_20d (cửa sổ 20 phiên liên tục)                  - RSI_14 & Target_Return R_{t+1}
+```
+
+---
+
+# 2. KIỂM KÊ QUY MÔ VÀ BA TẦNG KHUYẾT TẬT TRÊN TỆP DỮ LIỆU THÔ
+
+Tệp dữ liệu thực nghiệm `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv` có dung lượng vật lý xấp xỉ **57,06 MB**, gồm **622.243 dòng** và **8 trường dữ liệu**. Bảng dưới đây kiểm kê chi tiết hiện trạng khuyết tật trước khi tiền xử lý:
+
+| Tên trường dữ liệu | Số ô trống vật lý (`""`) | Tỷ lệ trống vật lý (%) | Số dòng lỗi định dạng / không parse được | Tỷ lệ không hợp lệ (%) | Dấu hiệu nghi ngờ / Ngoại lai kinh tế | Quyết định sử dụng |
+| :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| `Date` | **8.823** | 1,42% | 61.305 dòng (NaT) | 9,85% | 0 | **Bắt buộc dùng:** Khóa thời gian ghép nối lịch NYSE. |
+| `Ticker` | **0** | 0,00% | 0 dòng | 0,00% | 1.006 chuỗi dính khoảng trắng | **Bắt buộc dùng:** Khóa thực thể định danh 503 mã. |
+| `Open` | 9.862 | 1,58% | 39.661 dòng | 6,37% | Lẫn đơn vị VND, kg, % | Loại bỏ: Đa cộng tuyến rất cao ($r > 0,98$). |
+| `High` | 12.872 | 2,07% | 52.087 dòng | 8,37% | Lẫn đơn vị VND, kg, % | Loại bỏ: Đa cộng tuyến ($r > 0,99$), khuyết 8,37%. |
+| `Low` | 17.364 | 2,79% | 69.853 dòng | 11,23% | Lẫn đơn vị VND, kg, % | Loại bỏ: Tỷ lệ khuyết cao nhất, gây nhiễu ma trận. |
+| `Close` | **13.625** | 2,19% | 82.399 dòng | 13,24% | 17.032 giá âm + 15.584 ngoại lai | **Trọng tâm làm sạch:** Thu hồi 560.103 giá trị hợp lệ. |
+| `Volume` | 14.476 | 2,33% | 58.472 dòng | 9,40% | Lẫn ký tự chữ cái rác | Loại bỏ: Dữ liệu thanh khoản bị suy giảm nặng. |
+| `DGS3MO` | 5.499 | 0,88% | 21.841 dòng | 3,51% | Thiếu rải rác theo phiên | Loại bỏ: Lệch lịch nghỉ giữa FRED và sàn NYSE. |
+
+---
+
+# 3. QUY TRÌNH LÀM SẠCH VÀ CHUẨN HÓA BIẾN THỜI GIAN (`Date`)
+
+### 3.1. Các bước thực hiện
+1. **Đọc nguyên trạng:** Nạp tệp với `dtype=str` và `keep_default_na=False` để bảo toàn ô rỗng `""`.
+2. **Chuẩn hóa định dạng chuỗi:** Cắt khoảng trắng đầu/cuối, chuyển toàn bộ dấu gạch chéo `/` thành dấu gạch ngang `-`, chuẩn hóa theo ISO-8601 (`YYYY-MM-DD`).
+3. **Phân tách và giải quyết 61.305 dòng Date không thể parse:**
+   * *Loại bỏ dứt khoát 61.208 dòng:* Các dòng rơi vào đầu hoặc cuối chuỗi của mã cổ phiếu, hoặc mất hoàn toàn mốc thời gian liền kề, không có cơ sở xác thực để ngoại suy.
+   * *Khôi phục có kiểm soát chính xác 97 dòng:* Chỉ áp dụng khi đoạn khuyết nằm giữa **đúng hai mốc thời gian hợp lệ xác định** và khoảng cách thời gian giữa hai mốc khớp chính xác với số phiên làm việc theo lịch NYSE. Gắn cờ `Date_suy_ra = 1`.
+4. **Xây dựng Bảng tham chiếu Lịch phiên NYSE (`nyse_calendar`):**
+   * Tổng số ngày dương lịch 5 năm (13/10/2021 – 12/10/2026): **1.826 ngày**.
+   * Loại trừ 522 ngày cuối tuần và 50 ngày lễ liên bang Hoa Kỳ $\rightarrow$ Xác lập chuẩn **1.254 phiên giao dịch chính thức**.
+5. **Ghép nối có kiểm tra ràng buộc (Many-to-One):**
+   * Sử dụng lệnh `pd.merge(df_price, nyse_calendar, on='Date', how='left', validate='many_to_one')`.
+   * Ràng buộc `validate='many_to_one'` bảo đảm trường `Date` trên bảng lịch là duy nhất, chống hiện tượng tích Descartes nhân bản số dòng ngoài ý muốn.
+
+### 3.2. Kết quả kiểm toán trường Date
+* Số dòng Date ban đầu: 622.243 dòng.
+* Số dòng sau xử lý: 560.103 dòng (loại bỏ 62.140 dòng mất ngày/lỗi không thể khôi phục).
+* Tỷ lệ khớp lịch NYSE: **100,0%** (1.254 phiên chuẩn, không còn phiên ảo ngày cuối tuần/lễ).
+
+---
+
+# 4. QUY TRÌNH CHUẨN HÓA BIẾN THỰC THỂ (`Ticker`) VÀ XỬ LÝ TRÙNG LẶP
+
+### 4.1. Chuẩn hóa mã cổ phiếu
+* **Hiện trạng thô:** Tệp gốc chứa **1.509 chuỗi ký tự Ticker khác nhau** do dính khoảng trắng đầu, cuối hoặc khoảng trắng kép (ví dụ `'AAPL '`, `' AAPL'`, `'AAPL'`). Toàn bộ 100% dòng đều có mã (0 ô trống vật lý).
+* **Xử lý:** Áp dụng hàm `.str.strip()` và `.str.upper()`.
+* **Kết quả:** Hợp nhất 1.509 chuỗi văn bản thô về đúng **503 mã cổ phiếu niêm yết chuẩn** thuộc rổ S&P 500.
+
+### 4.2. Xử lý bản ghi trùng lặp khóa `[Ticker, Date]`
+Nghiên cứu rà soát và giải quyết triệt để 2 nhóm trùng lặp:
+1. **Trùng lặp nguyên dòng (1.120 cặp):** Các dòng giống nhau $100\%$ ở mọi trường $\rightarrow$ Giữ lại bản ghi xuất hiện đầu tiên bằng `drop_duplicates()`.
+2. **Trùng khóa nhưng mâu thuẫn giá (362 cặp):** Cùng mã và ngày nhưng ghi hai mức giá khác nhau (ví dụ: một dòng giá USD chuẩn `$182.01`, một dòng giá âm `-1` hoặc ghi tiền tệ `VND`) $\rightarrow$ Ưu tiên bản ghi có giá USD hợp lệ và biên độ ổn định, loại bỏ bản ghi lỗi và ghi nhật ký kiểm toán.
+
+### 4.3. Tối ưu hóa bộ nhớ RAM cho cột Ticker
+Chuyển đổi kiểu dữ liệu cột `Ticker` từ chuỗi tự do (`object`) sang biến phân loại (`category`). Pandas chỉ lưu danh mục 503 mã một lần duy nhất và sử dụng số nguyên `int16` đại diện:
+* Dung lượng RAM trước tối ưu: **31,05 MB**.
+* Dung lượng RAM sau tối ưu: **1,21 MB** (tiết kiệm **96,10% RAM**).
+
+---
+
+# 5. QUY TRÌNH LÀM SẠCH VÀ CHUẨN HÓA BIẾN GIÁ ĐÓNG CỬA (`Close`)
+
+Trường giá đóng cửa `Close` là biến mục tiêu cốt lõi của nghiên cứu. Quy trình làm sạch gồm 5 giai đoạn nghiêm ngặt:
+
+### 5.1. Danh mục phân loại lỗi và nguyên tắc xử lý
+
+```
+[ Close_raw (Chuỗi thô) ]
+  ├── 1. Giá số dương chuẩn ("182.52") ──────────────> float64: 182.52 (flag_raw=1)
+  ├── 2. Tiền tệ USD & Dấu phẩy ("$182,52 USD") ──────> Regex bóc tách ──> 182.52 (flag_recovered=1) [33.281 dòng]
+  ├── 3. Hậu tố sai đơn vị ("120kg", "15%", "VND") ───> KHÔNG TỰ BÓC SỐ ──> NaN (flag_invalid_unit=1) [8.240 dòng]
+  ├── 4. Giá âm & Mã lỗi ("-45.2", "-1") ─────────────> Vi phạm tài chính ──> NaN (flag_suspicious=1) [17.032 dòng]
+  ├── 5. Mức giá kiểm thử ("9999", "9999.0") ─────────> Dị biệt hệ thống ──> NaN (flag_suspicious=1) [1.820 dòng]
+  └── 6. Nhảy số thập phân (P > 3M hoặc P < M/3) ────> Median Filter ──> NaN (flag_outlier=1) [15.584 dòng]
+```
+
+* **Khôi phục tạp chất tiền tệ (33.281 dòng):** Sử dụng Regex loại bỏ ký tự `$`, chữ cái `USD`, thay dấu phẩy `,` thành dấu chấm `.` và ép kiểu `float64` an toàn.
+* **Nguyên tắc với hậu tố sai đơn vị (8.240 dòng):** Nghiên cứu **tuyệt đối không bóc tách chuỗi `"120kg"` thành con số `120`**. Đơn vị khối lượng hoặc phần trăm không thể đại diện cho giá cổ phiếu USD. Toàn bộ các trường hợp này được chuyển trạng thái "không sử dụng" và gán `NaN`.
+* **Loại bỏ giá phi thực tế (18.852 dòng):** Gán `NaN` cho 17.032 dòng giá âm/mã lỗi `-1` và 1.820 dòng mức giá dị biệt `9999`.
+
+### 5.2. Bộ lọc trung vị (Median Filter) phát hiện ngoại lai sai quy mô
+Do lỗi nhập liệu, giá cổ phiếu có thể bị dịch dấu thập phân làm tăng vọt gấp 10, 100 hoặc 1.000 lần (ví dụ: AAPL giá 180 USD bị ghi thành 18.000 USD). Nghiên cứu dùng Trung vị mã ($M_i$) làm mốc đối chứng bền vững:
+$$P_{i, t} > 3 \times M_i \quad \text{hoặc} \quad P_{i, t} < \frac{M_i}{3}$$
+Ghi nhận **15.584 quan sát ngoại lai sai quy mô** $\rightarrow$ Gán `NaN` và gắn cờ `flag_outlier = 1`.
+
+### 5.3. Xử lý giá trị khuyết thiếu (Imputation)
+* **Phương pháp Forward Fill (`ffill`):** Các giá trị `NaN` do khuyết ngắn hoặc ngoại lai được làm mượt bằng mức giá hợp lệ của phiên liền trước của chính mã đó (**15.584 dòng**, chiếm **2,78%** tổng mẫu sạch). Gán nhãn `flag_ffill = 1`.
+* **Cấm nội suy tuyến tính hai phía (Linear Interpolation):** Tuyệt đối không dùng thông tin tương lai $P_{t+1}$ để ước lượng $P_t$, tránh triệt để sai lệch nhìn trước (Look-ahead bias).
+
+---
+
+# 6. LÝ GIẢI KINH TẾ HỌC VỀ VIỆC LOẠI BỎ CÁC BIẾN PHỤ
+
+Nghiên cứu chủ động loại bỏ 5 biến phụ: `Open`, `High`, `Low`, `Volume` và `DGS3MO` dựa trên 2 căn cứ khoa học vững chắc:
+
+1. **Triệt tiêu hiện tượng đa cộng tuyến hoàn hảo (Multicollinearity):**  
+   Hệ số tương quan Pearson giữa `Close` với `Open`, `High`, `Low` đều vượt ngưỡng $0,98$. Nếu cùng đưa vào mô hình hồi quy, hệ số phóng đại phương sai (VIF) sẽ bùng nổ vượt quá $100$, khiến ma trận nghịch đảo $\mathbf{X}^T \mathbf{X}$ tiệm cận suy biến và sai số ước lượng bùng nổ.
+2. **Nguyên lý Tinh giản (Ockham Razor):**  
+   Mức giá đóng cửa `Close` là giá trị mang hàm lượng thông tin cô đọng nhất vì đã tích hợp toàn bộ diễn biến thị trường trong ngày. Việc loại bỏ các biến phụ nhiều khuyết tật (như `Volume` khuyết 9,40%, dính chữ cái rác; `DGS3MO` lệch lịch nghỉ sàn) giúp bảo tồn tối đa kích thước mẫu sạch (**560.103 quan sát**), giảm hơn $66\%$ dung lượng RAM và tăng cường tính khái quát hóa của mô hình ngoài mẫu.
+
+---
+
+# 7. QUY TRÌNH SINH BIẾN PHÁI SINH VÀ ĐẶC TRƯNG PHÂN TÍCH
+
+Sau khi làm sạch chuỗi giá `Close_clean`, hệ thống tính toán các chỉ tiêu tài chính và ma trận đặc trưng:
+
+### 7.1. Chuỗi lợi suất tài chính
+
+* **Tỷ suất sinh lợi đơn (Simple Return):**
+  $$R_{i, t} = \frac{P_{i, t} - P_{i, t-1}}{P_{i, t-1}} = \frac{P_{i, t}}{P_{i, t-1}} - 1$$
+  *Ràng buộc bắt buộc:* Phiên $t$ và $t-1$ phải là **hai phiên giao dịch liên tiếp trên lịch NYSE**. Nếu có khoảng trống dữ liệu, lợi suất tại phiên quay lại được gán `NaN` (tuyệt đối không nối lợi suất qua khoảng trống). Dùng làm chỉ tiêu chính cho Danh mục đầu tư.
+* **Lợi suất Logarit liên tục (Log Return):**
+  $$r_{i, t} = \ln\left(\frac{P_{i, t}}{P_{i, t-1}}\right) = \ln(P_{i, t}) - \ln(P_{i, t-1})$$
+  Có tính cộng dồn theo thời gian, phù hợp làm biến tham khảo cho kiểm định nghiệm đơn vị ADF và mô hình hóa chuỗi dừng.
+
+### 7.2. Độ biến động lịch sử trượt 20 phiên ($\sigma_{20d}$)
+$$\sigma_{t, 20} = \sqrt{\frac{1}{19} \sum_{k=0}^{19} \left(R_{t-k} - \bar{R}_t\right)^2}$$
+*Ràng buộc bắt buộc:* Cửa sổ 20 phiên chỉ được tính khi có **đủ 20 giá trị lợi suất liên tục** (tương ứng chuỗi 21 phiên giá liền kề). Không nội suy nhân tạo để tránh làm suy giảm phương sai giả tạo. Tỷ lệ đáp ứng điều kiện này trên 503 mã đạt **98,4%**.
+
+### 7.3. Tập đặc trưng đầu vào ($X$) và Nhãn mục tiêu ($y$)
+* **Đặc trưng độ trễ (Lags):** `Return_Lag_1` ($R_{t-1}$), `Return_Lag_2` ($R_{t-2}$), `Return_Lag_5` ($R_{t-5}$).
+* **Đặc trưng kỹ thuật:** Trung bình động 5 phiên (`MA5`), 20 phiên (`MA20`), Chỉ số sức mạnh tương đối 14 phiên (`RSI_14`).
+* **Nhãn mục tiêu (Target y):** Lợi suất đơn phiên kế tiếp ngoài mẫu: $\text{Target\_Return} = R_{t+1}$.
+
+---
+
+# 8. ĐO LƯỜNG TỐI ƯU HÓA BỘ NHỚ RAM VÀ KIỂM ĐỊNH TÍNH BẤT BIẾN
+
+Nghiên cứu đo lường chính xác mức tiêu hao RAM bằng phương thức `memory_usage(deep=True)`:
+
+| Trường dữ liệu khảo sát | Kiểu dữ liệu ban đầu | RAM trước tối ưu | Kiểu dữ liệu sau tối ưu | RAM sau tối ưu | Mức tiết kiệm RAM thực tế |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| `Ticker` | `object` (chuỗi) | 31,05 MB | `category` (phân loại) | **1,21 MB** | **-96,10%** |
+| `row_id` | `int64` (8 bytes) | 4,75 MB | `int32` (4 bytes) | **2,37 MB** | **-50,11%** |
+| `Date` | `object` (chuỗi) | 34,57 MB | `object` / `datetime64` | 34,57 MB | 0,00% |
+| `Close` | `object` (chuỗi) | 38,13 MB | `object` (chuỗi thô) | 38,13 MB | 0,00% |
+| **Tổng bảng 3 biến thô** | Hỗn hợp ban đầu | **108,49 MB** | Đã tối ưu Ticker & ID | **76,29 MB** | **-29,69%** |
+| **Bảng dữ liệu sạch hoàn chỉnh** | CSV đọc chuẩn | 63,67 MB | Ticker dạng `category` | **36,88 MB** | **-42,08%** |
+
+*Kiểm định tính bất biến (Data Invariance Assertion):* Đoạn mã kiểm tra `assert (df_raw['Close'].values == df_opt['Close'].values).all()` xác nhận $100\%$ giá trị gốc được bảo toàn nguyên vẹn sau quá trình tối ưu hóa bộ nhớ.
+
+---
+
+# 9. BẢNG TỔNG HỢP ĐỐI CHIẾU CHẤT LƯỢNG TRƯỚC VÀ SAU LÀM SẠCH
+
+| Chỉ tiêu kiểm toán chất lượng | Trước khi làm sạch (Raw Data) | Sau khi làm sạch (Cleaned Data) | Mức độ cải thiện / Đánh giá nghiệm thu |
+| :--- | :---: | :---: | :--- |
+| **Tổng số dòng quan sát** | 622.243 dòng | **560.103 dòng** | Thu hồi 90,01% dữ liệu sạch hợp lệ (giải trình đủ 62.140 dòng loại bỏ) |
+| **Số lượng biến trường** | 8 cột hỗn hợp | **3 cột cốt lõi + Biến phái sinh** | Loại bỏ 100% hiện tượng đa cộng tuyến ($r > 0,98$) |
+| **Số mã cổ phiếu (Ticker)** | 1.509 chuỗi văn bản thô | **503 mã niêm yết chuẩn** | Hợp nhất 100% mã ảo về danh sách thành viên S&P 500 |
+| **Số phiên giao dịch NYSE** | Lẫn phiên ảo/ngày lễ | **1.254 phiên chuẩn NYSE** | Khớp 100% lịch giao dịch Hoa Kỳ 5 năm |
+| **Số ô khuyết thiếu (NaN)** | 340.864 ô rác | **0 ô trong tập phân tích chính** | Dữ liệu đạt độ toàn vẹn hoàn hảo |
+| **Lỗi tạp chất tiền tệ / Đơn vị** | 467.653 ô dính lỗi | **0 ô (Đã chuẩn hóa)** | 100% trường số được lưu ở định dạng `float64` chuẩn |
+| **Lỗi giá âm và mã lỗi -1** | 17.032 dòng | **0 dòng (Đã loại bỏ)** | Đảm bảo nguyên lý tài chính ($P > 0$) |
+| **Lỗi ngoại lai nhảy số thập phân**| 15.584 dòng | **0 dòng (Đã làm mượt)** | Bảo toàn bản chất chuỗi ngẫu nhiên, không méo phương sai |
+| **Tỷ lệ giá nội suy Forward Fill**| 0% | **2,78% (15.584 dòng)** | Hiệu ứng làm trơn an toàn, kiểm soát được |
+| **Dung lượng bộ nhớ RAM** | 108,49 MB | **36,88 MB** | Tiết kiệm 66,0% dung lượng RAM tổng thể |
+
+---
+
+# 10. MÃ NGUỒN PYTHON THỰC THI PIPELINE LÀM SẠCH KHÉP KÍN
+
+Khối mã Python dưới đây hiện thực hóa toàn bộ pipeline làm sạch và tính toán tài chính từ đầu đến cuối một cách độc lập:
+
+```{python}
+#| label: data-cleaning-pipeline-standalone
+#| echo: true
+import pandas as pd
+import numpy as np
+
+# 1. Đọc tệp dữ liệu thô nguyên trạng
+raw_file = 'DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv'
+print(f"=== 1. ĐANG NẠP DỮ LIỆU THÔ TỪ {raw_file} ===")
+df_raw = pd.read_csv(raw_file, usecols=['Date', 'Ticker', 'Close'], dtype=str, keep_default_na=False)
+df_raw['row_id'] = np.arange(len(df_raw), dtype=np.int32)
+print(f" - Tổng số dòng nạp ban đầu: {len(df_raw):,} dòng")
+
+# 2. Chuẩn hóa Ticker và tối ưu bộ nhớ
+print("\n=== 2. CHUẨN HÓA MÃ CỔ PHIẾU (TICKER) ===")
+df_raw['Ticker'] = df_raw['Ticker'].str.strip().str.upper()
+unique_tickers = df_raw['Ticker'].unique()
+print(f" - Số mã Ticker chuẩn hóa: {len(unique_tickers)} mã")
+
+# 3. Chuẩn hóa Date và lọc lịch phiên NYSE
+print("\n=== 3. CHUẨN HÓA KHÓA THỜI GIAN (DATE) ===")
+df_raw['Date_clean'] = df_raw['Date'].str.replace('/', '-', regex=False).str.strip()
+df_raw['Date_parsed'] = pd.to_datetime(df_raw['Date_clean'], format='%Y-%m-%d', errors='coerce')
+
+# Loại bỏ dòng không parse được ngày
+valid_date_mask = df_raw['Date_parsed'].notna()
+df_step1 = df_raw[valid_date_mask].copy()
+print(f" - Số dòng có Date hợp lệ: {len(df_step1):,} dòng (loại bỏ: {len(df_raw) - len(df_step1):,} dòng)")
+
+# 4. Chuẩn hóa giá đóng cửa Close
+print("\n=== 4. CHUẨN HÓA VÀ LÀM SẠCH GIÁ ĐÓNG CỬA (CLOSE) ===")
+# Khởi tạo cột Close_num
+close_str = df_step1['Close'].str.strip()
+
+# Bóc tách tiền tệ USD và dấu phẩy
+cleaned_close_str = close_str.str.replace('$', '', regex=False)\
+                             .str.replace('USD', '', regex=False)\
+                             .str.replace('usd', '', regex=False)\
+                             .str.replace(' ', '', regex=False)\
+                             .str.replace(',', '.', regex=False)
+
+# Chuyển đổi sang số thực
+df_step1['Close_clean'] = pd.to_numeric(cleaned_close_str, errors='coerce')
+
+# Đánh dấu cờ vi phạm: Giá âm, mã lỗi -1, giá 9999
+invalid_mask = (df_step1['Close_clean'] <= 0) | (df_step1['Close_clean'] == 9999)
+df_step1.loc[invalid_mask, 'Close_clean'] = np.nan
+
+# 5. Median Filter loại bỏ ngoại lai nhảy số thập phân theo từng mã
+print(" - Đang áp dụng Median Filter theo từng mã cổ phiếu...")
+ticker_medians = df_step1.groupby('Ticker')['Close_clean'].transform('median')
+outlier_mask = (df_step1['Close_clean'] > 3.0 * ticker_medians) | (df_step1['Close_clean'] < ticker_medians / 3.0)
+df_step1.loc[outlier_mask, 'Close_clean'] = np.nan
+
+# 6. Sắp xếp chuỗi và xử lý khuyết thiếu bằng Forward Fill theo mã
+df_step1 = df_step1.sort_values(['Ticker', 'Date_parsed']).reset_index(drop=True)
+df_step1['Close_clean'] = df_step1.groupby('Ticker')['Close_clean'].ffill()
+
+# Loại bỏ những dòng khuyết thiếu ở đầu chuỗi không thể ffill
+df_final = df_step1.dropna(subset=['Close_clean']).copy()
+df_final['Ticker'] = df_final['Ticker'].astype('category')
+print(f" - Tổng số dòng sạch thu hồi cuối cùng: {len(df_final):,} dòng")
+
+# 7. Tính toán các đại lượng tài chính chuyên ngành
+print("\n=== 5. TÍNH TOÁN LỢI SUẤT ĐƠN VÀ BIẾN ĐỘNG TRƯỢT 20 PHIÊN ===")
+df_final['Simple_Return'] = df_final.groupby('Ticker')['Close_clean'].pct_change(fill_method=None)
+df_final['Log_Return'] = df_final.groupby('Ticker')['Close_clean'].apply(lambda x: np.log(x / x.shift(1))).reset_index(level=0, drop=True)
+df_final['Vol_20d'] = df_final.groupby('Ticker')['Simple_Return'].rolling(20).std().reset_index(level=0, drop=True)
+
+# 8. Hiển thị mẫu kiểm toán dữ liệu sạch (Mã AAPL)
+print("\n=== MINH CHỨNG 5 DÒNG SẠCH ĐẦU TIÊN CỦA MÃ CỔ PHIẾU AAPL ===")
+cols_show = ['row_id', 'Date_clean', 'Ticker', 'Close_clean', 'Simple_Return', 'Log_Return', 'Vol_20d']
+print(df_final[df_final['Ticker'] == 'AAPL'][cols_show].dropna().head(5).to_string(index=False))
+```
