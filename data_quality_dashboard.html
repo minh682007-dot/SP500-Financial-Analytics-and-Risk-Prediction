@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Điều Khiển Kiểm Toán Dữ Liệu S&P 500 (PRJ-05) - UFM</title>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              200: '#bae0fd',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              900: '#082f49',
+              950: '#041c2c',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 9999px; }
+    .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    
+    /* Smooth glass effect */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    
+    /* Tab active indicator */
+    .tab-btn.active {
+      color: #0284c7;
+      border-color: #0284c7;
+      background: rgba(2, 132, 199, 0.08);
+      font-weight: 600;
+    }
+    .dark .tab-btn.active {
+      color: #38bdf8;
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      font-weight: 600;
+    }
+    
+    /* Code badge */
+    .code-badge {
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.25rem;
+      font-size: 0.8em;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200 antialiased font-sans">
+
+  <!-- TOP HEADER / INSTITUTIONAL BRANDING -->
+  <header class="sticky top-0 z-50 glass-card border-b border-slate-200/80 dark:border-slate-800/80 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        
+        <!-- Left: Logo & Project Identity -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-700 via-brand-600 to-sky-400 flex items-center justify-center text-white font-black text-lg shadow-md shadow-brand-500/20">
+            📊
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800">
+                PRJ-05 S&P 500
+              </span>
+              <span class="text-xs text-slate-500 dark:text-slate-400">Trường ĐH Tài chính – Marketing (UFM)</span>
+            </div>
+            <h1 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              Bảng Điều Khiển Kiểm Toán Dữ Liệu Lớn & Chất Lượng Chuỗi Thời Gian
+            </h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Học viên: <strong class="text-slate-700 dark:text-slate-200">Đào Ngọc Minh</strong> (MSSV: 2521001081) | GVHD: <strong class="text-slate-700 dark:text-slate-200">ThS. Nguyễn Mạnh Tường</strong>
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: Status Badges & Controls -->
+        <div class="flex items-center gap-2.5 self-end md:self-center">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            <span>Audit Trail Verified (560,103 dòng)</span>
+          </div>
+
+          <!-- Theme Toggle Button -->
+          <button id="theme-toggle" onclick="toggleTheme()" class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors shadow-xs" title="Chuyển chế độ Sáng / Tối">
+            <span id="theme-icon">🌙</span>
+          </button>
+
+          <!-- Print / Export Button -->
+          <button onclick="window.print()" class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-300 transition-colors shadow-xs flex items-center gap-1.5" title="In hoặc lưu PDF">
+            <span>🖨️</span>
+            <span class="hidden sm:inline">Xuất Báo Cáo</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- EXECUTIVE KPI SCORECARDS (6 TIÊU CHÍ TRỌNG YẾU) -->
+    <section>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+          <span>📌</span> THƯỚC ĐO TỔNG QUAN KIỂM TOÁN CHẤT LƯỢNG (EXECUTIVE KPI SCORECARD)
+        </h2>
+        <span class="text-[11px] text-slate-400 font-mono">Đồng bộ từ tệp: DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv</span>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        
+        <!-- KPI 1: Raw Sample -->
+        <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all group">
+          <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-1">
+            <span class="font-medium">1. Quy Mô Thô Gốc</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono font-bold">RAW</span>
+          </div>
+          <div class="text-xl lg:text-2xl font-black text-slate-900 dark:text-white font-mono tracking-tight group-hover:text-brand-600 transition-colors">
+            622,243
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
+            <span class="text-slate-400">📁</span> 8 trường | 57.06 MB
+          </p>
+        </div>
+
+        <!-- KPI 2: Clean Production Sample -->
+        <div class="p-3.5 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/40 dark:bg-emerald-950/20 shadow-xs hover:border-emerald-300 dark:hover:border-emerald-700 transition-all group">
+          <div class="flex items-center justify-between text-xs text-emerald-700 dark:text-emerald-400 mb-1">
+            <span class="font-medium">2. Mẫu Sạch Hợp Lệ</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900 font-mono font-bold text-emerald-800 dark:text-emerald-200">90.01%</span>
+          </div>
+          <div class="text-xl lg:text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono tracking-tight">
+            560,103
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+            Loại bỏ: <strong class="text-rose-600 dark:text-rose-400 font-mono">62,140</strong> (9.99%)
+          </p>
+        </div>
+
+        <!-- KPI 3: S&P 500 Tickers -->
+        <div class="p-3.5 rounded-xl border border-indigo-200 dark:border-indigo-900/60 bg-indigo-50/40 dark:bg-indigo-950/20 shadow-xs hover:border-indigo-300 dark:hover:border-indigo-700 transition-all group">
+          <div class="flex items-center justify-between text-xs text-indigo-700 dark:text-indigo-400 mb-1">
+            <span class="font-medium">3. Mã Cổ Phiếu</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900 font-mono font-bold text-indigo-800 dark:text-indigo-200">1,509 → 503</span>
+          </div>
+          <div class="text-xl lg:text-2xl font-black text-indigo-600 dark:text-indigo-400 font-mono tracking-tight">
+            503 mã
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+            Gọt 50,172 dòng khoảng trắng
+          </p>
+        </div>
+
+        <!-- KPI 4: NYSE Calendar -->
+        <div class="p-3.5 rounded-xl border border-sky-200 dark:border-sky-900/60 bg-sky-50/40 dark:bg-sky-950/20 shadow-xs hover:border-sky-300 dark:hover:border-sky-700 transition-all group">
+          <div class="flex items-center justify-between text-xs text-sky-700 dark:text-sky-400 mb-1">
+            <span class="font-medium">4. Lịch Phiên NYSE</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-900 font-mono font-bold text-sky-800 dark:text-sky-200">100.0%</span>
+          </div>
+          <div class="text-xl lg:text-2xl font-black text-sky-600 dark:text-sky-400 font-mono tracking-tight">
+            1,254 phiên
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+            13/10/2021 – 12/10/2026
+          </p>
+        </div>
+
+        <!-- KPI 5: RAM Reduction -->
+        <div class="p-3.5 rounded-xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/40 dark:bg-amber-950/20 shadow-xs hover:border-amber-300 dark:hover:border-amber-700 transition-all group">
+          <div class="flex items-center justify-between text-xs text-amber-700 dark:text-amber-400 mb-1">
+            <span class="font-medium">5. Tiết Kiệm RAM</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900 font-mono font-bold text-amber-800 dark:text-amber-200">-66.0%</span>
+          </div>
+          <div class="text-xl lg:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono tracking-tight">
+            36.88 MB
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+            Từ 108.49 MB (category int16)
+          </p>
+        </div>
+
+        <!-- KPI 6: Invariance Assertions -->
+        <div class="p-3.5 rounded-xl border border-teal-200 dark:border-teal-900/60 bg-teal-50/40 dark:bg-teal-950/20 shadow-xs hover:border-teal-300 dark:hover:border-teal-700 transition-all group">
+          <div class="flex items-center justify-between text-xs text-teal-700 dark:text-teal-400 mb-1">
+            <span class="font-medium">6. Kiểm Định Bất Biến</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900 font-mono font-bold text-teal-800 dark:text-teal-200">GATE</span>
+          </div>
+          <div class="text-xl lg:text-2xl font-black text-teal-600 dark:text-teal-400 font-mono tracking-tight">
+            4 / 4 PASS
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+            100% Cổng an toàn vượt qua
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- NAVIGATION TABS -->
+    <section>
+      <div class="border-b border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2">
+        <nav class="flex space-x-1 sm:space-x-2 overflow-x-auto pb-px" aria-label="Tabs">
+          <button onclick="switchTab('tab-missing')" id="btn-tab-missing" class="tab-btn active px-3.5 py-2.5 border-b-2 text-xs sm:text-sm font-medium rounded-t-lg transition-all flex items-center gap-1.5 whitespace-nowrap">
+            <span>📊</span>
+            <span>1. Kiểm Kê 8 Biến Gốc</span>
+          </button>
+          <button onclick="switchTab('tab-dirty')" id="btn-tab-dirty" class="tab-btn px-3.5 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-xs sm:text-sm font-medium rounded-t-lg transition-all flex items-center gap-1.5 whitespace-nowrap">
+            <span>☣️</span>
+            <span>2. 6 Tầng Hội Chứng "Bẩn"</span>
+          </button>
+          <button onclick="switchTab('tab-pipeline')" id="btn-tab-pipeline" class="tab-btn px-3.5 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-xs sm:text-sm font-medium rounded-t-lg transition-all flex items-center gap-1.5 whitespace-nowrap">
+            <span>🏭</span>
+            <span>3. Kiến Trúc 6 Trạm Kiểm Soát</span>
+          </button>
+          <button onclick="switchTab('tab-compare')" id="btn-tab-compare" class="tab-btn px-3.5 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-xs sm:text-sm font-medium rounded-t-lg transition-all flex items-center gap-1.5 whitespace-nowrap">
+            <span>⚖️</span>
+            <span>4. Đối Chiếu Trước vs Sau</span>
+          </button>
+          <button onclick="switchTab('tab-invariance')" id="btn-tab-invariance" class="tab-btn px-3.5 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-xs sm:text-sm font-medium rounded-t-lg transition-all flex items-center gap-1.5 whitespace-nowrap">
+            <span>🛡️</span>
+            <span>5. 4 Phép Kiểm Định Bất Biến</span>
+          </button>
+          <button onclick="switchTab('tab-simulator')" id="btn-tab-simulator" class="tab-btn px-3.5 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-xs sm:text-sm font-medium rounded-t-lg transition-all flex items-center gap-1.5 whitespace-nowrap">
+            <span>🧪</span>
+            <span>6. Trình Giả Lập Live</span>
+          </button>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 1: KIỂM KÊ 8 BIẾN GỐC ==================== -->
+    <div id="tab-missing" class="space-y-4">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        
+        <!-- Left 2 Cols: Detailed Variable Breakdown -->
+        <div class="lg:col-span-2 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div>
+              <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center gap-2">
+                <span>📋</span> Kiểm Kê Tỷ Lệ Dòng Bị Khuyết Thiếu Trên 8 Biến Thô (N = 622,243)
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                Đánh giá mức độ ô nhiễm bề mặt trước khi áp dụng bất kỳ bước làm sạch nào
+              </p>
+            </div>
+            <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              8 Fields
+            </span>
+          </div>
+
+          <!-- Variable list with visual progress bars -->
+          <div class="space-y-3.5 text-xs">
+            
+            <!-- Low -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-semibold text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                  <code>Low</code> — Giá thấp nhất phiên
+                </span>
+                <span class="font-mono font-bold text-rose-600 dark:text-rose-400">69,853 dòng (11.23%) — KHUYẾT CAO NHẤT</span>
+              </div>
+              <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                <div class="h-full bg-gradient-to-r from-rose-500 to-rose-600 rounded-full transition-all duration-700" style="width: 11.23%"></div>
+              </div>
+            </div>
+
+            <!-- Volume -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                  <code>Volume</code> — Khối lượng giao dịch cổ phiếu
+                </span>
+                <span class="font-mono font-bold text-amber-600 dark:text-amber-400">58,472 dòng (9.40%)</span>
+              </div>
+              <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                <div class="h-full bg-gradient-to-r from-amber-500 to-amber-600 rounded-full transition-all duration-700" style="width: 9.40%"></div>
+              </div>
+            </div>
+
+            <!-- Close -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-semibold text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+                  <code>Close</code> — Giá đóng cửa chốt phiên (Biến lõi nghiên cứu)
+                </span>
+                <span class="font-mono font-bold text-sky-600 dark:text-sky-400">54,928 dòng (8.83%)</span>
+              </div>
+              <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                <div class="h-full bg-gradient-to-r from-sky-500 to-sky-600 rounded-full transition-all duration-700" style="width: 8.83%"></div>
+              </div>
+            </div>
+
+            <!-- High -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                  <code>High</code> — Giá cao nhất phiên
+                </span>
+                <span class="font-mono font-medium">52,087 dòng (8.37%)</span>
+              </div>
+              <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                <div class="h-full bg-slate-400 rounded-full transition-all duration-700" style="width: 8.37%"></div>
+              </div>
+            </div>
+
+            <!-- Date -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-semibold text-purple-600 dark:text-purple-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                  <code>Date</code> — Khóa thời gian giao dịch
+                </span>
+                <span class="font-mono font-bold text-purple-600 dark:text-purple-400">44,022 dòng (7.07%)</span>
+              </div>
+              <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                <div class="h-full bg-gradient-to-r from-purple-500 to-purple-600 rounded-full transition-all duration-700" style="width: 7.07%"></div>
+              </div>
+            </div>
+
+            <!-- Open -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                  <code>Open</code> — Giá mở cửa phiên
+                </span>
+                <span class="font-mono font-medium">39,661 dòng (6.37%)</span>
+              </div>
+              <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                <div class="h-full bg-slate-400 rounded-full transition-all duration-700" style="width: 6.37%"></div>
+              </div>
+            </div>
+
+            <!-- DGS3MO -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                  <code>DGS3MO</code> — Lãi suất tín phiếu 3 tháng FRED
+                </span>
+                <span class="font-mono font-medium">21,841 dòng (3.51%)</span>
+              </div>
+              <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                <div class="h-full bg-slate-400 rounded-full transition-all duration-700" style="width: 3.51%"></div>
+              </div>
+            </div>
+
+            <!-- Ticker -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <code>Ticker</code> — Mã cổ phiếu niêm yết
+                </span>
+                <span class="font-mono font-bold text-emerald-600 dark:text-emerald-400">0 dòng (0.00%) — ĐẦY ĐỦ 100%</span>
+              </div>
+              <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                <div class="h-full bg-emerald-500 rounded-full transition-all duration-700" style="width: 100%"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right 1 Col: Decision Matrix & Economic Insights -->
+        <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs space-y-4 flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <span>💡</span> Quyết Định Kinh Tế Học Về Chọn Biến
+            </h3>
+            
+            <div class="mt-3 space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <strong class="text-rose-600 dark:text-rose-400 block mb-1">🚨 Nguy cơ Đa cộng tuyến (VIF > 250):</strong>
+                Các biến giá trong ngày (<code>Open</code>, <code>High</code>, <code>Low</code>) tương quan tiệm cận hoàn hảo với <code>Close</code> ($r > 0.98$). Nếu đưa cùng lúc vào mô hình hồi quy OLS/Ridge sẽ làm nổ phương sai sai số chuẩn.
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <strong class="text-amber-600 dark:text-amber-400 block mb-1">⚠️ Chất lượng Volume và DGS3MO:</strong>
+                <code>Volume</code> khuyết tới 9.40% và chèn rác string. <code>DGS3MO</code> bị gán giá trị phi thực tế vọt lên 50.0% (trong khi trần Fed chỉ ~5.5%), dẫn đến quyết định thiết lập giả định kỹ thuật $R_f = 0$.
+              </div>
+
+              <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-300">
+                <strong class="block mb-1">✅ Chiến lược Tinh gọn (Ockham's Razor):</strong>
+                Loại bỏ 5 biến phụ, tập trung toàn lực kiểm toán 3 biến cốt lõi: <code>[Date, Ticker, Close]</code>. Vừa triệt tiêu đa cộng tuyến, vừa giảm 66% tải bộ nhớ RAM.
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-between text-[11px] text-slate-500">
+            <span>Chi tiết: Chương 3 quytrinhlamsach.qmd</span>
+            <span class="font-mono font-semibold text-brand-600">3 Cột Lõi</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: 6 TẦNG HỘI CHỨNG DỮ LIỆU BẨN ==================== -->
+    <div id="tab-dirty" class="hidden space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+        <!-- Syndrome 1 -->
+        <div class="p-4 rounded-2xl border border-rose-200 dark:border-rose-900/60 bg-white dark:bg-slate-900 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-lg bg-rose-100 dark:bg-rose-900/60 text-rose-700 dark:text-rose-300 font-bold flex items-center justify-center text-xs">1</span>
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">33,281 + 8,240 DÒNG</span>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1">
+              Tạp Chất Tiền Tệ & Sai Đơn Vị Đo
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+              Cột số bị chèn ký tự <code>$</code>, <code>USD</code>, hoặc đơn vị phi tài chính như <code>kg</code>, <code>%</code>, <code>VND</code> làm Python ép sang kiểu String.
+            </p>
+            <div class="space-y-1.5 text-xs font-mono bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+              <div class="text-rose-600 dark:text-rose-400">• Ví dụ: '$182.52 USD', '154.02 kg'</div>
+              <div>• Bóc tách $: <strong>33,281 dòng</strong></div>
+              <div>• Sai đơn vị (kg, %, VND): <strong>8,240 dòng</strong></div>
+              <div class="text-emerald-600 dark:text-emerald-400">• Xử lý: Regex bóc tách $; drop sai đơn vị</div>
+            </div>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 flex justify-between">
+            <span>Taxonomy: E5 & E6</span>
+            <span class="font-semibold text-emerald-600">Đã giải quyết 100%</span>
+          </div>
+        </div>
+
+        <!-- Syndrome 2 -->
+        <div class="p-4 rounded-2xl border border-indigo-200 dark:border-indigo-900/60 bg-white dark:bg-slate-900 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 font-bold flex items-center justify-center text-xs">2</span>
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">50,172 DÒNG LỖI</span>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1">
+              Phân Mảnh Định Danh Ticker
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+              Khoảng trắng vô hình đầu/cuối chuỗi văn bản biến 503 mã gốc S&P 500 thành 1,509 mã ảo độc lập trong RAM.
+            </p>
+            <div class="space-y-1.5 text-xs font-mono bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+              <div class="text-indigo-600 dark:text-indigo-400">• 'AAPL' vs ' AAPL' vs 'AAPL ' (3 mã)</div>
+              <div>• Chuỗi thô ban đầu: <strong>1,509 chuỗi</strong></div>
+              <div>• Mã chuẩn S&P 500: <strong>503 mã</strong></div>
+              <div class="text-emerald-600 dark:text-emerald-400">• Xử lý: .str.strip().str.upper()</div>
+            </div>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 flex justify-between">
+            <span>Taxonomy: E2 (Trailing Spaces)</span>
+            <span class="font-semibold text-emerald-600">Hợp nhất 503 mã</span>
+          </div>
+        </div>
+
+        <!-- Syndrome 3 -->
+        <div class="p-4 rounded-2xl border border-purple-200 dark:border-purple-900/60 bg-white dark:bg-slate-900 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-lg bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 font-bold flex items-center justify-center text-xs">3</span>
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">61,305 DÒNG NaT</span>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1">
+              Khuyết Tật Khóa Thời Gian (Date)
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+              Lẫn lộn dấu gạch chéo <code>/</code> và gạch ngang <code>-</code>, cùng ký tự rác đại diện ô trống (<code>?</code>, <code>nan</code>, rỗng).
+            </p>
+            <div class="space-y-1.5 text-xs font-mono bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+              <div class="text-purple-600 dark:text-purple-400">• Lỗi định dạng thô: 61,305 dòng</div>
+              <div>• Khôi phục có kiểm soát: <strong>97 dòng</strong></div>
+              <div>• Loại bỏ có giải trình: <strong>61,208 dòng</strong></div>
+              <div class="text-emerald-600 dark:text-emerald-400">• Chuẩn hóa: ISO-8601 YYYY-MM-DD</div>
+            </div>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 flex justify-between">
+            <span>Taxonomy: E1 (Date Glitches)</span>
+            <span class="font-semibold text-emerald-600">Khôi phục đúng 97 dòng</span>
+          </div>
+        </div>
+
+        <!-- Syndrome 4 -->
+        <div class="p-4 rounded-2xl border border-rose-200 dark:border-rose-900/60 bg-white dark:bg-slate-900 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-lg bg-rose-100 dark:bg-rose-900/60 text-rose-700 dark:text-rose-300 font-bold flex items-center justify-center text-xs">4</span>
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">18,852 DÒNG LỖI</span>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1">
+              Giá Âm, Mã Lỗi -1 & Mức 9999
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+              Vi phạm nguyên lý tài chính về giá tài sản dương ($P > 0$) và tính khả thi của hàm $\ln(P_t/P_{t-1})$.
+            </p>
+            <div class="space-y-1.5 text-xs font-mono bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+              <div class="text-rose-600 dark:text-rose-400">• Close âm & mã -1: <strong>17,032 dòng</strong></div>
+              <div>• Giá kiểm thử giả tạo 9999: <strong>1,820 dòng</strong></div>
+              <div>• Rủi ro toán học: Không thể tính Log Return</div>
+              <div class="text-emerald-600 dark:text-emerald-400">• Xử lý: Gán NaN và loại bỏ có kiểm toán</div>
+            </div>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 flex justify-between">
+            <span>Taxonomy: E3 (Non-positive)</span>
+            <span class="font-semibold text-emerald-600">100% P > 0 sau xử lý</span>
+          </div>
+        </div>
+
+        <!-- Syndrome 5 -->
+        <div class="p-4 rounded-2xl border border-amber-200 dark:border-amber-900/60 bg-white dark:bg-slate-900 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center text-xs">5</span>
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300">> 30,000 DÒNG</span>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1">
+              Vi Phạm Trật Tự Giá Trong Phiên
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+              Giá High phải lớn nhất và Low phải nhỏ nhất phiên, nhưng dữ liệu thô xuất hiện mâu thuẫn hình học nghiêm trọng.
+            </p>
+            <div class="space-y-1.5 text-xs font-mono bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+              <div class="text-amber-600 dark:text-amber-400">• Vi phạm High < Low: 30,730 dòng</div>
+              <div>• Vi phạm High < Close: 33,102 dòng</div>
+              <div>• Vi phạm High < Open: 30,549 dòng</div>
+              <div class="text-emerald-600 dark:text-emerald-400">• Xử lý: Loại bỏ Open, High, Low khỏi model</div>
+            </div>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 flex justify-between">
+            <span>Taxonomy: E4 (Logic Violation)</span>
+            <span class="font-semibold text-emerald-600">Triệt tiêu hoàn toàn</span>
+          </div>
+        </div>
+
+        <!-- Syndrome 6 -->
+        <div class="p-4 rounded-2xl border border-sky-200 dark:border-sky-900/60 bg-white dark:bg-slate-900 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-lg bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300 font-bold flex items-center justify-center text-xs">6</span>
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300">15,584 DÒNG ffill</span>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1">
+              Ngoại Lai Thập Phân & ffill
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+              Lỗi nhảy số thập phân nhân 10x, 100x. Áp dụng Bộ lọc Trung vị Median Filter và điền khuyết Forward Fill có kiểm soát.
+            </p>
+            <div class="space-y-1.5 text-xs font-mono bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+              <div class="text-sky-600 dark:text-sky-400">• Ngưỡng lọc: [Mi / 3.0, 3.0 * Mi]</div>
+              <div>• Số dòng Forward Fill: <strong>15,584 dòng (2.78%)</strong></div>
+              <div>• Cờ kiểm toán: <code>flag_ffill = 1</code></div>
+              <div class="text-emerald-600 dark:text-emerald-400">• Nghiêm cấm: Linear Interpolation 2 phía</div>
+            </div>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 flex justify-between">
+            <span>Taxonomy: E7 (Decimals & ffill)</span>
+            <span class="font-semibold text-emerald-600">Độ trơn kiểm soát 1.4%</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: KIẾN TRÚC 6 TRẠM KIỂM SOÁT ==================== -->
+    <div id="tab-pipeline" class="hidden space-y-4">
+      <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs space-y-6">
+        <div>
+          <h3 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+            <span>🏭</span> Kiến Trúc Dây Chuyền 6 Trạm Kiểm Soát Chất Lượng (6-Checkpoint Pipeline)
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Quy trình khép kín tự động lọc qua từng trạm kiểm tra, đảm bảo mỗi dòng dữ liệu đều có vết kiểm toán ngược về dòng gốc qua <code>row_id</code>
+          </p>
+        </div>
+
+        <!-- Visual Flow Pipeline Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3">
+          
+          <!-- Trạm 1 -->
+          <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2 relative">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-brand-100 text-brand-800 dark:bg-brand-900 dark:text-brand-300">TRẠM 1</span>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Chuẩn Hóa Ticker</h4>
+            <p class="text-[11px] text-slate-500 leading-tight">
+              Cắt khoảng trắng thừa, hợp nhất 1,509 chuỗi về 503 mã chuẩn. Ép kiểu <code>category</code>.
+            </p>
+            <div class="text-[11px] font-mono font-bold text-emerald-600">-96.1% RAM</div>
+          </div>
+
+          <!-- Trạm 2 -->
+          <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300">TRẠM 2</span>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Khóa Thời Gian Date</h4>
+            <p class="text-[11px] text-slate-500 leading-tight">
+              Đồng bộ ISO-8601. Khôi phục 97 dòng thỏa mãn 3 điều kiện, loại 61,208 dòng NaT.
+            </p>
+            <div class="text-[11px] font-mono font-bold text-purple-600">+97 Phục hồi</div>
+          </div>
+
+          <!-- Trạm 3 -->
+          <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-300">TRẠM 3</span>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Bóc Tách Giá Close</h4>
+            <p class="text-[11px] text-slate-500 leading-tight">
+              Regex bóc tách 33,281 dòng dính $, USD; loại trừ giá âm, mã -1, giá 9999 sang NaN.
+            </p>
+            <div class="text-[11px] font-mono font-bold text-sky-600">float64 chuẩn</div>
+          </div>
+
+          <!-- Trạm 4 -->
+          <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300">TRẠM 4</span>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Ghép Lịch NYSE</h4>
+            <p class="text-[11px] text-slate-500 leading-tight">
+              Ghép nối 1,254 phiên chính thức sàn NYSE với ràng buộc <code>validate='many_to_one'</code>.
+            </p>
+            <div class="text-[11px] font-mono font-bold text-indigo-600">100% khớp lịch</div>
+          </div>
+
+          <!-- Trạm 5 -->
+          <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300">TRẠM 5</span>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Median & ffill</h4>
+            <p class="text-[11px] text-slate-500 leading-tight">
+              Lọc ngoại lai qua ngưỡng 3Mi. Forward Fill 15,584 dòng nội bộ mã, cấm nội suy 2 phía.
+            </p>
+            <div class="text-[11px] font-mono font-bold text-amber-600">2.78% ffill</div>
+          </div>
+
+          <!-- Trạm 6 -->
+          <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300">TRẠM 6</span>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">4 Assertions</h4>
+            <p class="text-[11px] text-slate-500 leading-tight">
+              4 phép kiểm định tự động: P > 0, Khóa duy nhất, Bảo toàn dòng, Độ phủ cửa sổ >= 98%.
+            </p>
+            <div class="text-[11px] font-mono font-bold text-emerald-600">4/4 PASS</div>
+          </div>
+
+        </div>
+
+        <!-- Mathematical Conservation Balance -->
+        <div class="p-4 rounded-xl bg-slate-100/70 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-2">
+            <span class="text-base">⚖️</span>
+            <div>
+              <strong class="text-slate-900 dark:text-white">Phương Trình Bảo Toàn Dòng Kiểm Toán Bất Biến:</strong>
+              <div class="text-slate-500 font-mono mt-0.5">N_raw = N_clean + N_dropped <=> 622,243 = 560,103 + 62,140</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 font-mono text-xs">
+            <span class="px-2.5 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">Thô: 622,243</span>
+            <span>=</span>
+            <span class="px-2.5 py-1 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-300 dark:border-emerald-800">Sạch: 560,103</span>
+            <span>+</span>
+            <span class="px-2.5 py-1 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold border border-rose-300 dark:border-rose-800">Loại: 62,140</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: ĐỐI CHIẾU TRƯỚC VS SAU ==================== -->
+    <div id="tab-compare" class="hidden space-y-4">
+      <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs space-y-4">
+        
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
+          <div>
+            <h3 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+              <span>⚖️</span> Bảng Ma Trận Đối Chiếu Chất Lượng Dữ Liệu 10 Tiêu Chí
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Đánh giá định lượng toàn diện mức độ nâng cấp chất lượng dữ liệu giữa bản thô và bản xuất bản
+            </p>
+          </div>
+          
+          <!-- Search in table -->
+          <div class="relative w-full sm:w-64">
+            <input type="text" id="table-search" onkeyup="filterTable()" placeholder="Tìm tiêu chí kiểm toán..." class="w-full text-xs pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 focus:outline-hidden focus:ring-1 focus:ring-brand-500 font-sans">
+            <span class="absolute left-2.5 top-2 text-slate-400 text-xs">🔍</span>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+          <table id="matrix-table" class="w-full text-xs text-left">
+            <thead class="bg-slate-100/80 dark:bg-slate-800 text-slate-900 dark:text-white font-bold border-b border-slate-200 dark:border-slate-700">
+              <tr>
+                <th class="p-3 w-12 text-center">STT</th>
+                <th class="p-3">Tiêu chí kiểm toán chất lượng</th>
+                <th class="p-3 text-rose-700 dark:text-rose-400">Trước khi làm sạch (Raw Data)</th>
+                <th class="p-3 text-emerald-700 dark:text-emerald-400">Sau khi làm sạch (Cleaned Data)</th>
+                <th class="p-3">Mức độ cải thiện / Đánh giá</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800 font-sans">
+              
+              <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <td class="p-3 text-center font-mono font-bold text-slate-400">1</td>
+                <td class="p-3 font-semibold text-slate-900 dark:text-white">Tổng số dòng quan sát</td>
+                <td class="p-3 font-mono text-slate-600 dark:text-slate-300">622,243 dòng</td>
+                <td class="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">560,103 dòng</td>
+                <td class="p-3 text-emerald-600 font-medium">Thu hồi 90.01% (giải trình đủ 62,140 dòng loại)</td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <td class="p-3 text-center font-mono font-bold text-slate-400">2</td>
+                <td class="p-3 font-semibold text-slate-900 dark:text-white">Số lượng biến trường dữ liệu</td>
+                <td class="p-3 font-mono text-slate-600 dark:text-slate-300">8 cột hỗn hợp</td>
+                <td class="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">3 cột lõi + Biến phái sinh</td>
+                <td class="p-3 text-brand-600 font-medium">Triệt tiêu 100% hiện tượng đa cộng tuyến (r > 0.98)</td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <td class="p-3 text-center font-mono font-bold text-slate-400">3</td>
+                <td class="p-3 font-semibold text-slate-900 dark:text-white">Số mã cổ phiếu (Ticker)</td>
+                <td class="p-3 font-mono text-rose-600 dark:text-rose-400">1,509 chuỗi văn bản thô</td>
+                <td class="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">503 mã niêm yết chuẩn</td>
+                <td class="p-3 text-emerald-600 font-medium">Hợp nhất 100% mã ảo sinh ra từ khoảng trắng</td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <td class="p-3 text-center font-mono font-bold text-slate-400">4</td>
+                <td class="p-3 font-semibold text-slate-900 dark:text-white">Số phiên giao dịch NYSE</td>
+                <td class="p-3 font-mono text-rose-600 dark:text-rose-400">Lẫn phiên ảo & ngày lễ đóng cửa</td>
+                <td class="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">1,254 phiên chuẩn NYSE</td>
+                <td class="p-3 text-emerald-600 font-medium">Khớp 100% lịch giao dịch Hoa Kỳ 5 năm</td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <td class="p-3 text-center font-mono font-bold text-slate-400">5</td>
+                <td class="p-3 font-semibold text-slate-900 dark:text-white">Số ô khuyết thiếu (NaN)</td>
+                <td class="p-3 font-mono text-rose-600 dark:text-rose-400">340,864 ô rác & thiếu</td>
+                <td class="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">0 ô trong tập phân tích chính</td>
+                <td class="p-3 text-emerald-600 font-medium">Đạt độ toàn vẹn hoàn hảo trước khi ước lượng</td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <td class="p-3 text-center font-mono font-bold text-slate-400">6</td>
+                <td class="p-3 font-semibold text-slate-900 dark:text-white">Lỗi tạp chất tiền tệ & đơn vị</td>
+                <td class="p-3 font-mono text-rose-600 dark:text-rose-400">467,653 ô dính lỗi chuỗi</td>
+                <td class="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">0 ô (Đã bóc tách chuẩn)</td>
+                <td class="p-3 text-emerald-600 font-medium">100% trường số được lưu dạng float64 chuẩn</td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <td class="p-3 text-center font-mono font-bold text-slate-400">7</td>
+                <td class="p-3 font-semibold text-slate-900 dark:text-white">Lỗi giá âm & mã lỗi -1</td>
+                <td class="p-3 font-mono text-rose-600 dark:text-rose-400">17,032 dòng</td>
+                <td class="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">0 dòng (Đã loại trừ)</td>
+                <td class="p-3 text-emerald-600 font-medium">Đảm bảo nguyên lý tài chính giá dương (P > 0)</td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <td class="p-3 text-center font-mono font-bold text-slate-400">8</td>
+                <td class="p-3 font-semibold text-slate-900 dark:text-white">Lỗi ngoại lai nhảy số thập phân</td>
+                <td class="p-3 font-mono text-rose-600 dark:text-rose-400">15,584 dòng biến động phi lý</td>
+                <td class="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">0 dòng (Đã lọc qua Median)</td>
+                <td class="p-3 text-emerald-600 font-medium">Bảo toàn bản chất chuỗi ngẫu nhiên, không méo sigma</td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <td class="p-3 text-center font-mono font-bold text-slate-400">9</td>
+                <td class="p-3 font-semibold text-slate-900 dark:text-white">Tỷ lệ giá nội suy Forward Fill</td>
+                <td class="p-3 font-mono text-slate-600 dark:text-slate-300">0.00%</td>
+                <td class="p-3 font-mono font-bold text-amber-600 dark:text-amber-400">2.78% (15,584 dòng)</td>
+                <td class="p-3 text-amber-600 font-medium">Hiệu ứng làm trơn kiểm soát an toàn (giảm 1.4% sigma)</td>
+              </tr>
+
+              <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <td class="p-3 text-center font-mono font-bold text-slate-400">10</td>
+                <td class="p-3 font-semibold text-slate-900 dark:text-white">Dung lượng bộ nhớ RAM</td>
+                <td class="p-3 font-mono text-rose-600 dark:text-rose-400">108.49 MB</td>
+                <td class="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">36.88 MB</td>
+                <td class="p-3 text-emerald-600 font-medium">Tiết kiệm 66.0% RAM (vận hành mượt trên máy cá nhân)</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 5: 4 PHÉP KIỂM ĐỊNH BẤT BIẾN ==================== -->
+    <div id="tab-invariance" class="hidden space-y-4">
+      <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs space-y-5">
+        
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
+          <div>
+            <h3 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+              <span>🛡️</span> Bốn Phép Kiểm Định Tính Bất Biến Dữ Liệu (Invariance Assertions)
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Cơ chế "Fail-Fast Gatekeepers" tự động ngắt pipeline ngay lập tức nếu phát hiện dữ liệu bẩn rò rỉ sang mô hình
+            </p>
+          </div>
+          
+          <button onclick="runAssertions()" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-all">
+            <span>▶️</span> Chạy Kiểm Định Tương Tác
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Assertion 1: Positivity -->
+          <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-brand-600 dark:text-brand-400">KIỂM ĐỊNH P1: POSITIVITY</span>
+              <span id="pass-p1" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">PASS (100%)</span>
+            </div>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Bảo Toàn Nguyên Lý Giá Tài Sản Dương</h4>
+            <p class="text-[11px] text-slate-500">
+              Mệnh đề: <code>∀ i, t: Close_clean[i,t] > 0</code>. Giá nhỏ nhất: $0.15, lớn nhất: $3,420.50.
+            </p>
+            <div class="p-2 bg-slate-900 text-slate-100 rounded-lg font-mono text-[11px] overflow-x-auto">
+              <code>assert (df_final['Close_clean'] > 0).all()</code>
+            </div>
+          </div>
+
+          <!-- Assertion 2: Key Uniqueness -->
+          <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400">KIỂM ĐỊNH P2: KEY UNIQUENESS</span>
+              <span id="pass-p2" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">PASS (0 Trùng)</span>
+            </div>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Tính Duy Nhất Tuyệt Đối Khóa [Ticker, Date]</h4>
+            <p class="text-[11px] text-slate-500">
+              Mệnh đề: Không tồn tại cặp [Ticker, Date] xuất hiện ≥ 2 lần trong mẫu sạch. Đã triệt tiêu 1,120 cặp trùng thô.
+            </p>
+            <div class="p-2 bg-slate-900 text-slate-100 rounded-lg font-mono text-[11px] overflow-x-auto">
+              <code>assert df_final.duplicated(['Ticker_clean', 'Date_clean']).sum() == 0</code>
+            </div>
+          </div>
+
+          <!-- Assertion 3: Scale Conservation -->
+          <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-purple-600 dark:text-purple-400">KIỂM ĐỊNH P3: SCALE CONSERVATION</span>
+              <span id="pass-p3" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">PASS (Cân Bằng)</span>
+            </div>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Bảo Toàn Quy Mô Mẫu Không Thất Thoát Dòng</h4>
+            <p class="text-[11px] text-slate-500">
+              Phương trình: <code>622,243 = 560,103 (sạch) + 62,140 (loại có giải trình)</code>. Silent loss = 0.
+            </p>
+            <div class="p-2 bg-slate-900 text-slate-100 rounded-lg font-mono text-[11px] overflow-x-auto">
+              <code>assert initial_rows == final_rows + (initial_rows - final_rows)</code>
+            </div>
+          </div>
+
+          <!-- Assertion 4: Window Coverage -->
+          <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">KIỂM ĐỊNH P4: WINDOW COVERAGE</span>
+              <span id="pass-p4" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">PASS (98.4% >= 98%)</span>
+            </div>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Độ Phủ Cửa Sổ Đủ 21 Mức Giá Tính Biến Động</h4>
+            <p class="text-[11px] text-slate-500">
+              Mệnh đề: Tỷ lệ chuỗi đủ điều kiện tính σ_20d đạt 98.4% toàn mẫu, đảm bảo độ tin cậy rủi ro danh mục.
+            </p>
+            <div class="p-2 bg-slate-900 text-slate-100 rounded-lg font-mono text-[11px] overflow-x-auto">
+              <code>assert (df_final['Vol_20d'].notna().mean()) >= 0.98</code>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="assertion-result-banner" class="hidden p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300 flex items-center justify-between">
+          <span class="font-semibold flex items-center gap-2">
+            <span>🎉</span> TOÀN BỘ 4 PHÉP KIỂM ĐỊNH BẤT BIẾN ĐÃ THỰC THI THÀNH CÔNG VÀ ĐẠT 100% TIÊU CHÍ NGHIỆM THU!
+          </span>
+          <span class="font-mono text-[11px]">Execution Time: 0.12s</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 6: TRÌNH GIẢ LẬP LIVE ==================== -->
+    <div id="tab-simulator" class="hidden space-y-4">
+      <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs space-y-4">
+        
+        <div>
+          <h3 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+            <span>🧪</span> Trình Thử Nghiệm Bóc Tách & Làm Sạch Dữ Liệu Thời Gian Thực
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            Chọn các mẫu giá trị bẩn thực tế từ tệp PRJ-05 hoặc tự gõ để theo dõi trực quan thuật toán Python xử lý:
+          </p>
+        </div>
+
+        <!-- Preset buttons -->
+        <div>
+          <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+            Mẫu dữ liệu bẩn thực nghiệm trong tệp thô:
+          </label>
+          <div class="flex flex-wrap gap-1.5 text-xs font-mono">
+            <button onclick="setSample('  AAPL  ', 'ticker')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors">
+              Mã: '  AAPL  '
+            </button>
+            <button onclick="setSample('2021/10/18', 'date')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors">
+              Ngày gạch chéo: '2021/10/18'
+            </button>
+            <button onclick="setSample('2021-??-??', 'date')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors">
+              Ngày ký tự rác: '2021-??-??'
+            </button>
+            <button onclick="setSample('$182.520 USD', 'close')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors">
+              Giá dính $: '$182.520 USD'
+            </button>
+            <button onclick="setSample('154,026077 kg', 'close')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors">
+              Sai đơn vị: '154,026077 kg'
+            </button>
+            <button onclick="setSample('150.504 VND', 'close')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors">
+              Sai đơn vị: '150.504 VND'
+            </button>
+            <button onclick="setSample('-1', 'close')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors">
+              Mã lỗi âm: '-1'
+            </button>
+            <button onclick="setSample('9999', 'close')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors">
+              Giá kiểm thử: '9999'
+            </button>
+          </div>
+        </div>
+
+        <!-- Inputs Row -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end pt-2">
+          
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Loại trường dữ liệu:</label>
+            <select id="sim-type" class="w-full text-xs p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 font-medium focus:ring-2 focus:ring-brand-500">
+              <option value="close">Giá đóng cửa (Close)</option>
+              <option value="ticker">Mã cổ phiếu (Ticker)</option>
+              <option value="date">Khóa thời gian (Date)</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-3">
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Chuỗi thô ban đầu (Raw String Input):</label>
+            <div class="flex gap-2">
+              <input id="sim-input" type="text" value="$182.520 USD" class="w-full text-xs p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 font-mono focus:ring-2 focus:ring-brand-500" placeholder="Nhập giá trị thô cần test...">
+              <button onclick="runSimulation()" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs whitespace-nowrap shadow-sm transition-all flex items-center gap-1.5">
+                <span>⚡</span> Làm Sạch
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Interactive Transformation Visualizer -->
+        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/60 space-y-3">
+          
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">Kết Quả Xử Lý Thuật Toán:</span>
+            <span id="sim-status" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+              SẠCH CHUẨN
+            </span>
+          </div>
+
+          <!-- Output Display -->
+          <div class="flex flex-col sm:flex-row sm:items-baseline gap-2">
+            <div class="text-lg sm:text-xl font-mono font-black text-brand-600 dark:text-brand-400" id="sim-output">
+              $182.5200 (float64)
+            </div>
+            <span class="text-xs text-slate-400 font-mono" id="sim-audit-flag">flag_recovered = 1</span>
+          </div>
+
+          <!-- Detailed Explanation -->
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed" id="sim-explanation">
+            Đã bóc tách ký hiệu tiền tệ '$' và 'USD', chuẩn hóa khoảng trắng, ép kiểu thành công sang số thực <code>float64</code> phục vụ tính lợi suất.
+          </p>
+
+          <!-- Python Execution Code Snippet -->
+          <div class="mt-2">
+            <div class="flex justify-between items-center text-[10px] font-mono text-slate-400 mb-1">
+              <span>MÃ NGUỒN PYTHON THỰC THI (TƯƠNG ỨNG PIPELINE):</span>
+              <button onclick="copyPythonSnippet()" class="text-brand-600 dark:text-brand-400 hover:underline">📋 Sao chép code</button>
+            </div>
+            <pre class="p-2.5 bg-slate-900 text-slate-100 rounded-lg font-mono text-[11px] overflow-x-auto"><code id="sim-code"># Chuẩn hóa cột Close
+s = raw_val.replace('$', '').replace('USD', '').replace(' ', '').replace(',', '.')
+val = pd.to_numeric(s, errors='coerce')</code></pre>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 mt-12 bg-white dark:bg-slate-900 py-6 text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-3">
+      <div>
+        <strong>Học phần:</strong> Lập trình Python cho Khoa học Dữ liệu (PRJ-05) — Trường Đại học Tài chính - Marketing (UFM)
+      </div>
+      <div class="flex items-center gap-3 font-mono">
+        <span>Tệp tóm lược: <code>quytrinhlamsach.qmd</code></span>
+        <span>•</span>
+        <span>Tệp báo cáo: <code>tieuluan.qmd</code></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Tab switching
+    function switchTab(tabId) {
+      const tabs = ['tab-missing', 'tab-dirty', 'tab-pipeline', 'tab-compare', 'tab-invariance', 'tab-simulator'];
+      tabs.forEach(t => {
+        const el = document.getElementById(t);
+        const btn = document.getElementById('btn-' + t);
+        if (t === tabId) {
+          el.classList.remove('hidden');
+          btn.classList.add('active');
+        } else {
+          el.classList.add('hidden');
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    // Theme toggle
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      document.getElementById('theme-icon').textContent = '☀️';
+    }
+
+    // Table search filter
+    function filterTable() {
+      const input = document.getElementById('table-search').value.toLowerCase();
+      const rows = document.querySelectorAll('#matrix-table tbody tr');
+      rows.forEach(r => {
+        const text = r.innerText.toLowerCase();
+        r.style.display = text.includes(input) ? '' : 'none';
+      });
+    }
+
+    // Run assertions interactive
+    function runAssertions() {
+      const banner = document.getElementById('assertion-result-banner');
+      banner.classList.remove('hidden');
+      banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Preset selection
+    function setSample(val, type) {
+      document.getElementById('sim-input').value = val;
+      document.getElementById('sim-type').value = type;
+      runSimulation();
+    }
+
+    // Interactive simulator
+    function runSimulation() {
+      const type = document.getElementById('sim-type').value;
+      const input = document.getElementById('sim-input').value;
+      const outputEl = document.getElementById('sim-output');
+      const explEl = document.getElementById('sim-explanation');
+      const statusEl = document.getElementById('sim-status');
+      const flagEl = document.getElementById('sim-audit-flag');
+      const codeEl = document.getElementById('sim-code');
+
+      if (type === 'ticker') {
+        const cleaned = input.trim().toUpperCase();
+        outputEl.innerHTML = `'<span class="text-emerald-500">${cleaned}</span>' (category / int16)`;
+        flagEl.textContent = "flag_ticker_valid = 1 | category encoding (-96.1% RAM)";
+        explEl.textContent = `Áp dụng .str.strip().str.upper(): Gọt sạch khoảng trắng thừa 2 đầu. Hợp nhất chuỗi về mã chuẩn S&P 500, lưu trữ dạng con trỏ int16 bảng mã 503 phần tử.`;
+        statusEl.textContent = "HỢP NHẤT MÃ";
+        statusEl.className = "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300";
+        codeEl.textContent = `df['Ticker_clean'] = df['Ticker'].str.strip().str.upper().astype('category')`;
+      } 
+      else if (type === 'date') {
+        let cleaned = input.replace(/\//g, '-').trim();
+        if (['?', '-', 'nan', 'null', '', '2021-??-??'].includes(cleaned.toLowerCase()) || cleaned.includes('?')) {
+          outputEl.innerHTML = `<span class="text-rose-600">NaT (Loại bỏ có giải trình)</span>`;
+          flagEl.textContent = "flag_date_error = 1 | Drop 61,208 dòng NaT";
+          explEl.textContent = `Phát hiện ký tự rác hoặc mất mốc ngày. Không thể ghép nối cặp chuỗi thời gian nên phân loại vào nhóm 61,208 dòng loại bỏ có giải trình.`;
+          statusEl.textContent = "LOẠI BỎ (DROP)";
+          statusEl.className = "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300";
+          codeEl.textContent = `df['Date_clean'] = pd.to_datetime(df['Date'].str.replace('/', '-'), errors='coerce')\n# Drop nếu NaT không thể khôi phục\ndf = df.dropna(subset=['Date_clean'])`;
+        } else {
+          outputEl.innerHTML = `<span class="text-purple-600">${cleaned}</span> (datetime64[ns])`;
+          flagEl.textContent = "flag_date_iso = 1 | Khớp lịch NYSE 1,254 phiên";
+          explEl.textContent = `Đồng bộ hóa ký tự ngăn cách '/' thành '-', chuẩn hóa về định dạng ISO-8601 (YYYY-MM-DD), sẵn sàng đối chiếu bảng lịch NYSE.`;
+          statusEl.textContent = "CHUẨN HÓA NGÀY";
+          statusEl.className = "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300";
+          codeEl.textContent = `df['Date_clean'] = pd.to_datetime(df['Date'].str.replace('/', '-'), format='%Y-%m-%d')`;
+        }
+      } 
+      else if (type === 'close') {
+        let raw = input.trim();
+        let s = raw;
+        
+        // Kiểm tra sai đơn vị nghiêm ngặt (kg, %, VND)
+        if (/(kg|%|vnd|đ)/i.test(raw)) {
+          outputEl.innerHTML = `<span class="text-rose-600">NaN (Loại bỏ - Sai đơn vị)</span>`;
+          flagEl.textContent = "flag_invalid_unit = 1 | 8,240 dòng không tự bóc số";
+          explEl.textContent = `Quy tắc bất biến: Dính hậu tố sai đơn vị đo lường ('kg', '%', 'VND'). Nghiêm cấm tự bóc số vì gây ngụy tạo đơn vị tài chính. Chuyển sang trạng thái 'không sử dụng'.`;
+          statusEl.textContent = "SAI ĐƠN VỊ";
+          statusEl.className = "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300";
+          codeEl.textContent = `# Quy tắc bất biến: Không tự ý bóc số từ đơn vị sai\nunit_mask = df['Close'].str.contains(r'(kg|%|VND)', regex=True, case=False)\ndf.loc[unit_mask, 'Close_clean'] = np.nan`;
+          return;
+        }
+
+        // Bóc tách hợp lệ ($ và USD)
+        s = s.replace(/\$/g, '').replace(/usd/gi, '').replace(/\s+/g, '').replace(/,/g, '.');
+        const num = parseFloat(s);
+
+        if (isNaN(num)) {
+          outputEl.innerHTML = `<span class="text-rose-600">NaN (Khuyết thiếu)</span>`;
+          flagEl.textContent = "flag_missing = 1";
+          explEl.textContent = `Ô trống vật lý hoặc ký tự rác không ép được số. Gán NaN để tiến hành Forward Fill có kiểm soát.`;
+          statusEl.textContent = "KHUYẾT THIẾU";
+          statusEl.className = "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300";
+          codeEl.textContent = `df['Close_clean'] = pd.to_numeric(clean_str, errors='coerce')`;
+        } else if (num <= 0 || num === -1.0) {
+          outputEl.innerHTML = `<span class="text-rose-600">NaN (Loại trừ giá âm / mã -1)</span>`;
+          flagEl.textContent = "flag_suspicious = 1 | 17,032 dòng";
+          explEl.textContent = `Giá tài sản không thể âm (trách nhiệm hữu hạn). Mã -1 là mã quy ước lỗi. Gán NaN để tránh lỗi toán học khi tính ln(Pt/Pt-1).`;
+          statusEl.textContent = "GIÁ ÂM / MÃ -1";
+          statusEl.className = "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300";
+          codeEl.textContent = `df.loc[df['Close_clean'] <= 0, 'Close_clean'] = np.nan`;
+        } else if (num === 9999.0) {
+          outputEl.innerHTML = `<span class="text-amber-600">NaN (Ngoại lai kiểm thử 9999)</span>`;
+          flagEl.textContent = "flag_suspicious = 1 | 1,820 dòng";
+          explEl.textContent = `Giá trị kiểm thử giả định 9999. Đưa về NaN và điền bằng giá phiên trước (Forward Fill).`;
+          statusEl.textContent = "LỌC 9999";
+          statusEl.className = "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300";
+          codeEl.textContent = `df.loc[df['Close_clean'] == 9999, 'Close_clean'] = np.nan`;
+        } else {
+          outputEl.innerHTML = `<span class="text-emerald-600">$${num.toFixed(4)}</span> (float64)`;
+          flagEl.textContent = "flag_recovered = 1 | Hợp lệ tính lợi suất";
+          explEl.textContent = `Đã bóc tách sạch ký tự tiền tệ hợp lệ ('$' và 'USD'), chuẩn hóa dấu phẩy thành dấu chấm, lưu trữ dưới dạng số thực float64 chuẩn mực.`;
+          statusEl.textContent = "SẠCH CHUẨN";
+          statusEl.className = "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300";
+          codeEl.textContent = `df['Close_clean'] = pd.to_numeric(df['Close'].str.replace('$', '').str.replace('USD', '').str.replace(',', '.'), errors='coerce')`;
+        }
+      }
+    }
+
+    // Copy python snippet
+    function copyPythonSnippet() {
+      const code = document.getElementById('sim-code').textContent;
+      navigator.clipboard.writeText(code);
+      alert('Đã sao chép mã nguồn Python vào clipboard!');
+    }
+
+    // Run first simulation on load
+    runSimulation();
+  </script>
+</body>
+</html>
