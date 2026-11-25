@@ -1006,3 +1006,31 @@ IV. KẾ HOẠCH BƯỚC TIẾP THEO (NEXT STEPS)
 2. Ôn tập kỹ lưỡng bộ câu hỏi phản biện bảo vệ đề tài (Oral Defense) từ Chương 1 đến Chương 5.
 3. Đóng gói commit toàn diện và đồng bộ mã nguồn lên kho GitHub cá nhân.
 
+
+================================================================================
+NHẬT KÝ NGÀY: 25/11/2026
+Người ghi: Đào Ngọc Minh (MSSV: 2521001078)
+Khóa: UFM - KHDL 2025 | Đề tài: PRJ-05
+GVHD: ThS. Trần Mạnh Tường
+Trạng thái: Thiết kế và Nâng cấp Toàn diện Dashboard Kiểm toán Chất lượng Dữ liệu (data_quality_dashboard.html) theo Chuẩn Mẫu Executive Dark Theme Power BI (Mẫu Đối tác Datapot / Microsoft Solutions Partner)
+================================================================================
+
+I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
+1. Tiếp nhận mẫu giao diện thực tế chuyên nghiệp cao cấp nhất (Executive Dark Theme Power BI):
+   - Phân tích bố cục đồ họa mẫu Datapot / Microsoft Solutions Partner: Tông màu nền xanh đêm Midnight Navy (#07111e, #0a192f), điểm nhấn cam hổ phách (#f59e0b) và xanh cyan neon (#00b4d8, #38bdf8).
+   - Tối ưu hóa trải nghiệm người dùng với kiến trúc lưới Dashboard:
+     + Header: Logo glyph biểu tượng, tiêu đề chính 'DATA AUDIT & REVENUE OVERVIEW', 2 bộ lọc Dropdown Slicer động (by Sector, and Year), dòng chú thích in nghiêng màu vàng tóm tắt phát hiện kiểm toán.
+     + Cột trái: 5 thẻ KPI dọc với số liệu màu cam lớn (622K Dòng thô, 90.0% Thu hồi sạch, 503 Mã S&P 500, 1,254 Phiên NYSE, -66.0% Tiết kiệm RAM).
+     + Khung chính 2x2 biểu đồ:
+       * Ô 1 (Top-Left): Đường tăng trưởng tài sản tích lũy (Cumulative Wealth) với diện tích gradient cyan phát sáng, đánh dấu đỉnh 214.11 USD (+114.11%).
+       * Ô 2 (Top-Right): Bảng đối chiếu thác kiểm toán dữ liệu và phân tầng khuyết tật kỹ thuật (Mẫu sạch 560,103 dòng 90.01%, Date NaT 61,208 dòng -9.84%, Ticker khoảng trắng 50,172 dòng -8.06%, Dính tiền tệ 33,281 dòng +5.35%, Giá âm 17,032 dòng -2.74%) kèm thanh mini bar và nhãn bảo chứng UFM Data Science Lab | Microsoft PowerBI Style.
+       * Ô 3 (Bottom-Left): Combo Dual-Axis (Cột xanh lợi suất tháng và Đường cam biến động trượt sigma_20d với đỉnh bùng nổ +12.41% Tháng 11/2023).
+       * Ô 4 (Bottom-Right): Grouped Column Chart màu vàng và cam (Độ biến động vs RMSE ngoài mẫu theo phân vị Q1-Q5 và Lợi suất 5 ngành công nghiệp lõi Tech, Fin, Health, Cons, Energy).
+     + Dải nút điều hướng đáy màu cam nâu Power BI: 8 nút điều hướng tương tác [TỔNG QUAN (OVERVIEW)], [KIỂM KÊ 8 BIẾN], [6 HỘI CHỨNG LỖI], [6 TRẠM LÀM SẠCH], [TỐI ƯU HÓA RAM], [4 KIỂM ĐỊNH BẤT BIẾN], [KEY INSIGHTS], [XUẤT PDF] tích hợp Popup Drawer hiển thị chi tiết học thuật.
+2. Chuẩn hóa và đồng bộ 100% thông tin sinh viên & giảng viên hướng dẫn:
+   - Sinh viên thực hiện: Đào Ngọc Minh
+   - Mã số sinh viên (MSSV): 2521001078 (chuẩn hóa từ 2521001081)
+   - Khóa: UFM - KHDL 2025
+   - Giảng viên hướng dẫn: ThS. Trần Mạnh Tường
+3. Kiểm thử tương tác và xuất bản tệp HTML độc lập:
+   - File data_quality_dashboard.html tự chứa toàn bộ mã nguồn SVG, CSS và JS thuần, không phụ thuộc thư viện ngoài nặng nề, hiển thị tức thì, sắc nét trên mọi trình duyệt và màn hình thuyết trình.
