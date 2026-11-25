@@ -66,7 +66,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Tạo tệp Master Prompt "PROMPT_CHUAN_DE_LAM_BAI.txt" để lưu trữ cấu trúc đề cương và sẵn sàng cho bước chạy code thực nghiệm.
 
 15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
-- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Trần Mạnh Tường.
 - Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
 - Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
   + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
@@ -221,7 +221,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
   + Tab 4: Trình mô phỏng Live Simulator cho phép nhập dữ liệu bẩn để quan sát thuật toán bóc tách trực tiếp.
 
 15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
-- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Trần Mạnh Tường.
 - Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
 - Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
   + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
@@ -289,7 +289,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
   + Toàn bộ kết quả bảng biểu, dữ liệu thô in mẫu, bảng 14 chỉ số thống kê, bảng Top 5 Sharpe và các thông báo đối chiếu đều được ghi nhận trực tiếp vào tệp "tieuluan.ipynb".
 
 15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
-- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Trần Mạnh Tường.
 - Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
 - Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
   + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
@@ -453,7 +453,7 @@ I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
    - Chương 3: Kiểm kê 7 hội chứng dữ liệu bẩn của tệp gốc 622.243 dòng, nguyên lý Parsimony tinh giản về 3 biến cốt lõi [Date, Ticker, Close] để triệt tiêu đa cộng tuyến (r > 0.98) và tiết kiệm 95% RAM nhờ ép kiểu category, quy trình 6 bước làm sạch, phân tích 14 chỉ số thống kê EDA, bằng chứng phân phối Đuôi dày (Fat-tail Kurtosis = 5,82) và kiểm định tính dừng nghiệm đơn vị ADF.
    - Chương 4: Kỹ thuật tạo 5 đặc trưng trễ và nhãn r_{t+1}, quy tắc Time-series Split 80/20 đơn điệu chống rò rỉ tương lai (Look-ahead bias), đối kháng 3 mô hình (Zero Benchmark vs OLS vs Ridge Regression alpha=10), đánh giá sai số trên 112.021 quan sát ngoài mẫu, giải mã trọng số kinh tế (hệ số trễ âm thể hiện đảo chiều ngắn hạn, MA5/MA20 dương thể hiện quán tính dòng tiền) và ý nghĩa học thuật của R² = 0,84%.
    - Chương 5: 3 khuyến nghị chiến lược quản trị danh mục (tập trung biến động và MDD thay vì đoán đỉnh/đáy, tối ưu Sharpe, phòng ngừa rủi ro đuôi bằng CVaR/Stress Testing), lộ trình 4 bước tự động hóa chốt phiên tại quỹ đầu tư, thẳng thắn nhận diện 3 hạn chế thực nghiệm (Survivorship bias, Adjusted Close, Transaction Cost) và kết luận tổng kết toàn bài.
-4. Xây dựng và hoàn thiện Bộ cẩm nang câu hỏi phản biện bảo vệ đề tài (FAQ Oral Defense) từ Chương 1 đến Chương 5 trước Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+4. Xây dựng và hoàn thiện Bộ cẩm nang câu hỏi phản biện bảo vệ đề tài (FAQ Oral Defense) từ Chương 1 đến Chương 5 trước Giảng viên hướng dẫn ThS. Trần Mạnh Tường.
 5. Kiểm toán, đồng bộ hai bản báo cáo Quarto ("tieuluan.qmd" tại thư mục gốc và "skill/tieuluan.qmd"), đóng gói commit và push lên GitHub cá nhân.
 
 --------------------------------------------------------------------------------
@@ -479,7 +479,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
   `https://github.com/minh682007-dot/SP500-Financial-Analytics-and-Risk-Prediction`
 
 15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
-- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Trần Mạnh Tường.
 - Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
 - Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
   + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
@@ -512,7 +512,7 @@ IV. KẾ HOẠCH BẢO VỆ VÀ HOÀN THIỆN TIỂU LUẬN
 ================================================================================
 NHẬT KÝ NGÀY: 23/11/2026
 Người ghi: Đào Ngọc Minh (MSSV: 2521001081)
-Trạng thái: Tiếp nhận Đề cương Chi tiết mới (23/11/2026), Nâng cấp toàn diện "tieuluan.qmd" theo Rubric 5 tiêu chí của Giảng viên ThS. Nguyễn Mạnh Tường
+Trạng thái: Tiếp nhận Đề cương Chi tiết mới (23/11/2026), Nâng cấp toàn diện "tieuluan.qmd" theo Rubric 5 tiêu chí của Giảng viên ThS. Trần Mạnh Tường
 ================================================================================
 
 I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
@@ -707,7 +707,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd" và "skill/tieuluan.qmd".
 
 15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
-- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Trần Mạnh Tường.
 - Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
 - Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
   + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
@@ -744,7 +744,7 @@ IV. KẾ HOẠCH BƯỚC TIẾP THEO (NEXT STEPS)
 ================================================================================
 NHẬT KÝ NGÀY: 24/11/2026
 Người ghi: Đào Ngọc Minh (MSSV: 2521001081)
-Trạng thái: Hoàn thành trọn vẹn 100% TOÀN BỘ 5 CHƯƠNG TIỂU LUẬN (Chương 1 đến Chương 5) theo đúng Đề cương chi tiết và Rubric đánh giá của Giảng viên ThS. Nguyễn Mạnh Tường
+Trạng thái: Hoàn thành trọn vẹn 100% TOÀN BỘ 5 CHƯƠNG TIỂU LUẬN (Chương 1 đến Chương 5) theo đúng Đề cương chi tiết và Rubric đánh giá của Giảng viên ThS. Trần Mạnh Tường
 ================================================================================
 
 I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
@@ -967,7 +967,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 - Đồng bộ hóa thành công 100% giữa "tieuluan.qmd", "skill/tieuluan.qmd" và "nhật ký làm việc.md" (kiểm toán mã băm SHA256 trùng khớp `47958EAC6BCC90DCA0AE82C0BF030FFCF6144F37D979D12931630E2514FF2FC2`).
 
 15. Phiên tối (20:30 - 21:40 ngày 24/11/2026): Thiết lập và Mở rộng Toàn diện Báo cáo Đặc tả Kỹ thuật "quytrinhlamsach.qmd"
-- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+- Nhận diện yêu cầu và cấu trúc tài liệu độc lập: Xây dựng tệp "quytrinhlamsach.qmd" làm Báo cáo Chuyên đề Độc lập (Technical Specification & Data Quality Audit Report) nhằm phục vụ trực tiếp phần thẩm vấn và bảo vệ thực hành với Giảng viên hướng dẫn ThS. Trần Mạnh Tường.
 - Khắc phục lỗi hiển thị giao diện IDE: Xử lý dứt điểm hiện tượng văn bản đổi màu cam từ dòng 539 trong nhật ký làm việc do dấu nháy đơn không đóng (Ockham Razor), chuẩn hóa thống nhất toàn bộ văn bản.
 - Triển khai chi tiết cấu trúc 11 Chương hoàn chỉnh với tổng quy mô hơn 1.240 dòng:
   + Chương 1 - Khung Kiến trúc và 5 Nguyên tắc Kiểm toán Bất biến (Audit Trail, Không rò rỉ tương lai, Không triệt tiêu phương sai, Ockham Razor, Bảo toàn quy mô mẫu).
@@ -985,7 +985,7 @@ II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
 
 --------------------------------------------------------------------------------
 III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
-1. Tệp "tieuluan.qmd" và "skill/tieuluan.qmd" hoàn thành xuất sắc 100% TOÀN BỘ 5 CHƯƠNG TIỂU LUẬN VÀ 4 PHỤ LỤC theo đúng Đề cương chi tiết và Rubric của Giảng viên ThS. Nguyễn Mạnh Tường.
+1. Tệp "tieuluan.qmd" và "skill/tieuluan.qmd" hoàn thành xuất sắc 100% TOÀN BỘ 5 CHƯƠNG TIỂU LUẬN VÀ 4 PHỤ LỤC theo đúng Đề cương chi tiết và Rubric của Giảng viên ThS. Trần Mạnh Tường.
 2. Tích hợp đầy đủ hệ thống 28 bảng biểu học thuật xuyên suốt đề tài:
    - Chương 1: Bảng 1.1, 1.2, 1.3.
    - Chương 2: Bảng 2.1, 2.2, Hình 2.1, Bảng 2.3, 2.4, 2.5, Hình 2.2.
@@ -1002,7 +1002,7 @@ III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
 
 --------------------------------------------------------------------------------
 IV. KẾ HOẠCH BƯỚC TIẾP THEO (NEXT STEPS)
-1. Tiến hành kiểm tra biên dịch (render) Quarto ra định dạng HTML và DOCX để nộp bài cho Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường.
+1. Tiến hành kiểm tra biên dịch (render) Quarto ra định dạng HTML và DOCX để nộp bài cho Giảng viên hướng dẫn ThS. Trần Mạnh Tường.
 2. Ôn tập kỹ lưỡng bộ câu hỏi phản biện bảo vệ đề tài (Oral Defense) từ Chương 1 đến Chương 5.
 3. Đóng gói commit toàn diện và đồng bộ mã nguồn lên kho GitHub cá nhân.
 

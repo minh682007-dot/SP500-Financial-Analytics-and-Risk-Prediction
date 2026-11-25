@@ -28,7 +28,7 @@ execute:
 * **Đơn vị đào tạo:** Trường Đại học Tài chính – Marketing (UFM) — Khoa Công nghệ Thông tin & Kinh doanh Số.
 * **Sinh viên thực hiện:** Đào Ngọc Minh
 * **Mã số sinh viên (MSSV):** `2521001081`
-* **Giảng viên phụ trách học phần:** ThS. Nguyễn Mạnh Tường (`tmtuongSV`)
+* **Giảng viên phụ trách học phần:** ThS. Trần Mạnh Tường (`tmtuongSV`)
 * **Tệp dữ liệu thực nghiệm gốc:** `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv` (622.243 dòng quan sát, 8 trường dữ liệu thô).
 * **Phạm vi nghiên cứu:** 503 mã cổ phiếu thuộc rổ chỉ số S&P 500 từ ngày 13/10/2021 đến ngày 12/10/2026 (1.254 ngày giao dịch thực tế).
 
@@ -48,7 +48,7 @@ Toàn bộ các số liệu kiểm toán chất lượng dữ liệu, các bư�
 
 ## LỜI CẢM ƠN
 
-Lời đầu tiên, em xin gửi lời cảm ơn chân thành và sâu sắc nhất đến Quý Thầy/Cô Khoa Công nghệ Thông tin & Kinh doanh Số – Trường Đại học Tài chính – Marketing (UFM), đặc biệt là Giảng viên phụ trách học phần ThS. Nguyễn Mạnh Tường đã tận tình truyền đạt kiến thức nền tảng vững chắc về Lập trình Python cho Khoa học Dữ liệu và tư duy kinh tế lượng ứng dụng.
+Lời đầu tiên, em xin gửi lời cảm ơn chân thành và sâu sắc nhất đến Quý Thầy/Cô Khoa Công nghệ Thông tin & Kinh doanh Số – Trường Đại học Tài chính – Marketing (UFM), đặc biệt là Giảng viên phụ trách học phần ThS. Trần Mạnh Tường đã tận tình truyền đạt kiến thức nền tảng vững chắc về Lập trình Python cho Khoa học Dữ liệu và tư duy kinh tế lượng ứng dụng.
 
 Học phần `PRJ-05` đã trang bị cho em phương pháp luận khoa học, kỹ năng lập trình đường ống dữ liệu (Data Pipeline) chuẩn mực, khả năng xử lý dữ liệu lớn (Big Data $> 100.000$ dòng) và tư duy phân tích định lượng sắc bén. Dù đã rất nỗ lực hoàn thiện đề tài, bài tiểu luận khó tránh khỏi những hạn chế nhất định. Em kính mong nhận được những nhận xét, góp ý quý báu từ Giảng viên để tiếp tục trau dồi và nâng cao năng lực chuyên môn trong tương lai.
 
@@ -3409,7 +3409,7 @@ for name, p in [('Zero Benchmark', pred_zero), ('OLS Regression', pred_ols), ('R
 
 ## Phụ lục B. Nhật ký làm việc với Antigravity IDE (Audit Trail & Oral Defense Matrix)
 
-Căn cứ yêu cầu nghiệm thu của Giảng viên hướng dẫn ThS. Nguyễn Mạnh Tường, toàn bộ hành trình nghiên cứu, lập trình và giải quyết lỗi kỹ thuật được ghi chép trung thực, liên tục tại tệp gốc [nhật ký làm việc.md](file:///c:/Users/LENOVO/OneDrive/Documents/Tiểu%20Luận%20CK/nhật%20ký%20làm%20việc.md). Dưới đây là bảng ma trận tổng hợp 7 phiên làm việc độc lập trọng tâm phục vụ phần thẩm định vấn đáp (Oral Defense):
+Căn cứ yêu cầu nghiệm thu của Giảng viên hướng dẫn ThS. Trần Mạnh Tường, toàn bộ hành trình nghiên cứu, lập trình và giải quyết lỗi kỹ thuật được ghi chép trung thực, liên tục tại tệp gốc [nhật ký làm việc.md](file:///c:/Users/LENOVO/OneDrive/Documents/Tiểu%20Luận%20CK/nhật%20ký%20làm%20việc.md). Dưới đây là bảng ma trận tổng hợp 7 phiên làm việc độc lập trọng tâm phục vụ phần thẩm định vấn đáp (Oral Defense):
 
 | Phiên số | Ngày thực tế | Nội dung & Mục tiêu trọng tâm | Quyết định kỹ thuật & Giải pháp | Lỗi phát sinh & Cách khắc phục | Sản phẩm nghiệm thu |
 | :---: | :---: | :--- | :--- | :--- | :--- |

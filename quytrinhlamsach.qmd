@@ -1244,4 +1244,4 @@ Quy trình tiền xử lý và làm sạch dữ liệu trong tài liệu đặc 
 
 ---
 
-*Tài liệu đặc tả kỹ thuật này được lập bởi học viên Đào Ngọc Minh (MSSV: 2521001081), dưới sự hướng dẫn của ThS. Nguyễn Mạnh Tường, trong khuôn khổ học phần Lập trình Python cho Khoa học Dữ liệu, Trường Đại học Tài chính – Marketing (UFM), năm học 2026.*
+*Tài liệu đặc tả kỹ thuật này được lập bởi học viên Đào Ngọc Minh (MSSV: 2521001081), dưới sự hướng dẫn của ThS. Trần Mạnh Tường, trong khuôn khổ học phần Lập trình Python cho Khoa học Dữ liệu, Trường Đại học Tài chính – Marketing (UFM), năm học 2026.*
