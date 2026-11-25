@@ -511,7 +511,7 @@ IV. KẾ HOẠCH BẢO VỆ VÀ HOÀN THIỆN TIỂU LUẬN
 
 ================================================================================
 NHẬT KÝ NGÀY: 23/11/2026
-Người ghi: Đào Ngọc Minh (MSSV: 2521001081)
+Người ghi: Đào Ngọc Minh (MSSV: 2521001078)
 Trạng thái: Tiếp nhận Đề cương Chi tiết mới (23/11/2026), Nâng cấp toàn diện "tieuluan.qmd" theo Rubric 5 tiêu chí của Giảng viên ThS. Trần Mạnh Tường
 ================================================================================
 
@@ -743,7 +743,7 @@ IV. KẾ HOẠCH BƯỚC TIẾP THEO (NEXT STEPS)
 
 ================================================================================
 NHẬT KÝ NGÀY: 24/11/2026
-Người ghi: Đào Ngọc Minh (MSSV: 2521001081)
+Người ghi: Đào Ngọc Minh (MSSV: 2521001078)
 Trạng thái: Hoàn thành trọn vẹn 100% TOÀN BỘ 5 CHƯƠNG TIỂU LUẬN (Chương 1 đến Chương 5) theo đúng Đề cương chi tiết và Rubric đánh giá của Giảng viên ThS. Trần Mạnh Tường
 ================================================================================
 

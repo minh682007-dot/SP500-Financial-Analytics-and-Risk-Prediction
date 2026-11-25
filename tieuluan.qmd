@@ -1,7 +1,7 @@
 ---
 title: "PHÂN TÍCH BIẾN ĐỘNG VÀ DỰ BÁO LỢI SUẤT CỔ PHIẾU TRÊN THỊ TRƯỜNG CHỨNG KHOÁN MỸ BẰNG PYTHON: NGHIÊN CỨU CÁC DOANH NGHIỆP THUỘC CHỈ SỐ S&P 500, GIAI ĐOẠN 2021–2026"
 subtitle: "BÁO CÁO TIỂU LUẬN KẾT THÚC HỌC PHẦN (MÃ ĐỀ TÀI: PRJ-05)"
-author: "Đào Ngọc Minh (MSSV: 2521001081)"
+author: "Đào Ngọc Minh (MSSV: 2521001078)"
 date: "2026-11-23"
 format:
   html:
@@ -27,7 +27,7 @@ execute:
 * **Học phần:** Lập trình Python cho Khoa học Dữ liệu (Mã đề tài: `PRJ-05`).
 * **Đơn vị đào tạo:** Trường Đại học Tài chính – Marketing (UFM) — Khoa Công nghệ Thông tin & Kinh doanh Số.
 * **Sinh viên thực hiện:** Đào Ngọc Minh
-* **Mã số sinh viên (MSSV):** `2521001081`
+* **Mã số sinh viên (MSSV):** `2521001078`
 * **Giảng viên phụ trách học phần:** ThS. Trần Mạnh Tường (`tmtuongSV`)
 * **Tệp dữ liệu thực nghiệm gốc:** `DS_17_2521001081_PRJ05_NguyenPhiLamNguyen.csv` (622.243 dòng quan sát, 8 trường dữ liệu thô).
 * **Phạm vi nghiên cứu:** 503 mã cổ phiếu thuộc rổ chỉ số S&P 500 từ ngày 13/10/2021 đến ngày 12/10/2026 (1.254 ngày giao dịch thực tế).
@@ -3249,7 +3249,7 @@ Nhằm bảo đảm tính minh bạch và khả năng tái lập 100% của nghi
 """
 PIPELINE PHÂN TÍCH BIẾN ĐỘNG VÀ DỰ BÁO LỢI SUẤT S&P 500 (2021-2026)
 Học phần: Lập trình Python cho Khoa học Dữ liệu (PRJ-05)
-Sinh viên thực hiện: Đào Ngọc Minh (MSSV: 2521001081) - UFM
+Sinh viên thực hiện: Đào Ngọc Minh (MSSV: 2521001078) - UFM
 Môi trường thực thi: Python 3.13.7 (Thuần NumPy & Pandas, không rò rỉ dữ liệu)
 """
 
