@@ -1006,31 +1006,102 @@ IV. KẾ HOẠCH BƯỚC TIẾP THEO (NEXT STEPS)
 2. Ôn tập kỹ lưỡng bộ câu hỏi phản biện bảo vệ đề tài (Oral Defense) từ Chương 1 đến Chương 5.
 3. Đóng gói commit toàn diện và đồng bộ mã nguồn lên kho GitHub cá nhân.
 
-
 ================================================================================
 NHẬT KÝ NGÀY: 25/11/2026
 Người ghi: Đào Ngọc Minh (MSSV: 2521001078)
 Khóa: UFM - KHDL 2025 | Đề tài: PRJ-05
 GVHD: ThS. Trần Mạnh Tường
-Trạng thái: Thiết kế và Nâng cấp Toàn diện Dashboard Kiểm toán Chất lượng Dữ liệu (data_quality_dashboard.html) theo Chuẩn Mẫu Executive Dark Theme Power BI (Mẫu Đối tác Datapot / Microsoft Solutions Partner)
+Trạng thái: Chuẩn hóa Thông tin Định danh Học thuật & Hoàn thiện Toàn diện Dashboard Kiểm toán Chất lượng Dữ liệu (data_quality_dashboard.html) theo Chuẩn Mẫu Executive Dark Theme Power BI (Mẫu Đối tác Datapot / Microsoft Solutions Partner)
 ================================================================================
 
 I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
-1. Tiếp nhận mẫu giao diện thực tế chuyên nghiệp cao cấp nhất (Executive Dark Theme Power BI):
-   - Phân tích bố cục đồ họa mẫu Datapot / Microsoft Solutions Partner: Tông màu nền xanh đêm Midnight Navy (#07111e, #0a192f), điểm nhấn cam hổ phách (#f59e0b) và xanh cyan neon (#00b4d8, #38bdf8).
-   - Tối ưu hóa trải nghiệm người dùng với kiến trúc lưới Dashboard:
-     + Header: Logo glyph biểu tượng, tiêu đề chính 'DATA AUDIT & REVENUE OVERVIEW', 2 bộ lọc Dropdown Slicer động (by Sector, and Year), dòng chú thích in nghiêng màu vàng tóm tắt phát hiện kiểm toán.
-     + Cột trái: 5 thẻ KPI dọc với số liệu màu cam lớn (622K Dòng thô, 90.0% Thu hồi sạch, 503 Mã S&P 500, 1,254 Phiên NYSE, -66.0% Tiết kiệm RAM).
-     + Khung chính 2x2 biểu đồ:
-       * Ô 1 (Top-Left): Đường tăng trưởng tài sản tích lũy (Cumulative Wealth) với diện tích gradient cyan phát sáng, đánh dấu đỉnh 214.11 USD (+114.11%).
-       * Ô 2 (Top-Right): Bảng đối chiếu thác kiểm toán dữ liệu và phân tầng khuyết tật kỹ thuật (Mẫu sạch 560,103 dòng 90.01%, Date NaT 61,208 dòng -9.84%, Ticker khoảng trắng 50,172 dòng -8.06%, Dính tiền tệ 33,281 dòng +5.35%, Giá âm 17,032 dòng -2.74%) kèm thanh mini bar và nhãn bảo chứng UFM Data Science Lab | Microsoft PowerBI Style.
-       * Ô 3 (Bottom-Left): Combo Dual-Axis (Cột xanh lợi suất tháng và Đường cam biến động trượt sigma_20d với đỉnh bùng nổ +12.41% Tháng 11/2023).
-       * Ô 4 (Bottom-Right): Grouped Column Chart màu vàng và cam (Độ biến động vs RMSE ngoài mẫu theo phân vị Q1-Q5 và Lợi suất 5 ngành công nghiệp lõi Tech, Fin, Health, Cons, Energy).
-     + Dải nút điều hướng đáy màu cam nâu Power BI: 8 nút điều hướng tương tác [TỔNG QUAN (OVERVIEW)], [KIỂM KÊ 8 BIẾN], [6 HỘI CHỨNG LỖI], [6 TRẠM LÀM SẠCH], [TỐI ƯU HÓA RAM], [4 KIỂM ĐỊNH BẤT BIẾN], [KEY INSIGHTS], [XUẤT PDF] tích hợp Popup Drawer hiển thị chi tiết học thuật.
-2. Chuẩn hóa và đồng bộ 100% thông tin sinh viên & giảng viên hướng dẫn:
-   - Sinh viên thực hiện: Đào Ngọc Minh
-   - Mã số sinh viên (MSSV): 2521001078 (chuẩn hóa từ 2521001081)
-   - Khóa: UFM - KHDL 2025
+1. Tiếp nhận và đối soát 3 mẫu giao diện Dashboard thực tế chuyên nghiệp:
+   - Khảo sát Mẫu 1 (Boise Paper Company BI): Phong cách xanh lá - cam, 6 thẻ KPI ngang, 2 cột panel.
+   - Khảo sát Mẫu 2 (ACE Sales & Performance Dashboard - Đặng Thị Phương Ngân K36): Phong cách xanh Navy, Slicer dọc Top 9 sản phẩm bên trái, 6 thẻ Navy solid.
+   - Khảo sát Mẫu 3 (Datapot / Microsoft Solutions Partner Executive Dark Theme Power BI): Phong cách công nghệ cao cấp nhất với tông nền Midnight Navy (#07111e, #0a192f), điểm nhấn cam hổ phách (#f59e0b) và xanh cyan neon (#00b4d8, #38bdf8).
+   - Quyết định lựa chọn Mẫu 3 làm chuẩn mực thiết kế tối ưu, chuyên nghiệp và phù hợp nhất cho chuyên ngành Khoa học Dữ liệu (KHDL) tài chính.
+2. Chuẩn hóa và đồng bộ 100% thông tin định danh học thuật của đề tài:
+   - Sinh viên thực hiện: Đào Ngọc Minh.
+   - Mã số sinh viên (MSSV): 2521001078 (chuẩn hóa đồng nhất thay cho 2521001081).
+   - Khóa: UFM - KHDL 2025 (chuẩn hóa thay cho 2026).
+   - Giảng viên hướng dẫn: ThS. Trần Mạnh Tường (chuẩn hóa học vị và họ tên chính xác).
+   - Đồng bộ xuyên suốt toàn bộ các tệp: tieuluan.qmd, quytrinhlamsach.qmd, nhật ký làm việc.md, skill/ và Dashboard.
+3. Hiện thực hóa Dashboard kiểm toán chất lượng dữ liệu tương tác độc lập (data_quality_dashboard.html):
+   - Tái lập trung thực 100% cấu trúc thị giác của Mẫu Datapot Power BI Dark Theme.
+   - Tối ưu hóa hiệu năng: Tệp HTML tự chứa hoàn toàn mã SVG, CSS, JS thuần, kích thước siêu nhẹ (~41 KB), không cần phụ thuộc thư viện mạng bên ngoài, hiển thị mượt mà trên mọi thiết bị và màn hình trình chiếu.
+
+--------------------------------------------------------------------------------
+II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
+
+1. Phiên sáng (08:30 - 11:30): Rà soát tính toàn vẹn 5 Chương và đối soát số liệu kiểm toán
+- Tiến hành kiểm tra chéo toàn bộ hệ thống số liệu giữa bài tiểu luận (tieuluan.qmd) và báo cáo đặc tả kỹ thuật quy trình làm sạch (quytrinhlamsach.qmd):
+  + Quy mô quan sát thô: 622,243 dòng.
+  + Mẫu sạch chính thức: 560,103 dòng (tỷ lệ thu hồi 90.01%).
+  + Tổng dòng loại bỏ: 62,140 dòng (9.99%), trong đó khuyết mốc thời gian NaT chiếm 61,208 dòng (9.84%).
+  + Rổ cổ phiếu S&P 500: 503 mã niêm yết (500 công ty + 3 mã kép: GOOGL/GOOG, FOXA/FOX, NWSA/NWS).
+  + Lịch làm việc chuẩn NYSE: 1,254 phiên giao dịch 5 năm (13/10/2021 đến 12/10/2026).
+  + Giảm tải bộ nhớ RAM: Giảm 66.0% (từ 108.49 MB xuống 36.88 MB).
+  + Hiệu quả danh mục và mô hình: Hệ số Sharpe danh mục đạt 0.6953 (giả định kỹ thuật R_f = 0); mô hình Ridge (alpha=10,000) kiểm soát sai số RMSE ngoài mẫu tốt nhất ở nhóm biến động cực đoan Q4 và Q5; 4/4 phép kiểm định bất biến (Invariance Assertions) vượt qua thành công 100%.
+
+2. Phiên chiều (14:00 - 16:30): Chuẩn hóa và đồng bộ thông tin định danh học thuật
+- Tiếp nhận thông tin chính xác từ sinh viên: Mã số sinh viên 2521001078, Khóa UFM - KHDL 2025, Giảng viên hướng dẫn ThS. Trần Mạnh Tường.
+- Thực hiện cập nhật đồng loạt trên toàn bộ hệ thống tệp tin:
+  + tieuluan.qmd và skill/tieuluan.qmd: Cập nhật thông tin tác giả, trang bìa và lời cam đoan.
+  + quytrinhlamsach.qmd và skill/quytrinhlamsach.qmd: Cập nhật thông tin tác giả và GVHD.
+  + nhật ký làm việc.md và skill/nhật kí làm việc: Cập nhật header và các biên bản phiên làm việc.
+- Thực hiện commit Git an toàn: commit cd39900 ('Cap nhat MSSV 2521001078 va khoa UFM - KHDL 2025 cho Dao Ngoc Minh').
+
+3. Phiên chiều - tối (16:30 - 19:30): Khảo sát và đánh giá 3 trường phái thiết kế Dashboard
+- Tiếp nhận lần lượt 3 hình ảnh chụp mẫu dashboard thực tế từ sinh viên:
+  + Hình 1: Mẫu Boise Paper Company Dashboard (Bố cục ngang kiểu BI văn phòng, dải 6 KPI trên cùng, 2 cột panel lớn, phần Key Insights chiếm toàn bộ chiều rộng bên dưới).
+  + Hình 2: Mẫu ACE Sales & Performance Dashboard - Đặng Thị Phương Ngân K36 (Giao diện xanh Navy đậm, thanh Slicer dọc Top 9 danh mục sản phẩm bên trái, 6 thẻ KPI Navy solid, chia đôi khối hiệu suất cửa hàng và sản phẩm).
+  + Hình 3: Mẫu Datapot / Microsoft Solutions Partner Executive Dark Theme Power BI (Giao diện nền tối Midnight Navy công nghệ cao, điểm nhấn vàng cam và xanh cyan neon, thanh 5 thẻ KPI dọc màu cam lớn bên trái, khung chính 2x2 biểu đồ, dải nút màu cam nâu Power BI ở đáy).
+- Đánh giá so sánh: Mẫu 3 sở hữu độ tương phản thị giác xuất sắc nhất, mang phong cách giám đốc điều hành (Executive), cực kỳ tương thích với đề tài Phân tích Dữ liệu Tài chính & Khoa học Dữ liệu. Người dùng phê duyệt lựa chọn làm theo Mẫu 3.
+
+4. Phiên tối - đêm (19:30 - 21:50): Lập trình và Hoàn thiện Toàn diện Dashboard Datapot Power BI
+- Khởi tạo và thực thi script xây dựng dashboard tự động data_quality_dashboard.html:
+  + 1. Thiết kế Master Container: Nền xanh tối #07111e và #0a192f, viền mảnh #1e3a5f, đổ bóng phát sáng công nghệ.
+  + 2. Header Bar:
+       * Logo glyph biểu tượng ▲ màu xanh cyan (#00b4d8).
+       * Tiêu đề chính: 'DATA AUDIT & REVENUE OVERVIEW'.
+       * Tích hợp 2 bộ lọc Dropdown Slicer nội dòng: 'by Sector' [All Sectors ▼] và 'and Year' [All (2021–2026) ▼].
+       * Đoạn văn in nghiêng màu vàng tóm tắt phát hiện kiểm toán: Quy mô 622,243 dòng thô, thu hồi 560,103 dòng sạch (90.01%) rổ S&P 500 qua 1,254 phiên NYSE, lọc trung vị và category giúp giảm 66.0% RAM và triệt tiêu đa cộng tuyến hoàn hảo.
+       * Khung tác giả bên phải: Đào Ngọc Minh (2521001078) | GVHD: ThS. Trần Mạnh Tường | UFM - KHDL 2025.
+  + 3. Cột trái - Dải 5 thẻ KPI dọc màu cam lớn nổi bật (matching chuẩn ảnh chụp mẫu):
+       * Thẻ 1: 622K - Tổng Quan Sát Thô (Raw Observations).
+       * Thẻ 2: 90.0% - Tỷ Lệ Thu Hồi Sạch (560,103 Dòng).
+       * Thẻ 3: 503 - Mã S&P 500 Chuẩn (Consolidated).
+       * Thẻ 4: 1,254 - Phiên Sàn NYSE (Trading Sessions).
+       * Thẻ 5: -66.0% - Mức Tiết Kiệm RAM (36.88 MB Parquet).
+  + 4. Khung chính 2x2 biểu đồ đồ họa cao cấp:
+       * Ô 1 (Top-Left - Gross Profit over time style): Area Line Chart màu Cyan Neon (#00b4d8) có diện tích gradient phát sáng, mô phỏng Tăng Trưởng Giá Trị Tài Sản Tích Lũy (Cumulative Wealth), đánh dấu đỉnh 214.11 USD (+114.11%) vào Tháng 10/2026.
+       * Ô 2 (Top-Right - Actual Revenue by Country / Waterfall style): Bảng ma trận đối chiếu 5 tầng dữ liệu & khuyết tật kỹ thuật (Mẫu Sạch 560,103 dòng 90.01%, Date NaT 61,208 dòng -9.84%, Ticker khoảng trắng 50,172 dòng -8.06%, Dính tiền tệ 33,281 dòng +5.35%, Giá âm 17,032 dòng -2.74%) với thanh mini bar ngang trực quan xanh cyan & cam, nút chuyển view [Bảng đối chiếu | Biểu đồ thác] và badge chứng nhận 'UFM Data Science Lab | Microsoft PowerBI Style'.
+       * Ô 3 (Bottom-Left - Dual-Axis Combo style): Biểu đồ cột xanh Lợi suất tháng kết hợp đường dao động màu cam hổ phách biểu diễn Độ biến động sigma_20d với đỉnh bùng nổ lợi suất +12.41% Tháng 11/2023.
+       * Ô 4 (Bottom-Right - Grouped Column style): Biểu đồ cột nhóm màu vàng và cam so sánh Độ biến động vs Sai số RMSE ngoài mẫu theo 5 phân vị Q1-Q5 và Lợi suất 5 ngành công nghiệp lõi (Tech, Fin, Health, Cons, Energy), cùng 2 chỉ số mini trên đầu: 0.6953 Sharpe Ratio (Rf=0) và 4 / 4 PASS Invariance Assertions.
+  + 5. Dải nút điều hướng màu cam nâu Power BI ở đáy:
+       * 8 nút điều hướng tương tác: [TỔNG QUAN (OVERVIEW)], [KIỂM KÊ 8 BIẾN], [6 HỘI CHỨNG LỖI], [6 TRẠM LÀM SẠCH], [TỐI ƯU HÓA RAM], [4 KIỂM ĐỊNH BẤT BIẾN], [KEY INSIGHTS], [XUẤT PDF].
+       * Tích hợp Drawer / Popup Modal hiển thị toàn bộ nội dung học thuật chi tiết của từng phần kiểm toán khi người dùng nhấp chọn.
+  + 6. Lập trình JavaScript tương tác:
+       * Dropdown Slicer by Sector phản hồi động thay đổi số liệu 5 thẻ KPI theo thời gian thực (khi chọn Tech, Fin, Health, Clean, Dirty).
+- Xuất bản đồng bộ tệp data_quality_dashboard.html vào cả thư mục gốc của dự án và thư mục lưu trữ Artifact.
+- Đóng gói commit Git: commit 1cca1f6 ('Thiet ke Dashboard theo phong cach Datapot Microsoft Partner Dark Theme (Hinh 3)').
+
+--------------------------------------------------------------------------------
+III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
+1. Tệp Dashboard kiểm toán hoàn hảo: 'data_quality_dashboard.html' đạt chuẩn Executive Dark Theme Power BI, giao diện công nghệ đỉnh cao, trực quan, tương tác mượt mà, sẵn sàng phục vụ trình chiếu và bảo vệ đề tài.
+2. Hoàn tất chuẩn hóa và đồng bộ 100% thông tin tác giả học thuật trên toàn bộ hệ sinh thái dự án:
+   - Sinh viên: Đào Ngọc Minh
+   - MSSV: 2521001078
+   - Khóa: UFM - KHDL 2025 | Đề tài: PRJ-05
    - Giảng viên hướng dẫn: ThS. Trần Mạnh Tường
-3. Kiểm thử tương tác và xuất bản tệp HTML độc lập:
-   - File data_quality_dashboard.html tự chứa toàn bộ mã nguồn SVG, CSS và JS thuần, không phụ thuộc thư viện ngoài nặng nề, hiển thị tức thì, sắc nét trên mọi trình duyệt và màn hình thuyết trình.
+3. Nhật ký làm việc hoàn chỉnh, chi tiết từng mốc thời gian và nội dung kỹ thuật, đáp ứng đầy đủ yêu cầu minh chứng trung thực và liêm chính học thuật.
+4. Quản trị mã nguồn Git chặt chẽ với các commit lưu vết:
+   - cd39900: Cập nhật MSSV 2521001078 và khóa UFM - KHDL 2025.
+   - 1cca1f6: Thiết kế Dashboard theo mẫu Datapot Microsoft Partner Dark Theme (Hình 3).
+
+--------------------------------------------------------------------------------
+IV. KẾ HOẠCH BƯỚC TIẾP THEO (NEXT STEPS)
+1. Thử nghiệm mở và tương tác trên nhiều trình duyệt khác nhau (Chrome, Edge) để kiểm tra độ tương thích đồ họa.
+2. Sử dụng tính năng [XUẤT PDF] tích hợp trên Dashboard để tạo tài liệu minh chứng trực quan đính kèm báo cáo tiểu luận.
+3. Ôn luyện bộ câu hỏi phản biện bảo vệ đề tài dựa trên các trực quan hóa và chỉ số kiểm toán trên Dashboard.
+4. Đẩy toàn bộ các commit lên kho lưu trữ GitHub cá nhân phục vụ lưu trữ lâu dài.
