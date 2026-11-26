@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REVENUE & DATA QUALITY AUDIT OVERVIEW - S&P 500 (PRJ-05)</title>
-  <!-- Google Fonts: Montserrat & Segoe UI style -->
+  <title>DATA AUDIT & QUALITY CONTROL DASHBOARD - S&P 500 (PRJ-05)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&family=Montserrat:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -28,10 +27,10 @@
     /* Master Container */
     .dashboard-canvas {
       width: 100%;
-      max-width: 1400px;
+      max-width: 1420px;
       background: #0a192f;
       border: 1px solid #1e3a5f;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(10, 25, 47, 0.9);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.85), 0 0 25px rgba(10, 25, 47, 0.9);
       padding: 12px 14px 10px 14px;
       display: flex;
       flex-direction: column;
@@ -69,7 +68,7 @@
     }
     .title-text {
       font-family: 'Montserrat', sans-serif;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 900;
       color: #ffffff;
       letter-spacing: -0.2px;
@@ -78,7 +77,7 @@
       gap: 8px;
     }
     .slicer-label {
-      font-size: 12px;
+      font-size: 11.5px;
       color: #cbd5e1;
       font-weight: 400;
     }
@@ -97,18 +96,69 @@
       border-color: #00b4d8;
     }
 
+    /* View Switcher Bar (Tabs) */
+    .view-mode-tabs {
+      display: flex;
+      gap: 4px;
+      margin-left: 10px;
+      background: #071526;
+      padding: 2px;
+      border-radius: 4px;
+      border: 1px solid #1e3a5f;
+    }
+    .view-mode-btn {
+      background: transparent;
+      border: none;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      color: #94a3b8;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .view-mode-btn:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.05);
+    }
+    .view-mode-btn.active-dirty {
+      background: #ef4444;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+    }
+    .view-mode-btn.active-clean {
+      background: #00b4d8;
+      color: #0a192f;
+      font-weight: 800;
+      box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
+    }
+    .view-mode-btn.active-matrix {
+      background: #f59e0b;
+      color: #0a192f;
+      font-weight: 800;
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+    }
+
     /* Subtitle insight text */
     .header-subtext {
       font-size: 10.5px;
       color: #e2e8f0;
       font-style: italic;
-      margin-top: 3px;
+      margin-top: 4px;
       line-height: 1.35;
-      max-width: 1050px;
+      max-width: 1080px;
     }
     .header-subtext span.highlight {
       color: #f59e0b;
       font-weight: 600;
+    }
+    .header-subtext span.alert-red {
+      color: #f87171;
+      font-weight: 700;
     }
 
     /* Author info right */
@@ -122,17 +172,17 @@
     .author-meta strong {
       color: #38bdf8;
       font-family: 'Montserrat', sans-serif;
-      font-size: 12.5px;
+      font-size: 12px;
     }
 
-    /* Main Section: Left Vertical KPI Strip (5 Cards) + Right 2x2 Grid */
+    /* Main Section: Left Vertical KPI Strip + Right 2x2 Grid */
     .main-body-layout {
       display: grid;
-      grid-template-columns: 140px 1fr;
+      grid-template-columns: 145px 1fr;
       gap: 10px;
     }
 
-    /* Left KPI Vertical Strip (5 Cards with Big Orange Numbers) */
+    /* Left KPI Vertical Strip (5 Cards) */
     .kpi-vertical-strip {
       display: flex;
       flex-direction: column;
@@ -142,7 +192,7 @@
       background: #0d2038;
       border: 1px solid #163252;
       border-radius: 2px;
-      padding: 12px 6px;
+      padding: 10px 6px;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -153,6 +203,10 @@
       transition: all 0.2s ease;
       position: relative;
       overflow: hidden;
+    }
+    .kpi-dark-card.dirty-mode {
+      border-color: #7f1d1d;
+      background: #1a101f;
     }
     .kpi-dark-card::before {
       content: '';
@@ -165,6 +219,10 @@
       opacity: 0;
       transition: opacity 0.2s;
     }
+    .kpi-dark-card.dirty-mode::before {
+      background: #ef4444;
+      opacity: 1;
+    }
     .kpi-dark-card:hover {
       background: #112744;
       border-color: #1e4570;
@@ -173,16 +231,18 @@
     .kpi-dark-card:hover::before {
       opacity: 1;
     }
-    .kpi-orange-val {
+    .kpi-val {
       font-family: 'Montserrat', sans-serif;
       font-size: 21px;
       font-weight: 900;
-      color: #f59e0b;
       letter-spacing: -0.5px;
       line-height: 1;
     }
+    .val-orange { color: #f59e0b; }
+    .val-red { color: #f87171; }
+    .val-cyan { color: #38bdf8; }
     .kpi-card-label {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 600;
       color: #cbd5e1;
       margin-top: 5px;
@@ -205,8 +265,12 @@
       padding: 8px 10px;
       display: flex;
       flex-direction: column;
-      min-height: 200px;
+      min-height: 205px;
       position: relative;
+    }
+    .dark-chart-box.dirty-box {
+      border-color: #2a1b2d;
+      background: #0e1626;
     }
     .chart-box-title {
       font-family: 'Montserrat', sans-serif;
@@ -214,6 +278,27 @@
       font-weight: 800;
       color: #f8fafc;
       letter-spacing: 0.2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chart-box-title .badge-danger {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid #ef4444;
+      font-size: 8.5px;
+      padding: 1px 5px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+    .chart-box-title .badge-success {
+      background: rgba(0, 180, 216, 0.2);
+      color: #38bdf8;
+      border: 1px solid #00b4d8;
+      font-size: 8.5px;
+      padding: 1px 5px;
+      border-radius: 2px;
+      font-weight: 700;
     }
     .chart-box-sub {
       font-size: 9.5px;
@@ -221,6 +306,9 @@
       color: #f59e0b;
       margin-top: 1px;
       margin-bottom: 6px;
+    }
+    .chart-box-sub.sub-red {
+      color: #fca5a5;
     }
     .chart-svg-container {
       flex: 1;
@@ -236,7 +324,7 @@
       height: 100%;
     }
 
-    /* Financial Table Styling inside Top-Right Box */
+    /* Table Styling inside Boxes */
     .table-container {
       width: 100%;
       border-collapse: collapse;
@@ -251,7 +339,7 @@
       text-align: left;
     }
     .table-container td {
-      padding: 4px 6px;
+      padding: 3.5px 6px;
       color: #e2e8f0;
       border-bottom: 1px solid #122842;
     }
@@ -260,22 +348,25 @@
       background: rgba(0, 180, 216, 0.08);
       color: #38bdf8;
     }
-    .waterfall-bar-blue {
-      background: #00b4d8;
-      height: 12px;
-      border-radius: 1px;
-      display: inline-block;
-      vertical-align: middle;
-    }
-    .waterfall-bar-orange {
-      background: #f59e0b;
-      height: 12px;
-      border-radius: 1px;
-      display: inline-block;
-      vertical-align: middle;
+    .table-container tr.highlight-danger {
+      font-weight: 800;
+      background: rgba(239, 68, 68, 0.1);
+      color: #f87171;
     }
 
-    /* Partner Badge in Corner */
+    /* Visual Bars inside Tables */
+    .bar-pill {
+      height: 10px;
+      border-radius: 1px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .bar-blue { background: #00b4d8; }
+    .bar-orange { background: #f59e0b; }
+    .bar-red { background: #ef4444; }
+    .bar-purple { background: #a855f7; }
+
+    /* Partner Badge */
     .partner-badge {
       display: flex;
       align-items: center;
@@ -292,34 +383,14 @@
       background: #00b4d8;
       border-radius: 50%;
     }
-
-    /* View Switcher Tabs (Map view / Tabular view) */
-    .view-switcher-bar {
-      display: flex;
-      border: 1px solid #1e3a5f;
-      border-radius: 2px;
-      margin-top: 6px;
-      overflow: hidden;
-    }
-    .view-btn {
-      flex: 1;
-      background: #0d2038;
-      border: none;
-      color: #94a3b8;
-      font-size: 10px;
-      font-weight: 600;
-      padding: 4px;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-    }
-    .view-btn.active {
-      background: #00b4d8;
-      color: #0a192f;
-      font-weight: 800;
+    .partner-badge span.dot-red {
+      width: 6px;
+      height: 6px;
+      background: #ef4444;
+      border-radius: 50%;
     }
 
-    /* Bottom Navigation Strip (Exact matching Datapot orange tabs) */
+    /* Bottom Navigation Strip */
     .bottom-nav-strip {
       display: flex;
       gap: 3px;
@@ -333,8 +404,8 @@
       background: #a1550c;
       color: #ffffff;
       border: 1px solid #7d4007;
-      padding: 5px 12px;
-      font-size: 10.5px;
+      padding: 5px 11px;
+      font-size: 10px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.3px;
@@ -346,11 +417,25 @@
     .nav-tab-btn:hover {
       background: #c26913;
     }
+    .nav-tab-btn.btn-dirty {
+      background: #7f1d1d;
+      border-color: #991b1b;
+      color: #fecaca;
+    }
+    .nav-tab-btn.btn-dirty:hover {
+      background: #991b1b;
+    }
     .nav-tab-btn.active {
       background: #071526;
       border-color: #f59e0b;
       color: #f59e0b;
       box-shadow: inset 0 -2px 0 #f59e0b;
+    }
+    .nav-tab-btn.active-dirty-btn {
+      background: #071526;
+      border-color: #ef4444;
+      color: #f87171;
+      box-shadow: inset 0 -2px 0 #ef4444;
     }
 
     /* Modal / Drawer for Tab details */
@@ -368,11 +453,17 @@
       background: #0d2038;
       border: 2px solid #00b4d8;
       width: 100%;
-      max-width: 800px;
+      max-width: 840px;
+      max-height: 85vh;
+      overflow-y: auto;
       border-radius: 4px;
-      padding: 16px;
+      padding: 16px 20px;
       color: #e2e8f0;
       box-shadow: 0 10px 40px rgba(0, 180, 216, 0.3);
+    }
+    .modal-card.modal-danger {
+      border-color: #ef4444;
+      box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3);
     }
     .modal-header {
       display: flex;
@@ -412,21 +503,19 @@
     <header class="top-header">
       <div>
         <div class="header-main-title">
-          <div class="logo-icon">▲</div>
+          <div class="logo-icon" id="header-logo">▲</div>
           <div class="title-text">
-            <span>DATA AUDIT & REVENUE OVERVIEW</span>
+            <span id="header-main-title-text">DATA AUDIT & REVENUE OVERVIEW</span>
             <span class="slicer-label">by Sector</span>
-            <select class="slicer-select" id="sector-slicer" onchange="updateDashboard(this.value)">
-              <option value="all">All Sectors</option>
-              <option value="tech">Technology</option>
-              <option value="fin">Financials</option>
-              <option value="health">Healthcare</option>
-              <option value="energy">Energy</option>
-              <option value="clean">Clean (560K)</option>
-              <option value="dirty">Drop (62K)</option>
+            <select class="slicer-select" id="sector-slicer" onchange="handleSectorFilter(this.value)">
+              <option value="all">All Sectors (503)</option>
+              <option value="tech">Technology (78)</option>
+              <option value="fin">Financials (72)</option>
+              <option value="health">Healthcare (65)</option>
+              <option value="energy">Energy (23)</option>
             </select>
             <span class="slicer-label">and Year</span>
-            <select class="slicer-select" id="year-slicer" onchange="updateDashboard(this.value)">
+            <select class="slicer-select" id="year-slicer" onchange="alert('Dữ liệu toàn bộ chuỗi thời gian 2021–2026 đang hiển thị.')">
               <option value="all">All (2021–2026)</option>
               <option value="2022">2022</option>
               <option value="2023">2023</option>
@@ -435,10 +524,23 @@
               <option value="2026">2026</option>
             </select>
           </div>
+
+          <!-- PRIMARY DASHBOARD VIEW MODE SWITCHER (DIRTY DATA vs CLEAN DATA vs MATRIX) -->
+          <div class="view-mode-tabs">
+            <button class="view-mode-btn active-dirty" id="btn-mode-dirty" onclick="switchDashboardMode('dirty')">
+              ⚠️ KIỂM TOÁN DỮ LIỆU DƠ (62.1K)
+            </button>
+            <button class="view-mode-btn" id="btn-mode-clean" onclick="switchDashboardMode('clean')">
+              💎 MẪU SẠCH & HIỆU QUẢ (560K)
+            </button>
+            <button class="view-mode-btn" id="btn-mode-matrix" onclick="switchDashboardMode('matrix')">
+              🔄 ĐỐI CHIẾU TRƯỚC / SAU
+            </button>
+          </div>
         </div>
 
-        <div class="header-subtext">
-          Tổng quan quy mô <span class="highlight">622,243 quan sát</span> được kiểm toán nghiêm ngặt, thu hồi <span class="highlight">560,103 dòng sạch (90.01%)</span> rổ S&P 500 qua <span class="highlight">1,254 phiên NYSE</span>. Bộ lọc trung vị (Median Filter) và category encoding giúp giảm <span class="highlight">66.0% RAM</span> và triệt tiêu đa cộng tuyến hoàn hảo.
+        <div class="header-subtext" id="header-subtext-dynamic">
+          <span class="alert-red">CẢNH BÁO KIỂM TOÁN DỮ LIỆU DƠ:</span> Phát hiện <span class="highlight">62,140 dòng dữ liệu bẩn bị loại bỏ (9.99%)</span> và <span class="highlight">84,690 dòng tạp chất</span> trên tệp thô 622,243 dòng. Phân rã 7 hội chứng khuyết tật (E1–E7): Mất mốc NaT (61,208 dòng), Ticker phân mảnh (50,172 dòng), Dính USD/$ (33,281 dòng), Giá âm/-1 (17,032 dòng), Ngoại lai Median (15,584 dòng).
         </div>
       </div>
 
@@ -453,64 +555,383 @@
     <!-- 2. MAIN BODY: LEFT KPI STRIP + RIGHT 2x2 CHARTS -->
     <div class="main-body-layout">
       
-      <!-- LEFT 5 VERTICAL BIG ORANGE KPI CARDS (MATCHING PHOTO) -->
-      <div class="kpi-vertical-strip">
-        
-        <!-- KPI 1 -->
-        <div class="kpi-dark-card">
-          <div class="kpi-orange-val" id="kpi-val-1">622K</div>
-          <div class="kpi-card-label">Tổng Quan Sát Thô<br>(Raw Observations)</div>
-        </div>
-
-        <!-- KPI 2 -->
-        <div class="kpi-dark-card">
-          <div class="kpi-orange-val" id="kpi-val-2">90.0%</div>
-          <div class="kpi-card-label">Tỷ Lệ Thu Hồi Sạch<br>(560,103 Dòng)</div>
-        </div>
-
-        <!-- KPI 3 -->
-        <div class="kpi-dark-card">
-          <div class="kpi-orange-val" id="kpi-val-3">503</div>
-          <div class="kpi-card-label">Mã S&P 500 Chuẩn<br>(Consolidated)</div>
-        </div>
-
-        <!-- KPI 4 -->
-        <div class="kpi-dark-card">
-          <div class="kpi-orange-val" id="kpi-val-4">1,254</div>
-          <div class="kpi-card-label">Phiên Sàn NYSE<br>(Trading Sessions)</div>
-        </div>
-
-        <!-- KPI 5 -->
-        <div class="kpi-dark-card">
-          <div class="kpi-orange-val" id="kpi-val-5">-66.0%</div>
-          <div class="kpi-card-label">Mức Tiết Kiệm RAM<br>(36.88 MB Parquet)</div>
-        </div>
-
+      <!-- LEFT 5 VERTICAL BIG KPI CARDS -->
+      <div class="kpi-vertical-strip" id="left-kpi-strip">
+        <!-- Rendered dynamically by JS depending on mode -->
       </div>
 
-      <!-- RIGHT 2x2 GRID CHARTS AREA -->
-      <div class="charts-quad-grid">
-        
-        <!-- ================= CARD 1 (TOP-LEFT): GROSS PROFIT OVER TIME ================= -->
+      <!-- RIGHT 2x2 GRID CHARTS AREA (DYNAMIC BY MODE) -->
+      <div class="charts-quad-grid" id="main-charts-quad">
+        <!-- Rendered dynamically by JS depending on mode -->
+      </div>
+
+    </div>
+
+    <!-- 3. BOTTOM POWERBI-STYLE NAVIGATION TABS -->
+    <nav class="bottom-nav-strip">
+      <button class="nav-tab-btn btn-dirty active-dirty-btn" id="tab-nav-dirty" onclick="switchDashboardMode('dirty')">⚠️ DỮ LIỆU DƠ (E1-E7)</button>
+      <button class="nav-tab-btn" onclick="showTabDetail('missing', this)">KIỂM KÊ 8 BIẾN THÔ</button>
+      <button class="nav-tab-btn" onclick="showTabDetail('dirty_detail', this)">7 HỘI CHỨNG LỖI</button>
+      <button class="nav-tab-btn" onclick="showTabDetail('pipeline', this)">6 TRẠM LÀM SẠCH</button>
+      <button class="nav-tab-btn" onclick="showTabDetail('ram', this)">TỐI ƯU HÓA RAM (-66%)</button>
+      <button class="nav-tab-btn" onclick="showTabDetail('invariance', this)">4 PHÉP KIỂM BẤT BIẾN</button>
+      <button class="nav-tab-btn" onclick="switchDashboardMode('clean')">💎 MẪU SẠCH (560K)</button>
+      <button class="nav-tab-btn" onclick="showTabDetail('insights', this)">KEY INSIGHTS</button>
+      <button class="nav-tab-btn" style="background: #1e3a5f; border-color: #38bdf8;" onclick="window.print()">🖨️ XUẤT PDF</button>
+    </nav>
+
+  </div>
+
+  <!-- POPUP / DRAWER MODAL FOR DETAILED TAB CONTENT -->
+  <div id="tab-detail-overlay" onclick="closeModal(event)">
+    <div class="modal-card" id="modal-card-box" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-title">Chi Tiết Kiểm Toán</div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modal-body" style="font-size: 11.5px; line-height: 1.5; color: #cbd5e1;">
+        <!-- Dynamic content injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE JS LOGIC -->
+  <script>
+    // Current Mode: 'dirty' (default), 'clean', or 'matrix'
+    let currentMode = 'dirty';
+
+    // RENDER FUNCTIONS FOR THE 3 MODES
+    function renderDirtyDataView() {
+      // 1. Dynamic Header Update
+      document.getElementById('header-logo').textContent = '⚠️';
+      document.getElementById('header-logo').style.background = 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)';
+      document.getElementById('header-main-title-text').textContent = 'KIỂM TOÁN CHẤT LƯỢNG DỮ LIỆU DƠ (DIRTY DATA AUDIT)';
+      document.getElementById('header-subtext-dynamic').innerHTML = `
+        <span class="alert-red">CẢNH BÁO KIỂM TOÁN DỮ LIỆU DƠ:</span> Phát hiện <span class="highlight">62,140 dòng dữ liệu bẩn bị loại bỏ (9.99%)</span> và <span class="highlight">84,690 dòng tạp chất</span> trên tệp thô 622,243 dòng. Phân rã 7 hội chứng khuyết tật (E1–E7): Mất mốc NaT (61,208 dòng), Ticker phân mảnh (50,172 dòng), Dính USD/$ (33,281 dòng), Giá âm/-1 (17,032 dòng), Ngoại lai Median (15,584 dòng).
+      `;
+
+      // 2. Left KPI Cards (Dirty Data Focus)
+      document.getElementById('left-kpi-strip').innerHTML = `
+        <div class="kpi-dark-card dirty-mode">
+          <div class="kpi-val val-red">62.1K</div>
+          <div class="kpi-card-label">Dòng Dơ Bị Loại Bỏ<br>(9.99% Dữ Liệu Bẩn)</div>
+        </div>
+        <div class="kpi-dark-card dirty-mode">
+          <div class="kpi-val val-orange">61.2K</div>
+          <div class="kpi-card-label">Lỗi Date NaT / Rác<br>(9.84% Dòng Thô)</div>
+        </div>
+        <div class="kpi-dark-card dirty-mode">
+          <div class="kpi-val val-orange">50.2K</div>
+          <div class="kpi-card-label">Ticker Khoảng Trắng<br>(Tạo 1,509 Mã Ảo)</div>
+        </div>
+        <div class="kpi-dark-card dirty-mode">
+          <div class="kpi-val val-orange">33.3K</div>
+          <div class="kpi-card-label">Dính Ký Tự Tiền Tệ<br>(Bóc Tách $ & USD)</div>
+        </div>
+        <div class="kpi-dark-card dirty-mode">
+          <div class="kpi-val val-red">17.0K</div>
+          <div class="kpi-card-label">Vi Phạm Giá Âm / -1<br>(Gán NaN Loại Bỏ)</div>
+        </div>
+      `;
+
+      // 3. Right 2x2 Charts (Dirty Data Analysis)
+      document.getElementById('main-charts-quad').innerHTML = `
+        <!-- CARD 1: 7 HỘI CHỨNG DỮ LIỆU BẨN (E1-E7 TAXONOMY) -->
+        <div class="dark-chart-box dirty-box">
+          <div class="chart-box-title">
+            <span>Phân Rã 7 Hội Chứng Dữ Liệu Bẩn (Error Taxonomy E1–E7)</span>
+            <span class="badge-danger">62,140 DÒNG BẨN</span>
+          </div>
+          <div class="chart-box-sub sub-red">
+            Mất mốc thời gian NaT (E1) là khuyết tật nghiêm trọng nhất chiếm 9.84% toàn bộ tệp thô.
+          </div>
+
+          <div class="chart-svg-container">
+            <svg viewBox="0 0 540 145">
+              <!-- Y-Axis Labels -->
+              <text x="120" y="20" font-size="8" fill="#e2e8f0" text-anchor="end">E1 (Date NaT/Rỗng)</text>
+              <text x="120" y="38" font-size="8" fill="#e2e8f0" text-anchor="end">E2 (Ticker Spaces)</text>
+              <text x="120" y="56" font-size="8" fill="#e2e8f0" text-anchor="end">E4 (Dính USD/$)</text>
+              <text x="120" y="74" font-size="8" fill="#e2e8f0" text-anchor="end">E5 (Giá âm / Mã -1)</text>
+              <text x="120" y="92" font-size="8" fill="#e2e8f0" text-anchor="end">E7 (Ngoại lai 3x Median)</text>
+              <text x="120" y="110" font-size="8" fill="#e2e8f0" text-anchor="end">E3 (Sai đơn vị kg/%)</text>
+              <text x="120" y="128" font-size="8" fill="#e2e8f0" text-anchor="end">E6 (Mã test 9999)</text>
+
+              <!-- Grid vertical lines -->
+              <line x1="125" y1="10" x2="125" y2="135" stroke="#1e3a5f" stroke-width="1"/>
+              <line x1="225" y1="10" x2="225" y2="135" stroke="#142c4c" stroke-dasharray="2,2"/>
+              <line x1="325" y1="10" x2="325" y2="135" stroke="#142c4c" stroke-dasharray="2,2"/>
+              <line x1="425" y1="10" x2="425" y2="135" stroke="#142c4c" stroke-dasharray="2,2"/>
+
+              <!-- Horizontal Bars (Gradient Red & Orange) -->
+              <!-- E1: 61,208 dòng (Max width ~340px) -->
+              <rect x="126" y="12" width="340" height="11" fill="#ef4444" rx="2"/>
+              <text x="472" y="21" font-size="8" font-weight="bold" fill="#f87171">61,208 (9.84%)</text>
+
+              <!-- E2: 50,172 dòng (~280px) -->
+              <rect x="126" y="30" width="280" height="11" fill="#f97316" rx="2"/>
+              <text x="412" y="39" font-size="8" font-weight="bold" fill="#fb923c">50,172 (8.06%)</text>
+
+              <!-- E4: 33,281 dòng (~185px) -->
+              <rect x="126" y="48" width="185" height="11" fill="#f59e0b" rx="2"/>
+              <text x="317" y="57" font-size="8" font-weight="bold" fill="#fcd34d">33,281 (5.35%)</text>
+
+              <!-- E5: 17,032 dòng (~95px) -->
+              <rect x="126" y="66" width="95" height="11" fill="#dc2626" rx="2"/>
+              <text x="227" y="75" font-size="8" font-weight="bold" fill="#f87171">17,032 (2.74%)</text>
+
+              <!-- E7: 15,584 dòng (~87px) -->
+              <rect x="126" y="84" width="87" height="11" fill="#eab308" rx="2"/>
+              <text x="219" y="93" font-size="8" font-weight="bold" fill="#fef08a">15,584 (2.50%)</text>
+
+              <!-- E3: 8,240 dòng (~46px) -->
+              <rect x="126" y="102" width="46" height="11" fill="#ea580c" rx="2"/>
+              <text x="178" y="111" font-size="8" fill="#fdba74">8,240 (1.32%)</text>
+
+              <!-- E6: 1,820 dòng (~15px) -->
+              <rect x="126" y="120" width="15" height="11" fill="#991b1b" rx="2"/>
+              <text x="147" y="129" font-size="8" fill="#fca5a5">1,820 (0.29%)</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- CARD 2: KIỂM KÊ TỶ LỆ KHUYẾT THIẾU 8 BIẾN THÔ -->
+        <div class="dark-chart-box dirty-box">
+          <div class="chart-box-title">
+            <span>Kiểm Kê Tỷ Lệ Khuyết Thiếu 8 Biến Gốc (Missing Values Rate)</span>
+            <span class="badge-danger">LOW THIẾU 11.23%</span>
+          </div>
+          <div class="chart-box-sub sub-red">
+            Biến Low và Volume khuyết cao nhất; Cột Ticker bảo toàn 100% không khuyết.
+          </div>
+
+          <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <table class="table-container">
+              <thead>
+                <tr>
+                  <th style="width: 20%;">Biến trường</th>
+                  <th style="width: 25%;">Số ô khuyết thiếu</th>
+                  <th style="width: 38%;">Thanh đo mức độ bẩn / khuyết</th>
+                  <th style="width: 17%; text-align: right;">Tỷ lệ %</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="color: #f87171; font-weight: 700;">■ Low</td>
+                  <td style="font-family: 'JetBrains Mono';">69,853 ô</td>
+                  <td><span class="bar-pill bar-red" style="width: 85%;"></span></td>
+                  <td style="text-align: right; color: #f87171; font-weight: 700;">11.23%</td>
+                </tr>
+                <tr>
+                  <td style="color: #fb923c; font-weight: 700;">■ Volume</td>
+                  <td style="font-family: 'JetBrains Mono';">58,472 ô</td>
+                  <td><span class="bar-pill bar-orange" style="width: 71%;"></span></td>
+                  <td style="text-align: right; color: #fb923c; font-weight: 700;">9.40%</td>
+                </tr>
+                <tr>
+                  <td style="color: #f59e0b; font-weight: 700;">■ Close</td>
+                  <td style="font-family: 'JetBrains Mono';">54,928 ô</td>
+                  <td><span class="bar-pill bar-orange" style="width: 67%;"></span></td>
+                  <td style="text-align: right; color: #f59e0b; font-weight: 700;">8.83%</td>
+                </tr>
+                <tr>
+                  <td style="color: #f59e0b;">■ High</td>
+                  <td style="font-family: 'JetBrains Mono';">52,087 ô</td>
+                  <td><span class="bar-pill bar-orange" style="width: 63%;"></span></td>
+                  <td style="text-align: right; color: #f59e0b;">8.37%</td>
+                </tr>
+                <tr>
+                  <td style="color: #cbd5e1;">■ Date</td>
+                  <td style="font-family: 'JetBrains Mono';">44,022 ô</td>
+                  <td><span class="bar-pill bar-orange" style="width: 53%;"></span></td>
+                  <td style="text-align: right; color: #cbd5e1;">7.07%</td>
+                </tr>
+                <tr>
+                  <td style="color: #cbd5e1;">■ Open</td>
+                  <td style="font-family: 'JetBrains Mono';">39,661 ô</td>
+                  <td><span class="bar-pill bar-orange" style="width: 48%;"></span></td>
+                  <td style="text-align: right; color: #cbd5e1;">6.37%</td>
+                </tr>
+                <tr>
+                  <td style="color: #38bdf8;">■ DGS3MO</td>
+                  <td style="font-family: 'JetBrains Mono';">21,841 ô</td>
+                  <td><span class="bar-pill bar-blue" style="width: 26%;"></span></td>
+                  <td style="text-align: right; color: #38bdf8;">3.51%</td>
+                </tr>
+                <tr class="highlight-total">
+                  <td style="color: #22c55e;">■ Ticker</td>
+                  <td style="font-family: 'JetBrains Mono';">0 ô (Đầy đủ)</td>
+                  <td><span class="bar-pill bar-blue" style="width: 0%;"></span> [100% ĐẦY ĐỦ]</td>
+                  <td style="text-align: right; color: #22c55e;">0.00%</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 3px;">
+              <span style="font-size: 8.5px; color: #94a3b8;">*Nguồn: Bảng 3.2 trong tieuluan.qmd (N = 622,243)</span>
+              <div class="partner-badge">
+                <span class="dot-red"></span>
+                <span>Audit Taxonomy | Data Quality Engine</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3: VI PHẠM QUAN HỆ GIÁ & ĐA CỘNG TUYẾN OCKHAM'S RAZOR -->
+        <div class="dark-chart-box dirty-box">
+          <div class="chart-box-title">
+            <span>Vi Phạm Logic Giá Trong Phiên & Bùng Nổ Đa Cộng Tuyến</span>
+            <span class="badge-danger">VIF > 250</span>
+          </div>
+          <div class="chart-box-sub sub-red">
+            30,730 dòng High < Low và 33,102 dòng High < Close; Tương quan r > 0.98 giữa các biến giá.
+          </div>
+
+          <div class="chart-svg-container">
+            <svg viewBox="0 0 540 140">
+              <!-- Left: Logic Violation Bars -->
+              <text x="140" y="16" font-size="8.5" font-weight="bold" fill="#f87171" text-anchor="middle">VI PHẠM QUAN HỆ GIÁ TRONG PHIÊN</text>
+              
+              <text x="15" y="42" font-size="8" fill="#e2e8f0">High < Low (Nghịch lý):</text>
+              <rect x="135" y="32" width="115" height="14" fill="#ef4444" rx="2"/>
+              <text x="256" y="43" font-size="8" font-weight="bold" fill="#f87171">30,730 dòng (4.94%)</text>
+
+              <text x="15" y="66" font-size="8" fill="#e2e8f0">High < Close (Lỗi biên):</text>
+              <rect x="135" y="56" width="124" height="14" fill="#f97316" rx="2"/>
+              <text x="265" y="67" font-size="8" font-weight="bold" fill="#fb923c">33,102 dòng (5.32%)</text>
+
+              <text x="15" y="90" font-size="8" fill="#e2e8f0">Open = 9999 (Test code):</text>
+              <rect x="135" y="80" width="38" height="14" fill="#dc2626" rx="2"/>
+              <text x="180" y="91" font-size="8" font-weight="bold" fill="#fca5a5">9,985 dòng</text>
+
+              <!-- Middle Divider -->
+              <line x1="335" y1="10" x2="335" y2="130" stroke="#1e3a5f" stroke-width="1.5"/>
+
+              <!-- Right: Ockham's Razor Solution Comparison -->
+              <text x="435" y="16" font-size="8.5" font-weight="bold" fill="#38bdf8" text-anchor="middle">GIẢI PHÁP OCKHAM'S RAZOR</text>
+              
+              <rect x="350" y="30" width="80" height="42" fill="#1e1b4b" stroke="#ef4444" rx="3"/>
+              <text x="390" y="44" font-size="7.5" fill="#fca5a5" text-anchor="middle">GIỮ 8 BIẾN BẨN</text>
+              <text x="390" y="56" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">VIF > 250</text>
+              <text x="390" y="67" font-size="7" fill="#94a3b8" text-anchor="middle">RAM 108.5 MB</text>
+
+              <text x="445" y="53" font-size="12" fill="#f59e0b" text-anchor="middle">→</text>
+
+              <rect x="455" y="30" width="80" height="42" fill="#082f49" stroke="#00b4d8" rx="3"/>
+              <text x="495" y="44" font-size="7.5" fill="#7dd3fc" text-anchor="middle">3 BIẾN CỐT LÕI</text>
+              <text x="495" y="56" font-size="9" font-weight="bold" fill="#38bdf8" text-anchor="middle">VIF < 5 (TRIỆT TIÊU)</text>
+              <text x="495" y="67" font-size="7" fill="#7dd3fc" text-anchor="middle">RAM 36.9 MB (-66%)</text>
+
+              <rect x="350" y="80" width="185" height="48" fill="#0f172a" stroke="#1f4e78" rx="2"/>
+              <text x="358" y="93" font-size="7.5" fill="#cbd5e1">• Loại bỏ Open, High, Low, Volume, DGS3MO.</text>
+              <text x="358" y="105" font-size="7.5" fill="#cbd5e1">• Chỉ giữ [Date, Ticker, Close] chuẩn mực.</text>
+              <text x="358" y="117" font-size="7.5" fill="#38bdf8" font-weight="bold">✓ Triệt tiêu 100% bùng nổ phương sai OLS!</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- CARD 4: PHỄU 6 TRẠM LÀM SẠCH & KHẮC PHỤC DỮ LIỆU -->
+        <div class="dark-chart-box dirty-box">
+          <div class="chart-box-title">
+            <span>Quy Trình 6 Trạm Khắc Phục & Tái Sinh Dữ Liệu (Cleaning Funnel)</span>
+            <span class="badge-success">THU HỒI 90.01%</span>
+          </div>
+          <div class="chart-box-sub" style="color: #38bdf8;">
+            Bảo toàn quy mô mẫu: 622,243 = 560,103 dòng sạch + 62,140 dòng loại bỏ minh bạch.
+          </div>
+
+          <div class="chart-svg-container">
+            <svg viewBox="0 0 540 140">
+              <!-- Funnel Stage 1: Tệp thô 622K -->
+              <polygon points="20,15 520,15 480,35 60,35" fill="#334155" stroke="#475569"/>
+              <text x="270" y="27" font-size="8.5" font-weight="bold" fill="#ffffff" text-anchor="middle">
+                TẬP THÔ BAN ĐẦU: 622,243 DÒNG (100% BỊ NHIỄM BẨN / STRING OBJECT)
+              </text>
+
+              <!-- Funnel Stage 2: Trạm Ticker & Date -->
+              <polygon points="60,38 480,38 440,58 100,58" fill="#1e293b" stroke="#ef4444"/>
+              <text x="270" y="50" font-size="8" fill="#fca5a5" text-anchor="middle">
+                TRẠM 1-2: Hợp nhất 1,509 → 503 Ticker | Loại 61,208 Date NaT (Cứu 97 dòng Date)
+              </text>
+
+              <!-- Funnel Stage 3: Trạm Close & Tiền tệ -->
+              <polygon points="100,61 440,61 400,81 140,81" fill="#0f2b48" stroke="#f59e0b"/>
+              <text x="270" y="73" font-size="8" fill="#fde047" text-anchor="middle">
+                TRẠM 3: Bóc 33,281 USD/$ | Gán NaN 17,032 giá âm & mã -1 | Bỏ 8,240 dòng sai đơn vị
+              </text>
+
+              <!-- Funnel Stage 4: Lịch NYSE & Median Filter -->
+              <polygon points="140,84 400,84 370,104 170,104" fill="#0c4a6e" stroke="#00b4d8"/>
+              <text x="270" y="96" font-size="8" fill="#7dd3fc" text-anchor="middle">
+                TRẠM 4-5: Ghép 1,254 phiên NYSE | Lọc 3x Median & ffill 15,584 dòng (2.78%)
+              </text>
+
+              <!-- Funnel Stage 5: Kết quả cuối 560K sạch -->
+              <polygon points="170,107 370,107 350,132 190,132" fill="#065f46" stroke="#22c55e"/>
+              <text x="270" y="122" font-size="9" font-weight="900" fill="#4ade80" text-anchor="middle">
+                MẪU SẠCH CHÍNH THỨC: 560,103 DÒNG (90.01% - ĐẠT 4 BÀI TEST BẤT BIẾN)
+              </text>
+            </svg>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCleanDataView() {
+      // 1. Header Update
+      document.getElementById('header-logo').textContent = '▲';
+      document.getElementById('header-logo').style.background = 'linear-gradient(135deg, #00b4d8 0%, #0077b6 100%)';
+      document.getElementById('header-main-title-text').textContent = 'DATA AUDIT & REVENUE OVERVIEW (MẪU DỮ LIỆU SẠCH)';
+      document.getElementById('header-subtext-dynamic').innerHTML = `
+        Tổng quan quy mô <span class="highlight">622,243 quan sát</span> được kiểm toán nghiêm ngặt, thu hồi <span class="highlight">560,103 dòng sạch (90.01%)</span> rổ S&P 500 qua <span class="highlight">1,254 phiên NYSE</span>. Bộ lọc trung vị (Median Filter) và category encoding giúp giảm <span class="highlight">66.0% RAM</span> và triệt tiêu đa cộng tuyến hoàn hảo.
+      `;
+
+      // 2. Left KPI Cards (Clean Focus)
+      document.getElementById('left-kpi-strip').innerHTML = `
+        <div class="kpi-dark-card">
+          <div class="kpi-val val-orange">622K</div>
+          <div class="kpi-card-label">Tổng Quan Sát Thô<br>(Raw Observations)</div>
+        </div>
+        <div class="kpi-dark-card">
+          <div class="kpi-val val-orange">90.0%</div>
+          <div class="kpi-card-label">Tỷ Lệ Thu Hồi Sạch<br>(560,103 Dòng)</div>
+        </div>
+        <div class="kpi-dark-card">
+          <div class="kpi-val val-orange">503</div>
+          <div class="kpi-card-label">Mã S&P 500 Chuẩn<br>(Consolidated)</div>
+        </div>
+        <div class="kpi-dark-card">
+          <div class="kpi-val val-orange">1,254</div>
+          <div class="kpi-card-label">Phiên Sàn NYSE<br>(Trading Sessions)</div>
+        </div>
+        <div class="kpi-dark-card">
+          <div class="kpi-val val-orange">-66.0%</div>
+          <div class="kpi-card-label">Mức Tiết Kiệm RAM<br>(36.88 MB Parquet)</div>
+        </div>
+      `;
+
+      // 3. Right 2x2 Charts (Clean Wealth & Financial Models)
+      document.getElementById('main-charts-quad').innerHTML = `
+        <!-- CARD 1: CUMULATIVE WEALTH -->
         <div class="dark-chart-box">
-          <div class="chart-box-title">Tăng Trưởng Giá Trị Tài Sản Tích Lũy (Cumulative Wealth)</div>
+          <div class="chart-box-title">
+            <span>Tăng Trưởng Giá Trị Tài Sản Tích Lũy (Cumulative Wealth)</span>
+            <span class="badge-success">+114.11% PEAK</span>
+          </div>
           <div class="chart-box-sub">Tháng 10/2026 ghi nhận mức tài sản tích lũy đạt đỉnh cao nhất (+114.11%, cơ sở 100 USD lên 214.11 USD).</div>
           
           <div class="chart-svg-container">
             <svg viewBox="0 0 540 145">
-              <!-- Y-Axis Labels -->
               <text x="32" y="20" font-size="8" fill="#64748b" text-anchor="end">220 USD</text>
               <text x="32" y="48" font-size="8" fill="#64748b" text-anchor="end">180 USD</text>
               <text x="32" y="78" font-size="8" fill="#64748b" text-anchor="end">140 USD</text>
               <text x="32" y="108" font-size="8" fill="#64748b" text-anchor="end">100 USD</text>
 
-              <!-- Grid horizontal lines -->
               <line x1="38" y1="16" x2="525" y2="16" stroke="#142c4c" stroke-width="1"/>
               <line x1="38" y1="45" x2="525" y2="45" stroke="#142c4c" stroke-width="1"/>
               <line x1="38" y1="75" x2="525" y2="75" stroke="#142c4c" stroke-width="1"/>
               <line x1="38" y1="105" x2="525" y2="105" stroke="#1e3a5f" stroke-dasharray="2,2" stroke-width="1"/>
 
-              <!-- Gradient Defs for Area Glow -->
               <defs>
                 <linearGradient id="cyanAreaGlow" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#00b4d8" stop-opacity="0.35"/>
@@ -518,19 +939,15 @@
                 </linearGradient>
               </defs>
 
-              <!-- Area Fill under curve -->
               <polygon fill="url(#cyanAreaGlow)" 
                        points="45,105 75,98 105,103 135,92 165,85 195,80 225,72 255,80 285,68 315,55 345,60 375,45 405,48 435,35 465,30 495,24 515,18 515,105 45,105" />
 
-              <!-- Cyan Main Line -->
               <polyline fill="none" stroke="#00b4d8" stroke-width="2.5" 
                         points="45,105 75,98 105,103 135,92 165,85 195,80 225,72 255,80 285,68 315,55 345,60 375,45 405,48 435,35 465,30 495,24 515,18" />
 
-              <!-- Peak Dot & Label -->
               <circle cx="515" cy="18" r="4" fill="#f59e0b" stroke="#ffffff" stroke-width="1.5"/>
               <text x="510" y="12" font-size="8.5" font-weight="bold" fill="#f59e0b" text-anchor="end">214.11 USD (+114.11%)</text>
 
-              <!-- X-Axis Labels (Exact time quarters) -->
               <text x="45" y="122" font-size="7.5" fill="#64748b" text-anchor="middle">2021 Q4</text>
               <text x="135" y="122" font-size="7.5" fill="#64748b" text-anchor="middle">2022 Q3</text>
               <text x="225" y="122" font-size="7.5" fill="#64748b" text-anchor="middle">2023 Q2</text>
@@ -541,9 +958,12 @@
           </div>
         </div>
 
-        <!-- ================= CARD 2 (TOP-RIGHT): ACTUAL REVENUE BY COUNTRY (WATERFALL TABLE) ================= -->
+        <!-- CARD 2: WATERFALL TABLE -->
         <div class="dark-chart-box">
-          <div class="chart-box-title">Kiểm Kê Trạng Thái Dữ Liệu & Khuyết Tật Kỹ Thuật</div>
+          <div class="chart-box-title">
+            <span>Kiểm Kê Trạng Thái Dữ Liệu & Khuyết Tật Kỹ Thuật</span>
+            <span class="badge-success">560K HỢP LỆ</span>
+          </div>
           <div class="chart-box-sub">Tập dữ liệu sạch đạt 560,103 quan sát, giải trình minh bạch 62,140 dòng loại bỏ (9.99%).</div>
 
           <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
@@ -552,7 +972,7 @@
                 <tr>
                   <th style="width: 28%;">Hạng mục kiểm toán</th>
                   <th style="width: 25%;">Số dòng thực tế</th>
-                  <th style="width: 32%;">Tỷ trọng / Phân rã trực quan</th>
+                  <th style="width: 32%;">Tỷ trọng trực quan</th>
                   <th style="width: 15%; text-align: right;">Độ lệch %</th>
                 </tr>
               </thead>
@@ -560,61 +980,44 @@
                 <tr>
                   <td style="font-weight: 700; color: #38bdf8;">■ Mẫu Sạch Hợp Lệ</td>
                   <td style="font-family: 'JetBrains Mono'; font-weight: 700;">560,103 dòng</td>
-                  <td>
-                    <span class="waterfall-bar-blue" style="width: 82%;"></span>
-                  </td>
+                  <td><span class="bar-pill bar-blue" style="width: 82%;"></span></td>
                   <td style="text-align: right; color: #38bdf8; font-weight: 700;">90.01%</td>
                 </tr>
                 <tr>
                   <td style="color: #cbd5e1;">■ Loại Bỏ Date NaT</td>
                   <td style="font-family: 'JetBrains Mono';">61,208 dòng</td>
-                  <td>
-                    <span class="waterfall-bar-orange" style="width: 14%;"></span>
-                  </td>
+                  <td><span class="bar-pill bar-orange" style="width: 14%;"></span></td>
                   <td style="text-align: right; color: #f59e0b;">-9.84%</td>
                 </tr>
                 <tr>
                   <td style="color: #cbd5e1;">■ Ticker Khoảng Trắng</td>
                   <td style="font-family: 'JetBrains Mono';">50,172 dòng</td>
-                  <td>
-                    <span class="waterfall-bar-orange" style="width: 11%;"></span>
-                  </td>
+                  <td><span class="bar-pill bar-orange" style="width: 11%;"></span></td>
                   <td style="text-align: right; color: #f59e0b;">-8.06%</td>
                 </tr>
                 <tr>
                   <td style="color: #cbd5e1;">■ Dính USD & $</td>
                   <td style="font-family: 'JetBrains Mono';">33,281 dòng</td>
-                  <td>
-                    <span class="waterfall-bar-blue" style="width: 8%;"></span>
-                  </td>
+                  <td><span class="bar-pill bar-blue" style="width: 8%;"></span></td>
                   <td style="text-align: right; color: #38bdf8;">+5.35%</td>
                 </tr>
                 <tr>
                   <td style="color: #cbd5e1;">■ Giá Âm & Mã -1</td>
                   <td style="font-family: 'JetBrains Mono';">17,032 dòng</td>
-                  <td>
-                    <span class="waterfall-bar-orange" style="width: 5%;"></span>
-                  </td>
+                  <td><span class="bar-pill bar-orange" style="width: 5%;"></span></td>
                   <td style="text-align: right; color: #f59e0b;">-2.74%</td>
                 </tr>
                 <tr class="highlight-total">
                   <td>TỔNG KIỂM TOÁN THÔ</td>
                   <td style="font-family: 'JetBrains Mono';">622,243 dòng</td>
-                  <td>
-                    <span class="waterfall-bar-blue" style="width: 100%;"></span>
-                  </td>
+                  <td><span class="bar-pill bar-blue" style="width: 100%;"></span></td>
                   <td style="text-align: right; color: #00b4d8;">100.0%</td>
                 </tr>
               </tbody>
             </table>
 
-            <!-- View Switcher & Partner Logo at Bottom of Card 2 -->
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px;">
-              <div class="view-switcher-bar" style="width: 170px;">
-                <button class="view-btn active">Bảng đối chiếu</button>
-                <button class="view-btn" onclick="alert('Đã đồng bộ dữ liệu với bảng 3.11 trong tieuluan.qmd')">Biểu đồ thác</button>
-              </div>
-
+              <span style="font-size: 8.5px; color: #94a3b8;">*Đồng bộ Bảng 3.11 trong tieuluan.qmd</span>
               <div class="partner-badge">
                 <span class="dot"></span>
                 <span>UFM Data Science Lab | Microsoft PowerBI Style</span>
@@ -623,71 +1026,50 @@
           </div>
         </div>
 
-        <!-- ================= CARD 3 (BOTTOM-LEFT): COMBO DUAL-AXIS (COLUMNS + ORANGE LINE) ================= -->
+        <!-- CARD 3: COMBO DUAL-AXIS -->
         <div class="dark-chart-box">
-          <div class="chart-box-title">Lợi Suất Danh Mục & Mức Biến Động Chuỗi Thời Gian</div>
+          <div class="chart-box-title">
+            <span>Lợi Suất Danh Mục & Mức Biến Động Chuỗi Thời Gian</span>
+            <span class="badge-success">SHARPE 0.6953</span>
+          </div>
           <div class="chart-box-sub">Tháng 11/2023 ghi nhận lợi suất bùng nổ (+12.41%), trong khi Tháng 09/2022 sụt giảm sâu (-9.46%).</div>
 
           <div class="chart-svg-container">
             <svg viewBox="0 0 540 145">
-              <!-- Grid lines -->
               <line x1="35" y1="20" x2="520" y2="20" stroke="#142c4c" stroke-width="1"/>
               <line x1="35" y1="55" x2="520" y2="55" stroke="#142c4c" stroke-width="1"/>
               <line x1="35" y1="90" x2="520" y2="90" stroke="#142c4c" stroke-width="1"/>
-
-              <!-- Baseline 0 -->
               <line x1="35" y1="85" x2="520" y2="85" stroke="#1e3a5f" stroke-width="1"/>
 
-              <!-- Legend -->
               <rect x="40" y="2" width="7" height="7" fill="#00b4d8"/>
               <text x="50" y="8" font-size="7.5" fill="#cbd5e1">Lợi suất tháng (Columns)</text>
               <line x1="170" y1="5" x2="185" y2="5" stroke="#f59e0b" stroke-width="2"/>
               <circle cx="177" cy="5" r="2" fill="#f59e0b"/>
               <text x="190" y="8" font-size="7.5" fill="#f59e0b">Độ biến động σ_20d (Line)</text>
 
-              <!-- Columns: Monthly Returns (Light blue) -->
-              <!-- Q4 2021 -->
               <rect x="45" y="65" width="16" height="20" fill="#00b4d8"/>
-              <!-- Q1 2022 -->
               <rect x="75" y="72" width="16" height="13" fill="#00b4d8"/>
-              <!-- Q2 2022 -->
               <rect x="105" y="78" width="16" height="7" fill="#00b4d8"/>
-              <!-- Q3 2022: Drop -9.46% -->
               <rect x="135" y="85" width="16" height="26" fill="#f59e0b"/>
-              <!-- Q4 2022 -->
               <rect x="165" y="55" width="16" height="30" fill="#00b4d8"/>
-              <!-- Q1 2023 -->
               <rect x="195" y="60" width="16" height="25" fill="#00b4d8"/>
-              <!-- Q2 2023 -->
               <rect x="225" y="50" width="16" height="35" fill="#00b4d8"/>
-              <!-- Q3 2023 -->
               <rect x="255" y="68" width="16" height="17" fill="#00b4d8"/>
-              <!-- Q4 2023: Peak +12.41% -->
               <rect x="285" y="32" width="16" height="53" fill="#38bdf8"/>
-              <!-- Q1 2024 -->
               <rect x="315" y="45" width="16" height="40" fill="#00b4d8"/>
-              <!-- Q2 2024 -->
               <rect x="345" y="52" width="16" height="33" fill="#00b4d8"/>
-              <!-- Q3 2024 -->
               <rect x="375" y="62" width="16" height="23" fill="#00b4d8"/>
-              <!-- Q4 2024 -->
               <rect x="405" y="48" width="16" height="37" fill="#00b4d8"/>
-              <!-- Q1 2025 -->
               <rect x="435" y="56" width="16" height="29" fill="#00b4d8"/>
-              <!-- Q2 2025 -->
               <rect x="465" y="50" width="16" height="35" fill="#00b4d8"/>
-              <!-- Q3 2026 -->
               <rect x="495" y="40" width="16" height="45" fill="#38bdf8"/>
 
-              <!-- Orange Line: Fluctuating Volatility (Exact matching photo) -->
               <polyline fill="none" stroke="#f59e0b" stroke-width="2.2" 
                         points="53,60 83,70 113,80 143,92 173,65 203,72 233,45 263,78 293,22 323,50 353,62 383,75 413,42 443,68 473,55 503,38" />
 
-              <!-- Orange Peak Dot -->
               <circle cx="293" cy="22" r="3.5" fill="#f59e0b" stroke="#ffffff" stroke-width="1"/>
               <text x="293" y="16" font-size="7.5" font-weight="bold" fill="#f59e0b" text-anchor="middle">+12.41%</text>
 
-              <!-- X-Axis text -->
               <text x="53" y="125" font-size="7" fill="#64748b" text-anchor="middle">2021</text>
               <text x="143" y="125" font-size="7" fill="#64748b" text-anchor="middle">2022</text>
               <text x="233" y="125" font-size="7" fill="#64748b" text-anchor="middle">2023</text>
@@ -698,12 +1080,14 @@
           </div>
         </div>
 
-        <!-- ================= CARD 4 (BOTTOM-RIGHT): GROUPED COLUMN CHARTS (YELLOW & ORANGE) ================= -->
+        <!-- CARD 4: GROUPED COLUMNS RMSE -->
         <div class="dark-chart-box">
-          <div class="chart-box-title">Độ Biến Động vs Sai Số Mô Hình Ngoài Mẫu (RMSE)</div>
+          <div class="chart-box-title">
+            <span>Độ Biến Động vs Sai Số Mô Hình Ngoài Mẫu (RMSE)</span>
+            <span class="badge-success">4/4 PASS</span>
+          </div>
           <div class="chart-box-sub">Mô hình Ridge kiểm soát sai số tốt nhất ở nhóm biến động cực đoan Q4 và Q5.</div>
 
-          <!-- Top mini metrics header inside card 4 -->
           <div style="display: flex; gap: 14px; margin-bottom: 4px; font-size: 10px;">
             <div>
               <span style="color: #38bdf8; font-weight: 800; font-family: 'Montserrat';">0.6953</span>
@@ -717,69 +1101,54 @@
 
           <div class="chart-svg-container">
             <svg viewBox="0 0 540 125">
-              <!-- Left Subchart: Top Phân Vị Biến Động Q1-Q5 -->
-              <!-- Legend Left -->
               <rect x="25" y="2" width="7" height="7" fill="#fef08a"/>
               <text x="35" y="8" font-size="7" fill="#cbd5e1">Baseline RMSE</text>
               <rect x="95" y="2" width="7" height="7" fill="#f59e0b"/>
               <text x="105" y="8" font-size="7" fill="#cbd5e1">Ridge RMSE</text>
 
-              <!-- Q1 -->
               <rect x="30" y="72" width="14" height="32" fill="#fef08a" rx="1"/>
               <rect x="46" y="74" width="14" height="30" fill="#f59e0b" rx="1"/>
               <text x="45" y="116" font-size="7" fill="#64748b" text-anchor="middle">Q1 (Thấp)</text>
 
-              <!-- Q2 -->
               <rect x="75" y="62" width="14" height="42" fill="#fef08a" rx="1"/>
               <rect x="91" y="64" width="14" height="40" fill="#f59e0b" rx="1"/>
               <text x="90" y="116" font-size="7" fill="#64748b" text-anchor="middle">Q2</text>
 
-              <!-- Q3 -->
               <rect x="120" y="52" width="14" height="52" fill="#fef08a" rx="1"/>
               <rect x="136" y="54" width="14" height="50" fill="#f59e0b" rx="1"/>
               <text x="135" y="116" font-size="7" fill="#64748b" text-anchor="middle">Q3</text>
 
-              <!-- Q4 -->
               <rect x="165" y="42" width="14" height="62" fill="#fef08a" rx="1"/>
               <rect x="181" y="40" width="14" height="64" fill="#f59e0b" rx="1"/>
               <text x="180" y="116" font-size="7" fill="#64748b" text-anchor="middle">Q4</text>
 
-              <!-- Q5 -->
               <rect x="210" y="24" width="14" height="80" fill="#fef08a" rx="1"/>
               <rect x="226" y="20" width="14" height="84" fill="#e05a1e" rx="1"/>
               <text x="225" y="116" font-size="7" font-weight="bold" fill="#f59e0b" text-anchor="middle">Q5 (3.04%)</text>
 
-              <!-- Dividing line between 2 internal subcharts -->
               <line x1="265" y1="10" x2="265" y2="115" stroke="#172a45" stroke-width="1.5"/>
 
-              <!-- Right Subchart: Top 5 Ngành Lõi (Tech, Fin, Health, Cons, Energy) -->
-              <!-- Legend Right -->
               <rect x="285" y="2" width="7" height="7" fill="#fde047"/>
-              <text x="295" y="8" font-size="7" fill="#cbd5e1">Lợi suất năm hóa</text>
+              <text x="295" y="8" font-size="7" fill="#cbd5e1">Lợi suất năm</text>
               <rect x="375" y="2" width="7" height="7" fill="#e05a1e"/>
-              <text x="385" y="8" font-size="7" fill="#cbd5e1">Biến động σ_20d</text>
+              <text x="385" y="8" font-size="7" fill="#cbd5e1">Biến động σ</text>
 
-              <!-- Tech -->
               <rect x="290" y="40" width="14" height="64" fill="#fde047" rx="1"/>
               <rect x="306" y="32" width="14" height="72" fill="#e05a1e" rx="1"/>
               <text x="305" y="116" font-size="7" font-weight="bold" fill="#38bdf8" text-anchor="middle">Tech</text>
 
-              <!-- Fin -->
               <rect x="335" y="55" width="14" height="49" fill="#fde047" rx="1"/>
               <rect x="351" y="60" width="14" height="44" fill="#e05a1e" rx="1"/>
               <text x="350" y="116" font-size="7" fill="#64748b" text-anchor="middle">Fin</text>
 
-              <!-- Health -->
               <rect x="380" y="60" width="14" height="44" fill="#fde047" rx="1"/>
               <rect x="396" y="68" width="14" height="36" fill="#e05a1e" rx="1"/>
               <text x="395" y="116" font-size="7" fill="#64748b" text-anchor="middle">Health</text>
 
-              <!-- Cons -->
               <rect x="425" y="65" width="14" height="39" fill="#fde047" rx="1"/>
               <rect x="441" y="70" width="14" height="34" fill="#e05a1e" rx="1"/>
               <text x="440" y="116" font-size="7" fill="#64748b" text-anchor="middle">Cons</text>
 
-              <!-- Energy -->
               <rect x="470" y="48" width="14" height="56" fill="#fde047" rx="1"/>
               <rect x="486" y="42" width="14" height="62" fill="#e05a1e" rx="1"/>
               <text x="485" y="116" font-size="7" fill="#64748b" text-anchor="middle">Energy</text>
@@ -788,85 +1157,198 @@
             </svg>
           </div>
         </div>
+      `;
+    }
 
-      </div>
+    function renderMatrixView() {
+      // 1. Header Update
+      document.getElementById('header-logo').textContent = '🔄';
+      document.getElementById('header-logo').style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+      document.getElementById('header-main-title-text').textContent = 'MA TRẬN KIỂM TOÁN ĐỐI CHIẾU TRƯỚC vs SAU LÀM SẠCH';
+      document.getElementById('header-subtext-dynamic').innerHTML = `
+        Bảng đối chiếu toàn diện <span class="highlight">10 tiêu chí kiểm toán nghiệm thu</span> giữa tệp thô ban đầu (622,243 dòng) và mẫu sạch chuẩn hóa (560,103 dòng). Đạt tuyệt đối <span class="highlight">4 phép kiểm tra bất biến</span> (Bảo toàn quy mô mẫu, Không âm, Khóa duy nhất, Độ phủ cửa sổ).
+      `;
 
-    </div>
+      // 2. Left KPI Cards (Summary Ratio)
+      document.getElementById('left-kpi-strip').innerHTML = `
+        <div class="kpi-dark-card">
+          <div class="kpi-val val-orange">622K</div>
+          <div class="kpi-card-label">Tổng Dòng Thô<br>(Raw Data N=622K)</div>
+        </div>
+        <div class="kpi-dark-card">
+          <div class="kpi-val val-cyan">560K</div>
+          <div class="kpi-card-label">Mẫu Sạch Hợp Lệ<br>(Thu Hồi 90.01%)</div>
+        </div>
+        <div class="kpi-dark-card dirty-mode">
+          <div class="kpi-val val-red">62.1K</div>
+          <div class="kpi-card-label">Dòng Loại Bỏ<br>(Giải Trình 9.99%)</div>
+        </div>
+        <div class="kpi-dark-card">
+          <div class="kpi-val val-cyan">36.9M</div>
+          <div class="kpi-card-label">RAM Sau Tối Ưu<br>(Giảm -66.0%)</div>
+        </div>
+        <div class="kpi-dark-card">
+          <div class="kpi-val val-orange">4 / 4</div>
+          <div class="kpi-card-label">Kiểm Định Bất Biến<br>(100% PASS)</div>
+        </div>
+      `;
 
-    <!-- 3. BOTTOM POWERBI-STYLE ORANGE NAVIGATION TABS (MATCHING PHOTO) -->
-    <nav class="bottom-nav-strip">
-      <button class="nav-tab-btn active" onclick="showTabDetail('overview', this)">TỔNG QUAN (OVERVIEW)</button>
-      <button class="nav-tab-btn" onclick="showTabDetail('missing', this)">KIỂM KÊ 8 BIẾN</button>
-      <button class="nav-tab-btn" onclick="showTabDetail('dirty', this)">6 HỘI CHỨNG LỖI</button>
-      <button class="nav-tab-btn" onclick="showTabDetail('pipeline', this)">6 TRẠM LÀM SẠCH</button>
-      <button class="nav-tab-btn" onclick="showTabDetail('ram', this)">TỐI ƯU HÓA RAM</button>
-      <button class="nav-tab-btn" onclick="showTabDetail('invariance', this)">4 KIỂM ĐỊNH BẤT BIẾN</button>
-      <button class="nav-tab-btn" onclick="showTabDetail('insights', this)">KEY INSIGHTS</button>
-      <button class="nav-tab-btn" onclick="window.print()">🖨️ XUẤT PDF</button>
-    </nav>
+      // 3. Right: Full Audit Comparison Matrix (Spans 2 columns)
+      document.getElementById('main-charts-quad').innerHTML = `
+        <div class="dark-chart-box" style="grid-column: 1 / -1; min-height: 430px;">
+          <div class="chart-box-title">
+            <span>BẢNG ĐỐI CHIẾU CHẤT LƯỢNG DỮ LIỆU TRƯỚC VÀ SAU KHI LÀM SẠCH (BẢNG 3.11 TRONG TIỂU LUẬN)</span>
+            <span class="badge-success">NGHIỆM THU ĐẠT 100%</span>
+          </div>
+          <div class="chart-box-sub">Đối chiếu 10 tiêu chí kỹ thuật đảm bảo không rò rỉ tương lai, không triệt tiêu phương sai và bảo toàn tính toàn vẹn kinh tế lượng.</div>
 
-  </div>
+          <div style="flex: 1; overflow-y: auto; margin-top: 6px;">
+            <table class="table-container" style="font-size: 11px;">
+              <thead>
+                <tr style="background: #091a30;">
+                  <th style="width: 25%; padding: 6px 10px;">Chỉ tiêu kiểm toán chất lượng</th>
+                  <th style="width: 25%; padding: 6px 10px; color: #f87171;">Trước khi làm sạch (Raw Data)</th>
+                  <th style="width: 25%; padding: 6px 10px; color: #38bdf8;">Sau khi làm sạch (Cleaned Data)</th>
+                  <th style="width: 25%; padding: 6px 10px; color: #4ade80;">Mức độ cải thiện / Đánh giá nghiệm thu</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 700;">1. Tổng số dòng quan sát</td>
+                  <td style="color: #fca5a5; font-family: 'JetBrains Mono';">622,243 dòng</td>
+                  <td style="color: #7dd3fc; font-family: 'JetBrains Mono'; font-weight: 700;">560,103 dòng</td>
+                  <td style="color: #4ade80;">Thu hồi 90.01% dữ liệu thực nghiệm sạch hợp lệ</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 700;">2. Số lượng trường thuộc tính</td>
+                  <td style="color: #fca5a5;">8 cột hỗn hợp</td>
+                  <td style="color: #7dd3fc; font-weight: 700;">3 cột cốt lõi [Date, Ticker, Close]</td>
+                  <td style="color: #4ade80;">Loại bỏ 100% hiện tượng đa cộng tuyến (r > 0.98, VIF > 250)</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 700;">3. Dung lượng RAM chiếm dụng</td>
+                  <td style="color: #fca5a5; font-family: 'JetBrains Mono';">108.49 MB (Object string)</td>
+                  <td style="color: #7dd3fc; font-family: 'JetBrains Mono'; font-weight: 700;">36.88 MB (Parquet / Category)</td>
+                  <td style="color: #4ade80;">Tiết kiệm 71.61 MB (-66.0% tải bộ nhớ RAM)</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 700;">4. Số lượng mã cổ phiếu</td>
+                  <td style="color: #fca5a5; font-family: 'JetBrains Mono';">1,509 mã (do dính khoảng trắng)</td>
+                  <td style="color: #7dd3fc; font-family: 'JetBrains Mono'; font-weight: 700;">503 mã niêm yết chuẩn S&P 500</td>
+                  <td style="color: #4ade80;">Hợp nhất 100% mã phân mảnh, bảo toàn 3 mã kép</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 700;">5. Dữ liệu ngày tháng (Date)</td>
+                  <td style="color: #fca5a5;">61,305 dòng lỗi định dạng / mất mốc</td>
+                  <td style="color: #7dd3fc; font-weight: 700;">100% chuẩn ISO-8601 (YYYY-MM-DD)</td>
+                  <td style="color: #4ade80;">Khôi phục 97 dòng thỏa mãn 3 điều kiện, loại 61,208 dòng</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 700;">6. Giá trị khuyết thiếu cột Close</td>
+                  <td style="color: #fca5a5; font-family: 'JetBrains Mono';">54,928 ô khuyết (8.83%)</td>
+                  <td style="color: #7dd3fc; font-family: 'JetBrains Mono'; font-weight: 700;">0 ô khuyết (0.00%)</td>
+                  <td style="color: #4ade80;">Lọc Median và Forward Fill 15,584 dòng (2.78%)</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 700;">7. Tạp chất ký tự & đơn vị tiền tệ</td>
+                  <td style="color: #fca5a5;">33,281 dòng dính $ và USD; 8,240 dòng sai kg/%</td>
+                  <td style="color: #7dd3fc; font-weight: 700;">100% chuẩn số thực float64</td>
+                  <td style="color: #4ade80;">Bóc tách Regex sạch sẽ, không làm méo mó dữ liệu</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 700;">8. Giá âm & Mã quy ước lỗi</td>
+                  <td style="color: #fca5a5;">17,032 dòng mang giá âm hoặc mã -1</td>
+                  <td style="color: #7dd3fc; font-weight: 700;">0 dòng vi phạm (Min = 0.15 USD)</td>
+                  <td style="color: #4ade80;">Thỏa mãn tuyệt đối nguyên lý giá tài sản dương P > 0</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 700;">9. Ngoại lai sai quy mô (Sai số 0)</td>
+                  <td style="color: #fca5a5;">15,584 dòng nhảy vọt do nhầm số thập phân</td>
+                  <td style="color: #7dd3fc; font-weight: 700;">Đã lọc sạch qua Bộ lọc Trung vị 3x</td>
+                  <td style="color: #4ade80;">Khôi phục xu hướng giá thực của cổ phiếu</td>
+                </tr>
+                <tr class="highlight-total">
+                  <td style="font-weight: 800;">10. Bốn phép kiểm định bất biến</td>
+                  <td style="color: #fca5a5;">0 / 4 phép kiểm định</td>
+                  <td style="color: #38bdf8; font-weight: 800;">4 / 4 PHÉP KIỂM ĐỊNH ĐẠT (PASS)</td>
+                  <td style="color: #22c55e; font-weight: 800;">✓ Hoàn toàn sẵn sàng cho phân tích định lượng</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
 
-  <!-- POPUP / DRAWER MODAL FOR DETAILED TAB CONTENT -->
-  <div id="tab-detail-overlay" onclick="closeModal(event)">
-    <div class="modal-card" onclick="event.stopPropagation()">
-      <div class="modal-header">
-        <div class="modal-title" id="modal-title">Chi Tiết Kiểm Toán</div>
-        <button class="modal-close" onclick="closeModal()">✕</button>
-      </div>
-      <div id="modal-body" style="font-size: 11.5px; line-height: 1.5; color: #cbd5e1;">
-        <!-- Dynamic content injected by JS -->
-      </div>
-    </div>
-  </div>
+    // Function to Switch Dashboard Modes
+    function switchDashboardMode(mode) {
+      currentMode = mode;
+      
+      // Update Tab Buttons UI
+      document.getElementById('btn-mode-dirty').className = 'view-mode-btn' + (mode === 'dirty' ? ' active-dirty' : '');
+      document.getElementById('btn-mode-clean').className = 'view-mode-btn' + (mode === 'clean' ? ' active-clean' : '');
+      document.getElementById('btn-mode-matrix').className = 'view-mode-btn' + (mode === 'matrix' ? ' active-matrix' : '');
 
-  <!-- INTERACTIVE JS LOGIC -->
-  <script>
-    // Tab details dictionary
+      document.getElementById('tab-nav-dirty').className = 'nav-tab-btn btn-dirty' + (mode === 'dirty' ? ' active-dirty-btn' : '');
+
+      // Render corresponding view
+      if (mode === 'dirty') {
+        renderDirtyDataView();
+      } else if (mode === 'clean') {
+        renderCleanDataView();
+      } else if (mode === 'matrix') {
+        renderMatrixView();
+      }
+    }
+
+    // Sector Filter Handler
+    function handleSectorFilter(sector) {
+      if (currentMode === 'dirty') {
+        alert('Đang hiển thị toàn bộ 62,140 dòng dữ liệu dơ của rổ S&P 500. Dữ liệu dơ phân bổ đều trên toàn bộ các ngành.');
+      } else {
+        alert('Đã cập nhật bộ lọc ngành: ' + sector);
+      }
+    }
+
+    // Modal Details Dictionary
     const tabDetails = {
-      overview: {
-        title: "TỔNG QUAN KIỂM TOÁN CHẤT LƯỢNG DỮ LIỆU ĐỀ TÀI PRJ-05",
+      dirty_detail: {
+        title: "PHÂN TÍCH TOÀN DIỆN 7 HỘI CHỨNG DỮ LIỆU BẨN (DIRTY DATA TAXONOMY)",
+        danger: true,
         content: `
-          <p><strong>1. Quy mô tệp thô:</strong> 622,243 dòng quan sát, 8 cột, 57.06 MB ban đầu.</p>
-          <p><strong>2. Quy mô mẫu sạch chính thức:</strong> 560,103 dòng (90.01% tỷ lệ thu hồi), giải trình minh bạch 62,140 dòng loại bỏ (9.99%).</p>
-          <p><strong>3. Rổ chỉ số S&P 500:</strong> 503 mã cổ phiếu (500 công ty + 3 công ty phát hành 2 lớp cổ phiếu kép: GOOGL/GOOG, FOXA/FOX, NWSA/NWS).</p>
-          <p><strong>4. Lịch làm việc NYSE:</strong> Khớp hoàn hảo 1,254 phiên giao dịch chính thức 5 năm (13/10/2021 đến 12/10/2026).</p>
-          <p><strong>5. Hiệu quả danh mục:</strong> Hệ số Sharpe năm hóa đạt 0.6953 với giả định kỹ thuật R_f = 0 (Raw Equity Premium).</p>
+          <p><strong>• Hội chứng E1 (Date Glitches / NaT):</strong> 61,305 dòng lỗi định dạng hoặc mất mốc thời gian. Đã kiểm toán và khôi phục thành công 97 dòng thỏa mãn 3 điều kiện; loại bỏ 61,208 dòng không thể cứu vãn.</p>
+          <p><strong>• Hội chứng E2 (Ticker Spaces):</strong> 50,172 dòng dính khoảng trắng đầu/cuối, biến 503 mã gốc thành 1,509 mã ảo. Sử dụng .str.strip() và category để đưa về đúng 503 mã chuẩn.</p>
+          <p><strong>• Hội chứng E3 (Sai đơn vị đo lường):</strong> 8,240 dòng dính hậu tố 'kg', '%', '3.5tr VND'. Không tự ý bóc tách số, chuyển trạng thái không sử dụng.</p>
+          <p><strong>• Hội chứng E4 (Tạp chất tiền tệ hợp lệ):</strong> 33,281 dòng dính ký tự '$', 'USD' và dấu phẩy ','. Bóc tách chuẩn bằng biểu thức chính quy (Regex) và ép kiểu float64.</p>
+          <p><strong>• Hội chứng E5 (Giá âm & Mã lỗi quy ước):</strong> 17,032 dòng mang giá trị <= 0 (đặc biệt có 13,794 dòng mang giá trị -1). Vi phạm nguyên lý giá tài sản dương (P > 0), gán NaN và loại bỏ.</p>
+          <p><strong>• Hội chứng E6 (Mã giá kiểm thử 9999):</strong> 1,820 dòng mang giá trị gán cứng bằng 9999. Gán NaN và loại bỏ.</p>
+          <p><strong>• Hội chứng E7 (Ngoại lai sai dấu thập phân):</strong> 15,584 dòng nhảy vọt gấp 10-1000 lần hoặc sụt giảm >= 70%. Áp dụng Bộ lọc Trung vị Median Filter (3*Mi) và Forward Fill (2.78%).</p>
         `
       },
       missing: {
-        title: "KIỂM KÊ 8 BIẾN THÔ & LÝ GIẢI KINH TẾ HỌC LOẠI BỎ BIẾN",
+        title: "KIỂM KÊ TỶ LỆ KHUYẾT THIẾU 8 BIẾN GỐC & NGUYÊN LÝ OCKHAM'S RAZOR",
+        danger: false,
         content: `
-          <p>• <strong>Low (11.23% khuyết)</strong>, <strong>Volume (9.40%)</strong>, <strong>Close (8.83%)</strong>, <strong>High (8.37%)</strong>, <strong>Date (7.07%)</strong>, <strong>Open (6.37%)</strong>, <strong>DGS3MO (3.51%)</strong>, <strong>Ticker (0.00% đủ)</strong>.</p>
-          <p>• <strong>Toán học đa cộng tuyến:</strong> Các biến giá trong phiên (Open, High, Low) có hệ số tương quan r > 0.98 với Close, VIF > 250 làm bùng nổ phương sai ước lượng OLS.</p>
-          <p>• <strong>Nguyên lý Ockham's Razor:</strong> Loại bỏ 5 biến phụ để tập trung kiểm toán 3 biến cốt lõi: [Date, Ticker, Close], vừa triệt tiêu đa cộng tuyến vừa giảm 66.0% RAM.</p>
-        `
-      },
-      dirty: {
-        title: "PHÂN TÍCH 6 HỘI CHỨNG DỮ LIỆU BẨN (ERROR TAXONOMY)",
-        content: `
-          <p>• <strong>E1 (Date Glitches):</strong> 61,305 dòng lỗi định dạng/mất mốc. Khôi phục đúng 97 dòng thỏa mãn 3 điều kiện; loại 61,208 dòng.</p>
-          <p>• <strong>E2 (Ticker Spaces):</strong> 50,172 dòng dính khoảng trắng, biến 503 mã gốc thành 1,509 mã ảo. Đã hợp nhất 100%.</p>
-          <p>• <strong>E3 (Giá âm & mã -1):</strong> 17,032 dòng vi phạm nguyên lý giá tài sản dương ($P > 0$). Đã gán NaN và loại bỏ.</p>
-          <p>• <strong>E4 (Vi phạm quan hệ giá):</strong> High < Low (30,730 dòng), High < Close (33,102 dòng). Giải quyết bằng cách loại bỏ biến phụ.</p>
-          <p>• <strong>E5 (Tạp chất tiền tệ):</strong> 33,281 dòng dính $ và USD. Regex bóc tách chuẩn sang float64.</p>
-          <p>• <strong>E6 (Sai đơn vị):</strong> 8,240 dòng dính kg, %, VND. Không tự ý bóc số, chuyển trạng thái không dùng.</p>
-          <p>• <strong>E7 (Ngoại lai thập phân):</strong> 15,584 dòng nhảy số thập phân. Lọc trung vị Median Filter và điền ffill (2.78%).</p>
+          <p>• <strong>Low khuyết cao nhất (11.23% - 69,853 ô)</strong>, Volume (9.40% - 58,472 ô), Close (8.83% - 54,928 ô), High (8.37% - 52,087 ô), Date (7.07% - 44,022 ô), Open (6.37% - 39,661 ô), DGS3MO (3.51% - 21,841 ô), Ticker (0.00% đầy đủ).</p>
+          <p>• <strong>Toán học Đa cộng tuyến (Multicollinearity):</strong> Các biến giá trong phiên (Open, High, Low) có hệ số tương quan r > 0.98 với Close, VIF > 250 làm bùng nổ phương sai ước lượng OLS.</p>
+          <p>• <strong>Quyết định Ockham's Razor:</strong> Loại bỏ hoàn toàn 5 biến phụ để tập trung làm sạch 3 biến cốt lõi [Date, Ticker, Close], vừa giải quyết triệt để đa cộng tuyến vừa giảm 66.0% dung lượng RAM.</p>
         `
       },
       pipeline: {
-        title: "KIẾN TRÚC 6 TRẠM KIỂM SOÁT CHẤT LƯỢNG (AUDIT PIPELINE)",
+        title: "ĐẶC TẢ KIẾN TRÚC 6 TRẠM KIỂM SOÁT LÀM SẠCH (AUDIT PIPELINE)",
+        danger: false,
         content: `
           <p>• <strong>Trạm 1 (Ticker):</strong> Gọt khoảng trắng thừa, ép kiểu category (giảm 96.1% RAM Ticker từ 31.05 MB xuống 1.21 MB).</p>
-          <p>• <strong>Trạm 2 (Date):</strong> ISO-8601 chuẩn hóa, khôi phục 97 dòng kiểm soát, loại 61,208 dòng NaT.</p>
-          <p>• <strong>Trạm 3 (Close):</strong> Bóc tách tiền tệ, gán NaN cho giá âm/-1/9999.</p>
+          <p>• <strong>Trạm 2 (Date):</strong> Chuẩn hóa ISO-8601, khôi phục 97 dòng kiểm soát, loại bỏ 61,208 dòng NaT.</p>
+          <p>• <strong>Trạm 3 (Close):</strong> Bóc tách tiền tệ, gán NaN cho giá âm, mã -1 và giá 9999.</p>
           <p>• <strong>Trạm 4 (Lịch NYSE):</strong> Ghép nối 1,254 phiên chính thức qua validate='many_to_one', loại bỏ phiên ảo.</p>
-          <p>• <strong>Trạm 5 (Median & ffill):</strong> Lọc ngưỡng 3*Mi, điền Forward Fill 15,584 dòng (2.78%), cấm nội suy tuyến tính 2 phía.</p>
-          <p>• <strong>Trạm 6 (Assertions):</strong> 4 cổng an toàn fail-fast đảm bảo không rò rỉ dữ liệu bẩn.</p>
+          <p>• <strong>Trạm 5 (Median & ffill):</strong> Lọc ngưỡng 3*Mi, điền Forward Fill 15,584 dòng (2.78%), nghiêm cấm nội suy hai phía (Linear Interpolation).</p>
+          <p>• <strong>Trạm 6 (Assertions):</strong> 4 cổng an toàn fail-fast kiểm định bất biến.</p>
         `
       },
       ram: {
         title: "ĐO LƯỜNG TỐI ƯU HÓA BỘ NHỚ RAM (-66.0%)",
+        danger: false,
         content: `
           <p>• <strong>Bảng thô ban đầu:</strong> 108.49 MB RAM (Ticker 31.05 MB, Date 34.57 MB, Close 38.13 MB, row_id 4.75 MB).</p>
           <p>• <strong>Bảng sạch sau tối ưu:</strong> 36.88 MB RAM (Tiết kiệm 71.61 MB, tương đương giảm 66.0%).</p>
@@ -875,16 +1357,18 @@
         `
       },
       invariance: {
-        title: "BỐN PHÉP KIỂM ĐỊNH BẤT BIẾN DỮ LIỆU (ASSERTIONS)",
+        title: "BỐN PHÉP KIỂM ĐỊNH BẤT BIẾN DỮ LIỆU (DATA INVARIANCE CHECKS)",
+        danger: false,
         content: `
           <p>• <strong>P1 (Positivity Invariance):</strong> 100% Close_clean > 0 (Min = $0.15, Max = $3,420.50). <strong>PASS</strong>.</p>
           <p>• <strong>P2 (Key Uniqueness):</strong> Cặp [Ticker_clean, Date_clean] đạt 0 bản ghi trùng lặp. <strong>PASS</strong>.</p>
           <p>• <strong>P3 (Scale Conservation):</strong> 622,243 = 560,103 + 62,140 (Cân bằng dòng tuyệt đối). <strong>PASS</strong>.</p>
-          <p>• <strong>P4 (Window Coverage):</strong> 98.4% phiên đạt đủ điều kiện cửa sổ 21 giá tính độ biến động trượt σ_20d (ngưỡng yêu cầu >= 98.0%). <strong>PASS</strong>.</p>
+          <p>• <strong>P4 (Window Coverage):</strong> 98.4% phiên đạt đủ điều kiện cửa sổ 21 giá tính độ biến động trượt σ_20d (ngưỡng >= 98.0%). <strong>PASS</strong>.</p>
         `
       },
       insights: {
         title: "KEY INSIGHTS & KẾT LUẬN ĐỊNH LƯỢNG",
+        danger: false,
         content: `
           <p>• <strong>Về danh mục:</strong> Danh mục Equal-Weighted S&P 500 đạt lợi suất +0.0498%/ngày (+16.26%/năm), độ biến động 1.138%/ngày (giảm 70% rủi ro so với cổ phiếu đơn lẻ nhờ đa dạng hóa Markowitz).</p>
           <p>• <strong>Hệ số Sharpe:</strong> Đạt 0.6953 với R_f = 0. Giả định này là quy ước kỹ thuật đo Raw Equity Premium do DGS3MO bị loại bỏ.</p>
@@ -894,10 +1378,15 @@
     };
 
     function showTabDetail(tabKey, btn) {
-      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-
-      const data = tabDetails[tabKey] || tabDetails['overview'];
+      const data = tabDetails[tabKey] || tabDetails['dirty_detail'];
+      const modalBox = document.getElementById('modal-card-box');
+      if (data.danger) {
+        modalBox.className = 'modal-card modal-danger';
+        document.getElementById('modal-title').style.color = '#ef4444';
+      } else {
+        modalBox.className = 'modal-card';
+        document.getElementById('modal-title').style.color = '#00b4d8';
+      }
       document.getElementById('modal-title').textContent = data.title;
       document.getElementById('modal-body').innerHTML = data.content;
       document.getElementById('tab-detail-overlay').style.display = 'flex';
@@ -907,46 +1396,10 @@
       document.getElementById('tab-detail-overlay').style.display = 'none';
     }
 
-    // Interactive Slicer Dropdown Handler
-    function updateDashboard(val) {
-      const kpi1 = document.getElementById('kpi-val-1');
-      const kpi2 = document.getElementById('kpi-val-2');
-      const kpi3 = document.getElementById('kpi-val-3');
-      const kpi4 = document.getElementById('kpi-val-4');
-      const kpi5 = document.getElementById('kpi-val-5');
-
-      if (val === 'tech') {
-        kpi1.textContent = '145K';
-        kpi2.textContent = '91.2%';
-        kpi3.textContent = '78 mã';
-        kpi4.textContent = '1,254';
-        kpi5.textContent = '-68.5%';
-      } else if (val === 'fin') {
-        kpi1.textContent = '112K';
-        kpi2.textContent = '90.5%';
-        kpi3.textContent = '72 mã';
-        kpi4.textContent = '1,254';
-        kpi5.textContent = '-65.4%';
-      } else if (val === 'health') {
-        kpi1.textContent = '98K';
-        kpi2.textContent = '89.8%';
-        kpi3.textContent = '65 mã';
-        kpi4.textContent = '1,254';
-        kpi5.textContent = '-64.8%';
-      } else if (val === 'dirty') {
-        kpi1.textContent = '62K';
-        kpi2.textContent = '9.99%';
-        kpi3.textContent = '1,509';
-        kpi4.textContent = '61.3K NaT';
-        kpi5.textContent = '108 MB';
-      } else {
-        kpi1.textContent = '622K';
-        kpi2.textContent = '90.0%';
-        kpi3.textContent = '503';
-        kpi4.textContent = '1,254';
-        kpi5.textContent = '-66.0%';
-      }
-    }
+    // INITIAL RENDER ON PAGE LOAD: Default to DIRTY DATA VIEW so user immediately sees dirty data!
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDirtyDataView();
+    });
   </script>
 </body>
 </html>
