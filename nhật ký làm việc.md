@@ -1105,3 +1105,48 @@ IV. KẾ HOẠCH BƯỚC TIẾP THEO (NEXT STEPS)
 2. Sử dụng tính năng [XUẤT PDF] tích hợp trên Dashboard để tạo tài liệu minh chứng trực quan đính kèm báo cáo tiểu luận.
 3. Ôn luyện bộ câu hỏi phản biện bảo vệ đề tài dựa trên các trực quan hóa và chỉ số kiểm toán trên Dashboard.
 4. Đẩy toàn bộ các commit lên kho lưu trữ GitHub cá nhân phục vụ lưu trữ lâu dài.
+
+================================================================================
+NHẬT KÝ NGÀY: 26/11/2026
+Người ghi: Đào Ngọc Minh (MSSV: 2521001078)
+Khóa: UFM - KHDL 2025 | Đề tài: PRJ-05
+GVHD: ThS. Trần Mạnh Tường
+Trạng thái: Nâng cấp Toàn diện Phân hệ Kiểm toán Dữ liệu Dơ (Dirty Data Audit) & Tích hợp Bộ chuyển Chế độ 3 Tầng lên Dashboard (data_quality_dashboard.html)
+================================================================================
+
+I. CÁC MỤC TIÊU VÀ ĐẦU VIỆC TRỌNG TÂM TRONG NGÀY
+1. Tiếp nhận phản hồi từ giảng viên/người dùng: Bổ sung nổi bật và trực quan hóa toàn bộ phần Dữ liệu dơ (Dirty Data) lên bề mặt giao diện Dashboard thay vì chỉ hiển thị mẫu sạch.
+2. Xây dựng Thanh điều hướng Chế độ 3 Tầng (3-Mode View Switcher) ngay trên Header:
+   - Chế độ 1 (Mặc định): [⚠️ KIỂM TOÁN DỮ LIỆU DƠ (62.1K)] - Trực quan hóa toàn bộ 7 hội chứng khuyết tật (E1–E7), tỷ lệ khuyết thiếu 8 biến thô, vi phạm logic giá trong phiên và phễu 6 trạm làm sạch.
+   - Chế độ 2: [💎 MẪU SẠCH & HIỆU QUẢ (560K)] - Đường tài sản tích lũy (+114.11%), lợi suất danh mục, độ biến động và sai số RMSE ngoài mẫu.
+   - Chế độ 3: [🔄 ĐỐI CHIẾU TRƯỚC / SAU] - Ma trận đối soát 10 tiêu chí kiểm toán nghiệm thu (Bảng 3.11 trong tieuluan.qmd).
+3. Tinh chỉnh hệ thống 5 thẻ KPI thích ứng động theo từng chế độ hiển thị:
+   - Chế độ Dữ liệu dơ: 62.1K Dòng dơ loại bỏ, 61.2K Lỗi Date NaT, 50.2K Ticker dính khoảng trắng, 33.3K Dính ký tự tiền tệ, 17.0K Vi phạm giá âm/-1.
+4. Kiểm thử tương tác JavaScript chuyển đổi mượt mà không tải lại trang, xuất bản tệp HTML độc lập và commit Git an toàn.
+
+--------------------------------------------------------------------------------
+II. TIẾN TRÌNH THỰC HIỆN CHI TIẾT (TIMELINE & ACTIONS)
+
+1. Phiên sáng (08:30 - 09:30): Khảo sát và thiết kế giao diện Phân hệ Dữ liệu Dơ
+- Rà soát các số liệu khuyết tật từ Chương 2 Báo cáo quy trình làm sạch (quytrinhlamsach.qmd) và Chương 3 Tiểu luận (tieuluan.qmd):
+  + Tệp thô 622,243 dòng ban đầu nhiễm bẩn 100% cột dưới dạng chuỗi (Object/String).
+  + 62,140 dòng bị loại bỏ (9.99%) do mất mốc thời gian NaT (61,208 dòng) hoặc sai đơn vị đo lường (8,240 dòng).
+  + 7 hội chứng lỗi: E1 (Date NaT), E2 (Ticker spaces 50,172 dòng), E3 (Sai đơn vị 8,240 dòng), E4 (Dính USD/$ 33,281 dòng), E5 (Giá âm/-1 17,032 dòng), E6 (Giá test 9999 1,820 dòng), E7 (Ngoại lai Median 3x 15,584 dòng).
+  + Tỷ lệ khuyết thiếu 8 biến: Low (11.23%), Volume (9.40%), Close (8.83%), High (8.37%), Date (7.07%), Open (6.37%), DGS3MO (3.51%), Ticker (0.00%).
+  + Vi phạm logic giá trong phiên: High < Low (30,730 dòng), High < Close (33,102 dòng), Open = 9999 (9,985 dòng).
+  + Đa cộng tuyến bùng nổ: r(Open, High, Low, Close) > 0.98, VIF > 250 -> Căn cứ áp dụng Ockham's Razor loại bỏ 5 biến phụ.
+
+2. Phiên sáng (09:30 - 09:45): Lập trình và Triển khai vào data_quality_dashboard.html
+- Tích hợp thanh nút View Switcher trên Header với 3 nút chuyển chế độ màu sắc nổi bật (Đỏ cảnh báo, Xanh cyan, Cam hổ phách).
+- Thiết lập hàm renderDirtyDataView() hiển thị mặc định ngay khi tải trang:
+  + Cột trái: 5 thẻ KPI màu đỏ cam viền đỏ sẫm.
+  + Ô 1 (Top-Left): Biểu đồ thanh ngang phân rã 7 hội chứng khuyết tật E1–E7 với tỷ lệ % và số dòng.
+  + Ô 2 (Top-Right): Bảng ma trận tỷ lệ khuyết thiếu 8 biến gốc với thanh đo cảnh báo màu đỏ/cam.
+  + Ô 3 (Bottom-Left): Đồ họa trực quan hóa vi phạm quan hệ giá trong phiên và sơ đồ đối chiếu Ockham's Razor (VIF > 250 vs VIF < 5).
+  + Ô 4 (Bottom-Right): Phễu 6 trạm lọc dòng chảy từ 622,243 thô xuống 560,103 dòng sạch đạt 4 bài test bất biến.
+- Cập nhật đồng thời vào artifact và kho lưu trữ local, thực hiện commit Git an toàn (commit a4dcc5d).
+
+--------------------------------------------------------------------------------
+III. KẾT QUẢ ĐÃ ĐẠT ĐƯỢC (DELIVERABLES)
+1. Dashboard 'data_quality_dashboard.html' (kích thước 69 KB) đã giải quyết triệt để yêu cầu hiển thị Dữ liệu dơ: Người xem ngay khi mở lên sẽ thấy toàn diện bức tranh kiểm toán dữ liệu bẩn và có thể chuyển đổi linh hoạt sang mẫu sạch.
+2. Đồng bộ mã nguồn và tài liệu trên hệ thống.
